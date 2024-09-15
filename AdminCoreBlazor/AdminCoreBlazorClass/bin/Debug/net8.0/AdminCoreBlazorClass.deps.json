@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "AdminCoreBlazorClass/1.0.0": {
+        "dependencies": {
+          "AdminCoreBlazorShared": "1.0.0"
+        },
+        "runtime": {
+          "AdminCoreBlazorClass.dll": {}
+        }
+      },
+      "AdminCoreBlazorShared/1.0.0": {
+        "runtime": {
+          "AdminCoreBlazorShared.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "AdminCoreBlazorClass/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AdminCoreBlazorShared/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

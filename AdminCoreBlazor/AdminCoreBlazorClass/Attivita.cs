@@ -11,7 +11,7 @@ namespace AdminCoreBlazorClass
         public decimal Costo { get; set; }
 }
 
-    public class TipoAttivita
+    public class PeriodoAttivita
     {
         public int ID { get; set; }
         public int Mese { get; set; }
@@ -19,7 +19,7 @@ namespace AdminCoreBlazorClass
         public string Descrizione { get; set; } = string.Empty;
     }
 
-    public class PeriodoAttivita
+    public class TipologiaAttivita
     {
         public int ID { get; set; }
         public string TipoAttivita { get; set; } = string.Empty;

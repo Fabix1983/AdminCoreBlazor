@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AdminCoreBlazorClass")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+80ad31ccdb3c344d60c20a6c263f6ab6bcc800b5")]
 [assembly: System.Reflection.AssemblyProductAttribute("AdminCoreBlazorClass")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AdminCoreBlazorClass")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

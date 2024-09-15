@@ -1,0 +1,16 @@
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\AdminCoreBlazorClass\bin\Debug\net8.0\AdminCoreBlazorClass.deps.json
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\AdminCoreBlazorClass\bin\Debug\net8.0\AdminCoreBlazorClass.dll
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\AdminCoreBlazorClass\bin\Debug\net8.0\AdminCoreBlazorClass.pdb
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\AdminCoreBlazorClass\bin\Debug\net8.0\AdminCoreBlazorShared.dll
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\AdminCoreBlazorClass\bin\Debug\net8.0\AdminCoreBlazorShared.pdb
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\AdminCoreBlazorClass\obj\Debug\net8.0\AdminCoreBlazorClass.csproj.AssemblyReference.cache
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\AdminCoreBlazorClass\obj\Debug\net8.0\AdminCoreBlazorClass.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\AdminCoreBlazorClass\obj\Debug\net8.0\AdminCoreBlazorClass.AssemblyInfoInputs.cache
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\AdminCoreBlazorClass\obj\Debug\net8.0\AdminCoreBlazorClass.AssemblyInfo.cs
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\AdminCoreBlazorClass\obj\Debug\net8.0\AdminCoreBlazorClass.csproj.CoreCompileInputs.cache
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\AdminCoreBlazorClass\obj\Debug\net8.0\AdminCoreBlazorClass.sourcelink.json
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\AdminCoreBlazorClass\obj\Debug\net8.0\AdminCoreBlazorClass.csproj.CopyComplete
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\AdminCoreBlazorClass\obj\Debug\net8.0\AdminCoreBlazorClass.dll
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\AdminCoreBlazorClass\obj\Debug\net8.0\refint\AdminCoreBlazorClass.dll
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\AdminCoreBlazorClass\obj\Debug\net8.0\AdminCoreBlazorClass.pdb
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\AdminCoreBlazorClass\obj\Debug\net8.0\ref\AdminCoreBlazorClass.dll

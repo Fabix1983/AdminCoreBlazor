@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "aF+fTfBArPw9dB7NTWUWUGsygSQfiJKgFjfxdKzkcD4=",
+  "Source": "APIRestConn",
+  "BasePath": "_content/APIRestConn",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
