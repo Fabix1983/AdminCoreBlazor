@@ -1,0 +1,13 @@
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\JSON\bin\Debug\net8.0\JSON.deps.json
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\JSON\bin\Debug\net8.0\JSON.dll
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\JSON\bin\Debug\net8.0\JSON.pdb
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\JSON\obj\Debug\net8.0\JSON.csproj.AssemblyReference.cache
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\JSON\obj\Debug\net8.0\JSON.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\JSON\obj\Debug\net8.0\JSON.AssemblyInfoInputs.cache
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\JSON\obj\Debug\net8.0\JSON.AssemblyInfo.cs
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\JSON\obj\Debug\net8.0\JSON.csproj.CoreCompileInputs.cache
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\JSON\obj\Debug\net8.0\JSON.sourcelink.json
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\JSON\obj\Debug\net8.0\JSON.dll
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\JSON\obj\Debug\net8.0\refint\JSON.dll
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\JSON\obj\Debug\net8.0\JSON.pdb
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\JSON\obj\Debug\net8.0\ref\JSON.dll

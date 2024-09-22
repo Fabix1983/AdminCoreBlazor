@@ -35,3 +35,6 @@ C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\APIRestConn\obj\Debug
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\APIRestConn\obj\Debug\net8.0\APIRestConn.pdb
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\APIRestConn\obj\Debug\net8.0\APIRestConn.genruntimeconfig.cache
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\APIRestConn\obj\Debug\net8.0\ref\APIRestConn.dll
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\APIRestConn\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\APIRestConn\bin\Debug\net8.0\JSON.dll
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\AdminCoreBlazor\APIRestConn\bin\Debug\net8.0\JSON.pdb

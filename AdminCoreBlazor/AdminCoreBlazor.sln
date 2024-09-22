@@ -12,9 +12,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PUB", "PUB", "{82DC1CD4-C1F
 		..\LICENSE = ..\LICENSE
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminCoreBlazorClass", "AdminCoreBlazorClass\AdminCoreBlazorClass.csproj", "{ABF0C9A3-0E86-4B46-8F78-72D820993A64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminCoreBlazorClass", "AdminCoreBlazorClass\AdminCoreBlazorClass.csproj", "{ABF0C9A3-0E86-4B46-8F78-72D820993A64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminCoreBlazorShared", "AdminCoreBlazorShared\AdminCoreBlazorShared.csproj", "{D6DB4278-73C8-4E9F-A2D0-990868DA4905}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminCoreBlazorShared", "AdminCoreBlazorShared\AdminCoreBlazorShared.csproj", "{D6DB4278-73C8-4E9F-A2D0-990868DA4905}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SHARED", "SHARED", "{87D773EB-2791-46D5-AFBF-3F086F8F66FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSON", "JSON\JSON.csproj", "{27AA74C7-7EA9-4E30-B79A-7DCC7E6DF71A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +38,10 @@ Global
 		{D6DB4278-73C8-4E9F-A2D0-990868DA4905}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6DB4278-73C8-4E9F-A2D0-990868DA4905}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6DB4278-73C8-4E9F-A2D0-990868DA4905}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27AA74C7-7EA9-4E30-B79A-7DCC7E6DF71A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27AA74C7-7EA9-4E30-B79A-7DCC7E6DF71A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27AA74C7-7EA9-4E30-B79A-7DCC7E6DF71A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27AA74C7-7EA9-4E30-B79A-7DCC7E6DF71A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,6 +49,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E9839D3B-B7CD-44C3-8E3F-0EFE28625E66} = {690CD594-91A8-407E-915B-7F431FE40323}
 		{ABF0C9A3-0E86-4B46-8F78-72D820993A64} = {690CD594-91A8-407E-915B-7F431FE40323}
+		{D6DB4278-73C8-4E9F-A2D0-990868DA4905} = {87D773EB-2791-46D5-AFBF-3F086F8F66FD}
+		{27AA74C7-7EA9-4E30-B79A-7DCC7E6DF71A} = {87D773EB-2791-46D5-AFBF-3F086F8F66FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E02F86A5-34AA-4558-9B47-7C1A9BB6D964}

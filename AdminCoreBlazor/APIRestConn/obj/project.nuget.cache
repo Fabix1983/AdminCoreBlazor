@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "yBxkeaPLWCUNu3S5+JO8dLmp+AyEVhMyG8LHCM5u6zCBB2Qqcpy49KWxbHZt9l/BUyxStzsCAAZ9q0q54OHxMg==",
+  "dgSpecHash": "iH4g2nFCic+k8ZsTaKOcRd/c7eiK6sqzsDI3o/x/xKPk2+dvbKqhL8F9PE5ul2kvU08qE73K/5/fzLnTzzWDcQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\AdminCoreBlazor\\APIRestConn\\APIRestConn.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\PC\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.1\\microsoft.extensions.dependencyinjection.abstractions.8.0.1.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.openapi\\1.6.14\\microsoft.openapi.1.6.14.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\swashbuckle.aspnetcore\\6.7.3\\swashbuckle.aspnetcore.6.7.3.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.7.3\\swashbuckle.aspnetcore.swagger.6.7.3.nupkg.sha512",

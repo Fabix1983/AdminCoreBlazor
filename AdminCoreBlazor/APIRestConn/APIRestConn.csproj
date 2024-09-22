@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AdminCoreBlazorClass\AdminCoreBlazorClass.csproj" />
+    <ProjectReference Include="..\JSON\JSON.csproj" />
   </ItemGroup>
 
 </Project>
