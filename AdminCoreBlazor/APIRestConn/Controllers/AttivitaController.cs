@@ -15,8 +15,8 @@ namespace APIRestConn.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetAttivita(int anno, int mese)
         {
-            //return NotFound($"Studente con ID {id} non trovato"); 
-            throw new Exception("Errore imprevisto");
+            ModelState.AddModelError("anno e mese", "Periodo Senza Attivita");
+            return NotFound(new ValidationProblemDetails(ModelState));
         }
 
         /*
