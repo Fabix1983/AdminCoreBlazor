@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("APIRestConn")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("DBLayer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
-[assembly: System.Reflection.AssemblyProductAttribute("APIRestConn")]
-[assembly: System.Reflection.AssemblyTitleAttribute("APIRestConn")]
+[assembly: System.Reflection.AssemblyProductAttribute("DBLayer")]
+[assembly: System.Reflection.AssemblyTitleAttribute("DBLayer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Generato dalla classe WriteCodeFragment di MSBuild.
