@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34316.72
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PUB", "PUB", "{D9487749-FD23-40DA-B746-03700B553BC1}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SERVER", "SERVER", "{F4D7CEDF-1505-47AF-98F9-B2D91BA2C678}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CLIENT", "CLIENT", "{22DE2992-07FD-46DD-BD35-218463EB54B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DB-STRUCTURE", "DB-STRUCTURE", "{C1CEBB4B-FB08-48A0-A795-46AC8DFBD622}"
+	ProjectSection(SolutionItems) = preProject
+		Utils.txt = Utils.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C1CEBB4B-FB08-48A0-A795-46AC8DFBD622} = {F4D7CEDF-1505-47AF-98F9-B2D91BA2C678}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {277D4176-602E-4976-BF00-0A5661A9A662}
+	EndGlobalSection
+EndGlobal
