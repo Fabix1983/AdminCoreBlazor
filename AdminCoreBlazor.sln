@@ -10,11 +10,27 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PUBLIC", "PUBLIC", "{18445618-754E-4614-9D94-7003BC94851F}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\LICENSE = ..\..\LICENSE
+		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{40B8B1D3-43E9-458C-97E9-11E3AAE32CE8}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{40B8B1D3-43E9-458C-97E9-11E3AAE32CE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40B8B1D3-43E9-458C-97E9-11E3AAE32CE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40B8B1D3-43E9-458C-97E9-11E3AAE32CE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40B8B1D3-43E9-458C-97E9-11E3AAE32CE8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{40B8B1D3-43E9-458C-97E9-11E3AAE32CE8} = {82D1CA43-5876-41D4-B98F-413FF4EB054B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5CC37B71-828C-48E3-9778-96C43B0BB274}
