@@ -8,11 +8,13 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.AspNetCore.Http;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Produces("application/json")]
     public class TrendController : Controller
     {
         private readonly ILogger<CompareController> _logger;
@@ -26,6 +28,8 @@ namespace API.Controllers
 
         // GET: TrendController/Trend/id
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public JsonResult Trend(int id = 10000000)
         {
             string json = "";

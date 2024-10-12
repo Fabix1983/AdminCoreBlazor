@@ -7,11 +7,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Produces("application/json")]
 
     public class CercaController : Controller
     {
@@ -26,6 +28,8 @@ namespace API.Controllers
 
         // GET: CercaController/Cerca/parola
         [HttpGet("{parola}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public JsonResult Cerca(string parola)
         {
             string json = "";
