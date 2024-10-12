@@ -36,9 +36,12 @@ namespace API.Controllers
             {
                 var connString = _configuration.GetConnectionString("Default");
 
-                //connString = "Server=.\\SQLEXPRESS;Database=dbGestionale;Uid=dbuser;Pwd=tex83db!user#19#;TrustServerCertificate=true";
+                String connStringEscape = connString.ToString().Replace("\\\\","\\");
 
-                using (SqlConnection connection = new SqlConnection(connString))
+                // dichiaro il chiamante con Certificato Valido
+                connStringEscape = connStringEscape + ";TrustServerCertificate=true";
+
+                using (SqlConnection connection = new SqlConnection(connStringEscape))
                 {
                     try
                     {

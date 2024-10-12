@@ -15,11 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PUBLIC", "PUBLIC", "{184456
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{40B8B1D3-43E9-458C-97E9-11E3AAE32CE8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DB-STRUCTURE", "DB-STRUCTURE", "{E6CE551D-4B3C-4717-813F-5EACF4422AB1}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\ModelloER-DB.jpg = ..\..\ModelloER-DB.jpg
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,7 +31,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{40B8B1D3-43E9-458C-97E9-11E3AAE32CE8} = {82D1CA43-5876-41D4-B98F-413FF4EB054B}
-		{E6CE551D-4B3C-4717-813F-5EACF4422AB1} = {82D1CA43-5876-41D4-B98F-413FF4EB054B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5CC37B71-828C-48E3-9778-96C43B0BB274}
