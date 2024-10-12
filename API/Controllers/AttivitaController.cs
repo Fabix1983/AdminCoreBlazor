@@ -6,7 +6,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AttivitaController : ControllerBase
+    public class AttivitaController : Controller
     {
    
     }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Data.SqlClient;
 using System.Data;
 using API.Models;
 using Newtonsoft.Json;
@@ -36,7 +35,7 @@ namespace API.Controllers
             {
                 var connString = _configuration.GetConnectionString("Default");
 
-                String connStringEscape = connString.ToString().Replace("\\\\","\\");
+                string connStringEscape = connString.ToString().Replace("\\\\","\\");
 
                 // dichiaro il chiamante con Certificato Valido
                 connStringEscape = connStringEscape + ";TrustServerCertificate=true";
@@ -98,7 +97,7 @@ namespace API.Controllers
             }
 
             json = JsonConvert.SerializeObject(cercaOUT, Formatting.Indented);
-            return Json(json); ;
+            return Json(json);
         }
 
     }
