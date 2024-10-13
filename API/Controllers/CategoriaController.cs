@@ -6,6 +6,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Produces("application/json")]
     public class CategoriaController : Controller
     {
 
