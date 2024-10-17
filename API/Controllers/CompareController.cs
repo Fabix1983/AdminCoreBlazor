@@ -25,11 +25,11 @@ namespace API.Controllers
             _configuration = configuration;
         }
 
-        // GET: CercaController/Cerca/parola
-        [HttpGet("{parola}")]
+        // GET: CompareController/Compare/anno/mese
+        [HttpGet("{anno}/{mese}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public JsonResult Cerca(int anno, int mese)
+        public JsonResult Compare(int anno, int mese)
         {
             string json = "";
             CompareOUT compareOUT = new CompareOUT();
