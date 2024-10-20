@@ -33,6 +33,8 @@ namespace API.Models
 
     public class AggregatoAttivitaOUT
     {
+        public String? Status { get; set; }
+        public String? StatusError { get; set; }
         public List<AggregatoAttivita>? AggregatoAttivita { get; set; }
     }
 
@@ -46,6 +48,8 @@ namespace API.Models
 
     public class DatiSuntoOUT
     {
+        public String? Status { get; set; }
+        public String? StatusError { get; set; }
         public List<DatiSunto>? DatiSunto { get; set; }
     }
 
@@ -57,6 +61,8 @@ namespace API.Models
 
     public class TipoAttivitaOUT
     {
+        public String? Status { get; set; }
+        public String? StatusError { get; set; }
         public List<TipoAttivita>? TipoAttivita { get; set; }
     }
 
