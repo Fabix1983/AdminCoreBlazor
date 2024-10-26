@@ -68,3 +68,8 @@ C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\API\bin\Debug\net8.0\runtimes\win-arm
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\API\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\API\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\API\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Runtime.Caching.dll
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\API\bin\Debug\net8.0\SharedClass.deps.json
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\API\bin\Debug\net8.0\SharedClass.runtimeconfig.json
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\API\bin\Debug\net8.0\SharedClass.exe
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\API\bin\Debug\net8.0\SharedClass.dll
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\API\bin\Debug\net8.0\SharedClass.pdb

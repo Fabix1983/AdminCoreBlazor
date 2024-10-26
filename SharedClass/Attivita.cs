@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data;
 
 namespace API.Models
 {
@@ -70,5 +72,27 @@ namespace API.Models
     {
         public int ID { get; set; }
         public string? Tipo { get; set; }
+    }
+
+    public class GenericOUT
+    {
+        public String? Status { get; set; }
+        public String? StatusError { get; set; }
+    }
+
+    public class AttivitaIN
+    {
+        [Display(Name = "Giorno")]
+        [Required]
+        public int Giorno { get; set; }
+        [Required]
+        public int RifPeriodo { get; set; }
+        [Display(Name = "Tipo Attivita")]
+        [Required]
+        public int RifTipoAttivita { get; set; }
+        public string? Dettagli { get; set; }
+        [Display(Name = "Valore")]
+        [Required]
+        public decimal Costo { get; set; }
     }
 }

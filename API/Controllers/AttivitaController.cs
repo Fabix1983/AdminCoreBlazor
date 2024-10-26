@@ -8,6 +8,8 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Data;
 using System;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Reflection;
 
 namespace API.Controllers
 {
@@ -222,7 +224,7 @@ namespace API.Controllers
                     int i = 0;
                     DataTable dt = new DataTable();
 
-                    String sSQL_Select = "SELECT " +
+                    string sSQL_Select = "SELECT " +
                                         "   ATT.ID, " +
                                         "   ATT.Giorno, " +
                                         "   ISNULL(ATT.Dettagli, '-') AS Dettagli, " +
@@ -241,7 +243,7 @@ namespace API.Controllers
                                         "WHERE " +
                                         "   Per.Anno = @Anno AND Per.Mese = @Mese ";
 
-                    String FiltroSQL = "";
+                    string FiltroSQL = "";
                     attivitaOUT.Status = "OK";
 
                     if (filter != null && filter.Trim() != "" && filter.Trim() != "none")
@@ -421,8 +423,8 @@ namespace API.Controllers
                 }
                 catch (Exception e)
                 {
-                    tipoAttivitaOUT.Status = "OK";
-                    tipoAttivitaOUT.StatusError = e.ToString();
+                    tipoAttivitaOUT.Status = "KO";
+                    tipoAttivitaOUT.StatusError = "Error " + e.ToString();
 
                 }
                 connection.Close();
@@ -432,6 +434,109 @@ namespace API.Controllers
             return Json(json);
         }
 
+        // DELETE: AttivitaController/Delete/id
+        [HttpDelete("[action]/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public JsonResult Delete(int id)
+        {
+            string json = "";
+            GenericOUT deleteOUT = new GenericOUT();
+
+            var connString = _configuration.GetConnectionString("Default");
+
+            string connStringEscape = connString.ToString().Replace("\\\\", "\\");
+
+            // dichiaro il chiamante con Certificato Valido
+            connStringEscape = connStringEscape + ";TrustServerCertificate=true";
+
+            using (SqlConnection connection = new SqlConnection(connStringEscape))
+            {
+                try
+                {
+                    connection.Open();  
+                    var command = new SqlCommand("DELETE FROM tblAttivita WHERE ID = @iRifAtt", connection);
+                    command.Parameters.Add("iRifAtt", SqlDbType.Int, 4);
+                    command.Parameters["iRifAtt"].Value = (Int32)id;
+                    int iRecordDelete = 0;
+                    iRecordDelete = command.ExecuteNonQuery();
+                    if (iRecordDelete == 1)
+                    {
+                        deleteOUT.Status = "OK";
+                        deleteOUT.StatusError = "";
+                    }
+                    else
+                    {
+                        deleteOUT.Status = "KO";
+                        deleteOUT.StatusError = "Errore Attivita da cancellare non trovata!";
+                    }
+                    connection.Close(); 
+                }
+                catch (Exception e)
+                {
+                    deleteOUT.Status = "KO";
+                    deleteOUT.StatusError = "Delete Error " + e.ToString();
+                }
+            }
+            json = JsonConvert.SerializeObject(deleteOUT, Formatting.Indented);
+            return Json(json);
+        }
+
+        // PUT: AttivitaController/AttivitaNew/attivita
+        [HttpPut("[action]/{attivita}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public JsonResult AttivitaNew(AttivitaIN attivita)
+        {
+            string json = "";
+            GenericOUT attivitaNewOUT = new GenericOUT();
+
+            var connString = _configuration.GetConnectionString("Default");
+
+            string connStringEscape = connString.ToString().Replace("\\\\", "\\");
+
+            // dichiaro il chiamante con Certificato Valido
+            connStringEscape = connStringEscape + ";TrustServerCertificate=true";
+
+            using (SqlConnection connection = new SqlConnection(connStringEscape))
+            {
+                try
+                {
+                    connection.Open();  
+                    var command = new SqlCommand("EXEC spAttivita_Nuova @Giorno, @RifPeriodo, @RiftipoAttivita, @Dettagli, @Costo", connection);
+                    command.Parameters.Add("@Giorno", SqlDbType.Int, 4);
+                    command.Parameters["@Giorno"].Value = attivita.Giorno;
+                    command.Parameters.Add("@RifPeriodo", SqlDbType.Int, 4);
+                    command.Parameters["@RifPeriodo"].Value = attivita.RifPeriodo;
+                    command.Parameters.Add("@RiftipoAttivita", SqlDbType.Int, 4);
+                    command.Parameters["@RiftipoAttivita"].Value = attivita.RifTipoAttivita;
+                    command.Parameters.Add("@Dettagli", SqlDbType.VarChar, 250);
+                    string sDettagli = "";
+                    if (attivita.Dettagli == "" || attivita.Dettagli is null)
+                    {
+                        sDettagli = "-";
+                    }
+                    else
+                    {
+                        sDettagli = attivita.Dettagli;
+                    }
+                    command.Parameters["@Dettagli"].Value = sDettagli;
+                    command.Parameters.Add("@Costo", SqlDbType.Money, 8);
+                    command.Parameters["@Costo"].Value = attivita.Costo;
+                    command.ExecuteNonQuery();
+                    attivitaNewOUT.Status = "OK";
+                    attivitaNewOUT.StatusError = "";
+
+                }
+                catch (Exception e)
+                {
+                    attivitaNewOUT.Status = "KO";
+                    attivitaNewOUT.StatusError = "Attivita New Error " + e.ToString();
+                }
+            }
+            json = JsonConvert.SerializeObject(attivitaNewOUT, Formatting.Indented);
+            return Json(json);
+        }
     }
 }
 
