@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "xZca2l5KR0DJ5Hqc+/zOGX+bzghz5ex9waOKUEmUrxG4UGGwsxyyQ+3iSsF4Uw8ChRMJ7YqOit7CsV6CLU8QgA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\WebAppBlazor\\WebAppBlazor\\WebAppBlazor.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\PC\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.server\\8.0.0\\microsoft.aspnetcore.components.webassembly.server.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
