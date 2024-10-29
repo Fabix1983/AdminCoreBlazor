@@ -1,47 +1,68 @@
 ﻿@page "/cerca"
 @rendermode InteractiveServer
-@using Models
 @using System.ComponentModel.DataAnnotations;
+@inject NavigationManager Navigation
 
 <PageTitle>Cerca</PageTitle>
 
 <h1><i class="bi bi-search"></i> Cerca</h1>
+<hr />
 
 <div class="container-fluid">
     <div class="row">
     @if (parola != null)
     {
-        <p>Hai cercato il seguente testo: @parola</p>
-        <hr />
+        <div class="col-md-3">
+            <div class="h-100 p-3 bg-body-tertiary border rounded-3">
+                <div class="box-body">
+                    <p>Hai cercato il seguente testo: <b>@parola</b></p>
+                    <button type="button" class="btn btn-primary width:20px; " @onclick="NewSearch">Nuova Ricerca</button>
+                </div>
+            </div>
+        </div>
     }
-    else
+    else 
     {
-        <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            Testo da cercare:
-            <InputText id="name" @bind-Value="model.parola" />
-            <ValidationMessage For="@(() => model.parola)"></ValidationMessage>
-            <hr />
-            <button type="submit" value="Cerca" class="btn btn-success">Cerca</button>
-        </EditForm>
-    } 
+        <div class="col-md-3">
+            <div class="h-100 p-3 bg-body-tertiary border rounded-3">
+                <div class="box-body">
+                    <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+                        <DataAnnotationsValidator />
+                        Testo da cercare:
+                        <InputText id="name" @bind-Value="model.parola" />
+                        <ValidationMessage For="@(() => model.parola)"></ValidationMessage>
+                        <button type="submit" value="Cerca" class="btn btn-primary">Cerca</button>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    }
     </div>
 </div>
 
 
 @code {
+    public class CercaIN
+    {
+        [Required(ErrorMessage = "Testo da cercare obbligatorio!")]
+        public string? parola { get; set; }
+    }
+
     [Parameter]
     [SupplyParameterFromQuery]
     public string? parola { get; set; }
 
-    [SupplyParameterFromForm]
-    private Cerca model { get; set; }
-
-    protected override void OnInitialized() => model ??= new();
+    private CercaIN model { get; set; } = new();
 
     private void OnValidSubmit()
     {
         parola = model.parola;
+    }
+
+    private void NewSearch()
+    {
+        parola = null;
+        model.parola = null;
+        Navigation.NavigateTo("/cerca");
     }
 }
