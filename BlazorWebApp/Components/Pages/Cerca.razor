@@ -1,0 +1,47 @@
+﻿@page "/cerca"
+@rendermode InteractiveServer
+@using Models
+@using System.ComponentModel.DataAnnotations;
+
+<PageTitle>Cerca</PageTitle>
+
+<h1><i class="bi bi-search"></i> Cerca</h1>
+
+<div class="container-fluid">
+    <div class="row">
+    @if (parola != null)
+    {
+        <p>Hai cercato il seguente testo: @parola</p>
+        <hr />
+    }
+    else
+    {
+        <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            Testo da cercare:
+            <InputText id="name" @bind-Value="model.parola" />
+            <ValidationMessage For="@(() => model.parola)"></ValidationMessage>
+            <hr />
+            <button type="submit" value="Cerca" class="btn btn-success">Cerca</button>
+        </EditForm>
+    } 
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? parola { get; set; }
+
+    [SupplyParameterFromForm]
+    private Cerca model { get; set; }
+
+    protected override void OnInitialized() => model ??= new();
+
+    private void OnValidSubmit()
+    {
+        parola = model.parola;
+    }
+}

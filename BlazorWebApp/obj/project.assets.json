@@ -1,11 +1,33 @@
 {
   "version": 3,
   "targets": {
-    "net8.0": {}
+    "net8.0": {
+      "SharedClass/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/SharedClass.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SharedClass.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "SharedClass/1.0.0": {
+      "type": "project",
+      "path": "../SharedClass/SharedClass.csproj",
+      "msbuildProject": "../SharedClass/SharedClass.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net8.0": []
+    "net8.0": [
+      "SharedClass >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\PC\\.nuget\\packages\\": {},
@@ -39,7 +61,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\SharedClass\\SharedClass.csproj": {
+              "projectPath": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\SharedClass\\SharedClass.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

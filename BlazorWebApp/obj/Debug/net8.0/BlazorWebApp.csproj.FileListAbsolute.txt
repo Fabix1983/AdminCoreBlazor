@@ -28,3 +28,10 @@ C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebApp\obj\Debug\net8.0\refint\
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebApp\obj\Debug\net8.0\BlazorWebApp.pdb
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebApp\obj\Debug\net8.0\BlazorWebApp.genruntimeconfig.cache
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebApp\obj\Debug\net8.0\ref\BlazorWebApp.dll
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebApp\bin\Debug\net8.0\SharedClass.deps.json
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebApp\bin\Debug\net8.0\SharedClass.runtimeconfig.json
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebApp\bin\Debug\net8.0\SharedClass.exe
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebApp\bin\Debug\net8.0\SharedClass.dll
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebApp\bin\Debug\net8.0\SharedClass.pdb
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebApp\obj\Debug\net8.0\BlazorWebApp.csproj.AssemblyReference.cache
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebApp\obj\Debug\net8.0\BlazorWebApp.csproj.CopyComplete
