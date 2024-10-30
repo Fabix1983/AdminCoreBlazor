@@ -1,19 +1,13 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager Navigation
+
 
 <div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
-
     <main>
         <div class="top-row px-4">
-            <div class="container-fluid">
-                <form action="cerca" method="POST" @formname="searchform">
-                    <AntiforgeryToken />
-                    <input type="text" placeholder="testo da cercare..." name="parola" id="parola" value="" required/>
-                    <button class="btn btn-outline-primary" type="submit"><i class="bi bi-search"></i></button>
-                </form>                               
-            </div>
             @DateTime.Now
         </div>
 
@@ -29,3 +23,6 @@
     <a class="dismiss">🗙</a>
 </div>
 
+@code{
+  
+}

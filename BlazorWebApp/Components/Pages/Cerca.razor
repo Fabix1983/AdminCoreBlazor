@@ -29,7 +29,7 @@
                     <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
                         <DataAnnotationsValidator />
                         Testo da cercare:
-                        <InputText id="name" @bind-Value="model.parola" />
+                        <InputText id="name" @bind-Value="model.parola" required/>
                         <ValidationMessage For="@(() => model.parola)"></ValidationMessage>
                         <button type="submit" value="Cerca" class="btn btn-primary">Cerca</button>
                     </EditForm>
