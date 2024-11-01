@@ -1,0 +1,78 @@
+﻿@page "/cerca"
+@using System.ComponentModel.DataAnnotations;
+@using Shared.Class
+@inject NavigationManager Navigation
+@using System.Net.Http
+@inject HttpClient Http
+
+<PageTitle>Cerca</PageTitle>
+
+<h1><i class="bi bi-search"></i> Cerca</h1>
+<hr />
+
+<div class="container-fluid">
+    <div class="row">
+        @if (parola != null)
+        {
+            <div class="col-md-4">
+                <div class="alert alert-primary" role="alert">
+                    <div class="box-body">
+                        <p>Hai cercato il seguente testo: <b>@parola</b></p>
+                        <button type="button" class="btn btn-primary width:20px; " @onclick="NewSearch">Nuova Ricerca</button>
+                    </div>
+                </div>
+            </div>
+
+            @cercaOUT.Status;
+            @cercaOUT.StatusError;
+        }
+        else
+        {
+            <div class="col-md-4">
+                <div class="box-body">
+                    <div class="alert alert-primary" role="alert">
+                        <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+                            <DataAnnotationsValidator />
+                            <i class="bi bi-pencil"></i> Testo da cercare:
+                            <InputText id="name" @bind-Value="model.parola" required />
+                            <ValidationMessage For="@(() => model.parola)"></ValidationMessage>
+                            <button type="submit" value="Cerca" class="btn btn-primary">Cerca</button>
+                        </EditForm>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@code {
+    public class CercaIN
+    {
+        [Required(ErrorMessage = "Testo da cercare obbligatorio!")]
+        public string? parola { get; set; }
+    }
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? parola { get; set; }
+
+    private CercaIN model { get; set; } = new();
+
+    private CercaOUT cercaOUT = new CercaOUT();
+
+    private void OnValidSubmit()
+    {
+        parola = model.parola;
+    }
+
+    protected override async Task OnInitializedAsync() => cercaOUT = await Http.GetFromJsonAsync<CercaOUT>("api/Cerca/gtc");
+
+    private void NewSearch()
+    {
+    parola = null;
+    model.parola = null;
+    Navigation.NavigateTo("/cerca");
+    }
+}
+

@@ -1,4 +1,4 @@
-﻿using API.Models;
+﻿
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -10,6 +10,7 @@ using System.Data;
 using System;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Reflection;
+using Shared.Class;
 
 namespace API.Controllers
 {

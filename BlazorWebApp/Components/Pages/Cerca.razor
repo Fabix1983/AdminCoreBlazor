@@ -1,7 +1,10 @@
 ﻿@page "/cerca"
 @rendermode InteractiveServer
 @using System.ComponentModel.DataAnnotations;
+@using Shared.Class
 @inject NavigationManager Navigation
+@using System.Net.Http
+@inject HttpClient Http
 
 <PageTitle>Cerca</PageTitle>
 
@@ -12,8 +15,8 @@
     <div class="row">
     @if (parola != null)
     {
-        <div class="col-md-3">
-            <div class="h-100 p-3 bg-body-tertiary border rounded-3">
+        <div class="col-md-4">
+            <div class="alert alert-primary" role="alert">
                 <div class="box-body">
                     <p>Hai cercato il seguente testo: <b>@parola</b></p>
                     <button type="button" class="btn btn-primary width:20px; " @onclick="NewSearch">Nuova Ricerca</button>
@@ -23,12 +26,12 @@
     }
     else 
     {
-        <div class="col-md-3">
-            <div class="h-100 p-3 bg-body-tertiary border rounded-3">
-                <div class="box-body">
+        <div class="col-md-4">
+            <div class="box-body">
+                <div class="alert alert-primary" role="alert">
                     <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
                         <DataAnnotationsValidator />
-                        Testo da cercare:
+                        <i class="bi bi-pencil"></i> Testo da cercare:
                         <InputText id="name" @bind-Value="model.parola" required/>
                         <ValidationMessage For="@(() => model.parola)"></ValidationMessage>
                         <button type="submit" value="Cerca" class="btn btn-primary">Cerca</button>
@@ -54,9 +57,15 @@
 
     private CercaIN model { get; set; } = new();
 
+    private CercaOUT cercaOUT = new CercaOUT();
+
     private void OnValidSubmit()
     {
         parola = model.parola;
+
+        protected override async Task OnInitAsync() => await GetDataSearch();
+    
+        private async Task GetDataSearch() => cercaOUT = await httpClient.GetJsonAsync<CercaOUT>("api/Cerca/" + parola);
     }
 
     private void NewSearch()

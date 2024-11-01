@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Data;
-using API.Models;
 using Newtonsoft.Json;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
@@ -8,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
+using Shared.Class;
 
 namespace API.Controllers
 {

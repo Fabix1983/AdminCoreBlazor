@@ -1,4 +1,4 @@
-﻿using API.Models;
+﻿
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Data;
 using System;
+using Shared.Class;
 
 namespace API.Controllers
 {
