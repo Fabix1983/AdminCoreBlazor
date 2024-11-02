@@ -41,6 +41,10 @@
                     </div>
                 </div>
             </div>
+
+            <button value="CercaTest" @onclick="GetData">Cerca</button>
+            @cercaOUT.Status;
+            @cercaOUT.StatusError;
         }
     </div>
 </div>
@@ -66,7 +70,25 @@
         parola = model.parola;
     }
 
-    protected override async Task OnInitializedAsync() => cercaOUT = await Http.GetFromJsonAsync<CercaOUT>("api/Cerca/gtc");
+    public HttpClient httpClient = new HttpClient();
+
+    public async Task GetData()
+    {
+        parola = "gtc";
+        try
+        {
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            cercaOUT = await httpClient.GetFromJsonAsync<CercaOUT>("https://localhost:7065/api/Cerca/gtc");
+        }
+        catch(Exception e)
+        {
+            parola = e.ToString();
+        }
+
+        parola = "gtc";
+    }
+
+    //protected override async Task OnInitializedAsync() => cercaOUT = await Http.GetFromJsonAsync<CercaOUT>("api/Cerca/gtc");
 
     private void NewSearch()
     {

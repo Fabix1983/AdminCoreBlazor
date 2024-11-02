@@ -685,19 +685,6 @@
         "runtime": {
           "lib/netcoreapp2.1/_._": {}
         }
-      },
-      "SharedClass/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v8.0",
-        "compile": {
-          "bin/placeholder/SharedClass.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/SharedClass.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
       }
     }
   },
@@ -2170,18 +2157,12 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
-    },
-    "SharedClass/1.0.0": {
-      "type": "project",
-      "path": "../SharedClass/SharedClass.csproj",
-      "msbuildProject": "../SharedClass/SharedClass.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "Microsoft.Data.SqlClient >= 5.2.2",
       "Newtonsoft.Json >= 13.0.3",
-      "SharedClass >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.8.1"
     ]
   },
@@ -2217,11 +2198,7 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {
-            "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\SharedClass\\SharedClass.csproj": {
-              "projectPath": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\SharedClass\\SharedClass.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
