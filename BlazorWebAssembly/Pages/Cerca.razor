@@ -78,7 +78,7 @@
         try
         {
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            cercaOUT = await httpClient.GetFromJsonAsync<CercaOUT>("https://localhost:7065/api/Cerca/gtc");
+            cercaOUT = await httpClient.GetFromJsonAsync<CercaOUT>("http://api.admincoreblazor.it//api/Cerca/gtc");
         }
         catch(Exception e)
         {
