@@ -26,6 +26,10 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/PC/Desktop/GitHub/AdminCoreBlazor/BlazorWebAssembly/Pages/Bottom.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQm90dG9tLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/PC/Desktop/GitHub/AdminCoreBlazor/BlazorWebAssembly/Pages/Cerca.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2VyY2EucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
@@ -40,6 +44,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/PC/Desktop/GitHub/AdminCoreBlazor/BlazorWebAssembly/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/PC/Desktop/GitHub/AdminCoreBlazor/BlazorWebAssembly/Pages/License.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGljZW5zZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/PC/Desktop/GitHub/AdminCoreBlazor/BlazorWebAssembly/Pages/Weather.razor]
