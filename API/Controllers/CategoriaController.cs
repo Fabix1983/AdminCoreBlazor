@@ -92,7 +92,7 @@ namespace API.Controllers
                 connection.Close();
             }
 
-            json = JsonConvert.SerializeObject(categoriaOUT, Formatting.Indented);
+            json = JsonConvert.SerializeObject(categoriaOUT, Formatting.None);
             return Json(json);
         }
 

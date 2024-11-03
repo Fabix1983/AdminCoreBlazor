@@ -91,7 +91,7 @@ namespace API.Controllers
                 connection.Close();
             }
 
-            json = JsonConvert.SerializeObject(compareOUT, Formatting.Indented);
+            json = JsonConvert.SerializeObject(compareOUT, Formatting.None);
             return Json(json);
         }
 

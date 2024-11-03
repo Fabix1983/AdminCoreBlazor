@@ -100,7 +100,7 @@ namespace API.Controllers
                 cercaOUT.StatusError = "Parola da cercare non indicata.";
             }
 
-            json = JsonConvert.SerializeObject(cercaOUT, Formatting.Indented);
+            json = JsonConvert.SerializeObject(cercaOUT, Formatting.None);
             return Json(json);
         }
 

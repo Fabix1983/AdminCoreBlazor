@@ -77,7 +77,7 @@ namespace API.Controllers
                 connection.Close();
             }
 
-            json = JsonConvert.SerializeObject(TrendOUT, Formatting.Indented);
+            json = JsonConvert.SerializeObject(TrendOUT, Formatting.None);
             return Json(json);
         }
     }

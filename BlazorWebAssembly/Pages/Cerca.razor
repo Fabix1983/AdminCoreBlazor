@@ -74,18 +74,18 @@
 
     public async Task GetData()
     {
-        parola = "gtc";
         try
         {
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            cercaOUT = await httpClient.GetFromJsonAsync<CercaOUT>("http://api.admincoreblazor.it//api/Cerca/gtc");
+            var response = await httpClient.GetStringAsync("http://api.admincoreblazor.it/api/Cerca/gtc");
+
+            //cercaOUT = await httpClient.GetFromJsonAsync<CercaOUT>("http://api.admincoreblazor.it/api/Cerca/gtc");
+            parola = response;
         }
         catch(Exception e)
         {
             parola = e.ToString();
-        }
-
-        parola = "gtc";
+        }        
     }
 
     //protected override async Task OnInitializedAsync() => cercaOUT = await Http.GetFromJsonAsync<CercaOUT>("api/Cerca/gtc");

@@ -75,7 +75,7 @@ namespace API.Controllers
                 connection.Close();
             }
 
-            json = JsonConvert.SerializeObject(periodoOUT, Formatting.Indented);
+            json = JsonConvert.SerializeObject(periodoOUT, Formatting.None);
             return Json(json);
         }
 
@@ -197,7 +197,7 @@ namespace API.Controllers
                 connection.Close();
             }
 
-            json = JsonConvert.SerializeObject(datiSuntoOUT, Formatting.Indented);
+            json = JsonConvert.SerializeObject(datiSuntoOUT, Formatting.None);
             return Json(json);
         }
 
@@ -314,7 +314,7 @@ namespace API.Controllers
                 connection.Close();
             }
 
-            json = JsonConvert.SerializeObject(attivitaOUT, Formatting.Indented);
+            json = JsonConvert.SerializeObject(attivitaOUT, Formatting.None);
             return Json(json);
         }
 
@@ -374,7 +374,7 @@ namespace API.Controllers
                 connection.Close();
             }
 
-            json = JsonConvert.SerializeObject(aggregatoAttivitaOUT, Formatting.Indented);
+            json = JsonConvert.SerializeObject(aggregatoAttivitaOUT, Formatting.None);
             return Json(json);
         }
 
@@ -431,7 +431,7 @@ namespace API.Controllers
                 connection.Close();
             }
 
-            json = JsonConvert.SerializeObject(tipoAttivitaOUT, Formatting.Indented);
+            json = JsonConvert.SerializeObject(tipoAttivitaOUT, Formatting.None);
             return Json(json);
         }
 
@@ -479,7 +479,7 @@ namespace API.Controllers
                     deleteOUT.StatusError = "Delete Error " + e.ToString();
                 }
             }
-            json = JsonConvert.SerializeObject(deleteOUT, Formatting.Indented);
+            json = JsonConvert.SerializeObject(deleteOUT, Formatting.None);
             return Json(json);
         }
 
@@ -535,7 +535,7 @@ namespace API.Controllers
                     attivitaNewOUT.StatusError = "Attivita New Error " + e.ToString();
                 }
             }
-            json = JsonConvert.SerializeObject(attivitaNewOUT, Formatting.Indented);
+            json = JsonConvert.SerializeObject(attivitaNewOUT, Formatting.None);
             return Json(json);
         }
     }
