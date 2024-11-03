@@ -23,7 +23,7 @@
                 </div>
             </div>
             <hr />
-            @if (cercaOUT.StatusError is not null && cercaOUT.StatusError != "")
+            @if (cercaOUT.StatusError != null && cercaOUT.StatusError != "")
             {
                 <div class="col-md-12">
                     <div class="alert alert-warning" role="alert">
@@ -32,63 +32,65 @@
                 </div>      
             }
 
-
-            <div class="col-md-12">
-                <div class="box-body">
-                    <table class="table table-striped">
-                        <!--
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>Giorno</th>
-                                <th>Tipo</th>
-                                <th>Dettagli</th>
-                                <th>Costo</th>
-                                <th>Tipo</th>
-                            </tr>
-                        </thead>
-                        -->
-                        <tbody>
-                            @foreach (var cerca in cercaOUT.Cerca)
-                            {
+            @if (cercaOUT.Cerca != null)
+            {
+                <div class="col-md-12">
+                    <div class="box-body">
+                        <table class="table table-striped">
+                            <!--
+                            <thead class="thead-dark">
                                 <tr>
-                                    <td>@cerca.DataSpesa.ToString().Replace("00:00:00", "")</td>
-                                    <td><b><font color="@cerca.ColoreHTML.ToString()">@cerca.TipoAttivita.ToString()</font></b></td>
-                                    <td>@cerca.Dettagli.ToString()</td>
-                                    <td>@Math.Round((decimal)@cerca.Costo, 0)</td>
-                                    @if ((decimal)cerca.Costo < 0)
-                                    {
-                                        <td><span class="badge text-bg-danger">@cerca.Tipologia.ToString()</span></td>
-                                    }
-                                    else
-                                    {
-                                        <td><span class="badge text-bg-success">@cerca.Tipologia.ToString()</span></td>
-                                    }
+                                    <th>Giorno</th>
+                                    <th>Tipo</th>
+                                    <th>Dettagli</th>
+                                    <th>Costo</th>
+                                    <th>Tipo</th>
                                 </tr>
-                            }
+                            </thead>
+                            -->
+                            <tbody>
+                                @foreach (var cerca in cercaOUT.Cerca)
+                                {
+                                    <tr>
+                                        <td>@cerca.DataSpesa.ToString().Replace("00:00:00", "")</td>
+                                        <td><b><font color="@cerca.ColoreHTML.ToString()">@cerca.TipoAttivita.ToString()</font></b></td>
+                                        <td>@cerca.Dettagli.ToString()</td>
+                                        <td>@Math.Round((decimal)@cerca.Costo, 0)</td>
+                                        @if ((decimal)cerca.Costo < 0)
+                                        {
+                                            <td><span class="badge text-bg-danger">@cerca.Tipologia.ToString()</span></td>
+                                        }
+                                        else
+                                        {
+                                            <td><span class="badge text-bg-success">@cerca.Tipologia.ToString()</span></td>
+                                        }
+                                    </tr>
+                                }
 
-                            @for (var i = 0; i < cercaOUT.Cerca.Count; i++)
-                            {
-                                <tr>
-                                    <td>@cercaOUT.Cerca[i].DataSpesa.ToString().Replace("00:00:00", "")</td>
-                                    <td><b><font color="@cercaOUT.Cerca[i].ColoreHTML.ToString()">@cercaOUT.Cerca[i].TipoAttivita.ToString()</font></b></td>
-                                    <td>@cercaOUT.Cerca[i].Dettagli.ToString()</td>
-                                    <td>@Math.Round((decimal)@cercaOUT.Cerca[i].Costo, 0)</td>
-                                    @if ((decimal)cercaOUT.Cerca[i].Costo < 0)
-                                    {
-                                        <td><span class="badge text-bg-danger">@cercaOUT.Cerca[i].Tipologia.ToString()</span></td>
-                                    }
-                                    else
-                                    {
-                                        <td><span class="badge text-bg-success">@cercaOUT.Cerca[i].Tipologia.ToString()</span></td>
-                                    }
-                                </tr>
+                                @for (var i = 0; i < cercaOUT.Cerca.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@cercaOUT.Cerca[i].DataSpesa.ToString().Replace("00:00:00", "")</td>
+                                        <td><b><font color="@cercaOUT.Cerca[i].ColoreHTML.ToString()">@cercaOUT.Cerca[i].TipoAttivita.ToString()</font></b></td>
+                                        <td>@cercaOUT.Cerca[i].Dettagli.ToString()</td>
+                                        <td>@Math.Round((decimal)@cercaOUT.Cerca[i].Costo, 0)</td>
+                                        @if ((decimal)cercaOUT.Cerca[i].Costo < 0)
+                                        {
+                                            <td><span class="badge text-bg-danger">@cercaOUT.Cerca[i].Tipologia.ToString()</span></td>
+                                        }
+                                        else
+                                        {
+                                            <td><span class="badge text-bg-success">@cercaOUT.Cerca[i].Tipologia.ToString()</span></td>
+                                        }
+                                    </tr>
 
 
-                            }
-                        </tbody>
-                    </table>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            }
 
         }
         else
