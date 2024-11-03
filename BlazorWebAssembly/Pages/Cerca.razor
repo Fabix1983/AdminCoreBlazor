@@ -14,21 +14,21 @@
     <div class="row">
         @if (parola != null)
         {
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <div class="alert alert-primary" role="alert">
                     <div class="box-body">
-                        <p>Hai cercato il seguente testo: <b>@parola</b></p>
-                        <button type="button" class="btn btn-primary width:20px; " @onclick="NewSearch">Nuova Ricerca</button>
+                        <p>Hai cercato il seguente testo: <b>@parola</b>&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-primary width:20px; " @onclick="NewSearch">Nuova Ricerca</button></p>
+                        
                     </div>
                 </div>
             </div>
-
+            <hr />
             @cercaOUT.Status;
             @cercaOUT.StatusError;
         }
         else
         {
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <div class="box-body">
                     <div class="alert alert-primary" role="alert">
                         <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
@@ -41,10 +41,6 @@
                     </div>
                 </div>
             </div>
-
-            <button value="CercaTest" @onclick="GetData">Cerca</button>
-            @cercaOUT.Status;
-            @cercaOUT.StatusError;
         }
     </div>
 </div>
@@ -65,31 +61,38 @@
 
     private CercaOUT cercaOUT = new CercaOUT();
 
-    private void OnValidSubmit()
-    {
-        parola = model.parola;
-    }
-
     public HttpClient httpClient = new HttpClient();
 
-    public async Task GetData()
+    private async Task OnValidSubmit()
     {
+        parola = model.parola;
+
         try
         {
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            var response = await httpClient.GetStringAsync("http://api.admincoreblazor.it/api/Cerca/gtc");
-            response = response.ToString().Replace("\\u0022", "\"");
+            var response = await httpClient.GetStringAsync("http://api.admincoreblazor.it/api/Cerca/" + parola);
+            response = JsonNormalized(response);
 
-            //cercaOUT = await httpClient.GetFromJsonAsync<CercaOUT>("http://api.admincoreblazor.it/api/Cerca/gtc");
+            cercaOUT = System.Text.Json.JsonSerializer.Deserialize<CercaOUT>(response);
+
+            // DEBUG
             parola = response;
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             parola = e.ToString();
-        }        
-    }
+            Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
+        }
+    }   
 
-    //protected override async Task OnInitializedAsync() => cercaOUT = await Http.GetFromJsonAsync<CercaOUT>("api/Cerca/gtc");
+    public string JsonNormalized(string json)
+    {
+        json = json.ToString().Replace("\\u0022", "\"");
+        json = json.ToString().Replace("\"{", "{");
+        json = json.ToString().Replace("}\"", "}");
+
+        return json;
+    }
 
     private void NewSearch()
     {

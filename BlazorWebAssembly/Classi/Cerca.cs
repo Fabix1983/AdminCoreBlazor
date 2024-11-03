@@ -4,12 +4,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Shared.Class
 {
-    public class CercaOUT
-    {
-        public String? Status { get; set; }
-        public String? StatusError { get; set; }
-        public List<Cerca>? Cerca { get; set; }
-    }
 
     public class Cerca
     {
@@ -19,7 +13,14 @@ namespace Shared.Class
         public string? ColoreHTML { get; set; }
         public string? Tipologia { get; set; }
         public string? Descrizione { get; set; }
-        public decimal Costo { get; set; }
+        public double Costo { get; set; }
+    }
+
+    public class CercaOUT
+    {
+        public string? Status { get; set; }
+        public string? StatusError { get; set; }
+        public List<Cerca>? Cerca { get; set; }
     }
 
 }
