@@ -158,7 +158,8 @@
         }
         catch (Exception e)
         {
-            parola = e.ToString();
+            // DEBUG
+            //parola = e.ToString();
             Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
         }
     }   
