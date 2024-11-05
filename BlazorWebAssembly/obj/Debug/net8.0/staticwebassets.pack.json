@@ -1,6 +1,10 @@
 {
   "Files": [
     {
+      "Id": "C:\\Users\\PC\\.nuget\\packages\\chartjs.blazor.fork\\2.0.2\\contentFiles\\any\\netstandard2.1\\wwwroot\\ChartJsBlazorInterop.js",
+      "PackagePath": "staticwebassets\\ChartJsBlazorInterop.js"
+    },
+    {
       "Id": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\bin\\Debug\\net8.0\\wwwroot\\_framework\\blazor.webassembly.js",
       "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js"
     },
@@ -8267,6 +8271,62 @@
     {
       "Id": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\lib\\Chart.js\\chart.cjs.map",
+      "PackagePath": "staticwebassets\\lib\\Chart.js\\chart.cjs.map"
+    },
+    {
+      "Id": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\lib\\Chart.js\\chart.js",
+      "PackagePath": "staticwebassets\\lib\\Chart.js\\chart.js"
+    },
+    {
+      "Id": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\lib\\Chart.js\\chart.js.map",
+      "PackagePath": "staticwebassets\\lib\\Chart.js\\chart.js.map"
+    },
+    {
+      "Id": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\lib\\Chart.js\\chart.min.js",
+      "PackagePath": "staticwebassets\\lib\\Chart.js\\chart.min.js"
+    },
+    {
+      "Id": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\lib\\Chart.js\\chart.umd.js",
+      "PackagePath": "staticwebassets\\lib\\Chart.js\\chart.umd.js"
+    },
+    {
+      "Id": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\lib\\Chart.js\\chart.umd.js.map",
+      "PackagePath": "staticwebassets\\lib\\Chart.js\\chart.umd.js.map"
+    },
+    {
+      "Id": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\lib\\Chart.js\\chart.umd.min.js",
+      "PackagePath": "staticwebassets\\lib\\Chart.js\\chart.umd.min.js"
+    },
+    {
+      "Id": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\lib\\Chart.js\\helpers.cjs.map",
+      "PackagePath": "staticwebassets\\lib\\Chart.js\\helpers.cjs.map"
+    },
+    {
+      "Id": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\lib\\Chart.js\\helpers.js",
+      "PackagePath": "staticwebassets\\lib\\Chart.js\\helpers.js"
+    },
+    {
+      "Id": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\lib\\Chart.js\\helpers.js.map",
+      "PackagePath": "staticwebassets\\lib\\Chart.js\\helpers.js.map"
+    },
+    {
+      "Id": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\lib\\Chart.js\\helpers.min.js",
+      "PackagePath": "staticwebassets\\lib\\Chart.js\\helpers.min.js"
+    },
+    {
+      "Id": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\lib\\Chart.js\\index.d.ts",
+      "PackagePath": "staticwebassets\\lib\\Chart.js\\index.d.ts"
+    },
+    {
+      "Id": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\lib\\Chart.js\\index.umd.d.ts",
+      "PackagePath": "staticwebassets\\lib\\Chart.js\\index.umd.d.ts"
+    },
+    {
+      "Id": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\lib\\Chart.js\\types.d.ts",
+      "PackagePath": "staticwebassets\\lib\\Chart.js\\types.d.ts"
     },
     {
       "Id": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\sample-data\\weather.json",

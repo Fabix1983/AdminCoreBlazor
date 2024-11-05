@@ -1030,3 +1030,14 @@ C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Debug\net8.0\Bl
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Debug\net8.0\refint\BlazorWebAssembly.dll
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Debug\net8.0\BlazorWebAssembly.pdb
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Debug\net8.0\ref\BlazorWebAssembly.dll
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\bin\Debug\net8.0\wwwroot\_framework\ChartJs.Blazor.wasm
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\bin\Debug\net8.0\wwwroot\_framework\Newtonsoft.Json.wasm
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\bin\Debug\net8.0\wwwroot\_framework\ChartJs.Blazor.wasm.gz
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\bin\Debug\net8.0\wwwroot\_framework\Newtonsoft.Json.wasm.gz
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\bin\Debug\net8.0\libman.json
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\bin\Debug\net8.0\ChartJs.Blazor.dll
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Debug\net8.0\webcil\ChartJs.Blazor.wasm
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Debug\net8.0\webcil\Newtonsoft.Json.wasm
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Debug\net8.0\compressed\27xd8cjbxa.gz
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Debug\net8.0\compressed\3pa3urenw0.gz
