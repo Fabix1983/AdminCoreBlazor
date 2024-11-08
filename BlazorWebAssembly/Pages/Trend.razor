@@ -8,7 +8,7 @@
 
 <PageTitle>Trend</PageTitle>
 
-<h1><i class="bi bi-graph-up"></i> Trend</h1>
+<h1><i class="bi bi-clipboard-data-fill"></i> Trend</h1>
 <hr />
 
 <div class="container-fluid">
@@ -24,17 +24,44 @@
                 <div class="col-md-12">
                     <div class="alert alert-primary" role="alert">
                         <div class="box-body">
-                            <p>Trend relativo all'intervallo indicato: <b>@descrizione</b>&nbsp;&nbsp;&nbsp;&nbsp;Bilancio del periodo:<b>@totale</b> &euro;</p>
-                            <p>
-                                Seleziona il periodo:
-                                <button type="button" class="btn btn-primary width:20px; " @onclick="(e => All(10000))">Da sempre</button>
-                                &nbsp;&nbsp;&nbsp;
-                                <button type="button" class="btn btn-primary width:20px; " @onclick="(e => All(12))">Ultimo anno</button>
-                                &nbsp;&nbsp;&nbsp;
-                                <button type="button" class="btn btn-primary width:20px; " @onclick="(e => All(24))">Ultimi due anni</button>
-                                &nbsp;&nbsp;&nbsp;
-                                <button type="button" class="btn btn-primary width:20px; " @onclick="(e => All(36))">Ultimi tre anni</button>
+                            <p>Trend relativo all'intervallo indicato: <b>@descrizione</b>&nbsp;&nbsp;&nbsp;&nbsp;Bilancio del periodo:<b>@totale</b> &euro;
+                            @if (totale > 0)
+                            {
+                                <font color="green"><i class="bi bi-arrow-up-circle-fill"></i></font>
+                            }
+                            else
+                            {
+                                <font color="red"><i class="bi bi-arrow-down-circle-fill"></i></font>
+                            }
                             </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="box-body text-center">
+                        <div class="alert alert-primary" role="alert">
+                            Periodo: <button type="button" class="btn btn-primary width:20px; " @onclick="(e => All(10000))">Da sempre</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="box-body text-center">
+                        <div class="alert alert-primary" role="alert">
+                            Periodo: <button type="button" class="btn btn-primary width:20px; " @onclick="(e => All(12))">Ultimo anno</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="box-body text-center">
+                        <div class="alert alert-primary" role="alert">
+                            Periodo: <button type="button" class="btn btn-primary width:20px; " @onclick="(e => All(24))">Ultimi due anni</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="box-body text-center">
+                        <div class="alert alert-primary" role="alert">
+                            Periodo: <button type="button" class="btn btn-primary width:20px; " @onclick="(e => All(36))">Ultimi tre anni</button>
                         </div>
                     </div>
                 </div>
@@ -61,35 +88,34 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @{
+                                        _config.Data.Labels.Clear();
+                                        _config.Data.Datasets.Clear();
+                                    }
                                     @foreach (var trend in trendOUT.Trend)
-                                    {
-                                        i = i + 1;
+                                    {                                        
                                         _config.Data.Labels.Add(trend.Descrizione);
-                                        dataset.Add(Convert.ToInt32(trend.Bilancio));
-                                        dataset.BackgroundColor = "red";
-                                        //dataset.Add(new BarDataset(Convert.ToInt32(trend.Bilancio)) { BackgroundColor = "red" });
+                                        dataset.Add(Convert.ToInt32(trend.Bilancio));                                      
                                         <tr>
                                             <td>@trend.Descrizione</td>
                                             @if ((decimal)trend.Bilancio < 0)
                                             {
                                                 <td><font color="red">@Math.Round((decimal)trend.Bilancio, 0)</font></td>
-                                            }
-                                            else
-                                            {
-                                                <td><font color="green">@Math.Round((decimal)trend.Bilancio, 0)</font></td>
-                                            }
-                                            @if ((decimal)trend.Bilancio < 0)
-                                            {
+                                                chart_color_assey[i] = "ORANGERED";
                                                 <td><font color="red"><i class="bi bi-calendar-minus"></i></font></td>
                                             }
                                             else
                                             {
+                                                <td><font color="green">@Math.Round((decimal)trend.Bilancio, 0)</font></td>
+                                                chart_color_assey[i] = "YELLOWGREEN";
                                                 <td><font color="green"><i class="bi bi-calendar-plus"></i></font></td>
                                             }
                                         </tr>
+                                        i = i + 1;
                                     }
                                     @if (i > 1)
                                     {
+                                        dataset.BackgroundColor = chart_color_assey;
                                         _config.Data.Datasets.Add(dataset);
                                     }                                   
                                 </tbody>
@@ -99,7 +125,7 @@
                     </div>
                     <div class="col-md-8">
                         <div class="box-body">
-                            <Chart Config="_config" Width="25" Height="25"></Chart>
+                            <Chart Config="_config"></Chart>
                         </div>
                     </div>
                     <br />
@@ -107,18 +133,32 @@
             }
         }
         else
-        {
-            <div class="col-md-12">
-                <div class="box-body">
+        {          
+            <div class="col-md-3">
+                <div class="box-body text-center">
+                    <div class="alert alert-primary" role="alert">                     
+                        Periodo: <button type="button" class="btn btn-primary width:20px; " @onclick="(e => All(10000))">Da sempre</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="box-body text-center">
                     <div class="alert alert-primary" role="alert">
-                        Seleziona il periodo:
-                        <button type="button" class="btn btn-primary width:20px; " @onclick="(e => All(10000))">Da sempre</button>
-                        &nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-primary width:20px; " @onclick="(e => All(12))">Ultimo anno</button>
-                        &nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-primary width:20px; " @onclick="(e => All(24))">Ultimi due anni</button>
-                        &nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-primary width:20px; " @onclick="(e => All(36))">Ultimi tre anni</button>
+                        Periodo: <button type="button" class="btn btn-primary width:20px; " @onclick="(e => All(12))">Ultimo anno</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="box-body text-center">
+                    <div class="alert alert-primary" role="alert">
+                        Periodo: <button type="button" class="btn btn-primary width:20px; " @onclick="(e => All(24))">Ultimi due anni</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="box-body text-center">
+                    <div class="alert alert-primary" role="alert">
+                        Periodo: <button type="button" class="btn btn-primary width:20px; " @onclick="(e => All(36))">Ultimi tre anni</button>
                     </div>
                 </div>
             </div>
@@ -141,14 +181,13 @@
 
     public BarConfig _config;
 
-    public int i { get; set; }
-
-    public string[]? chart_asseycolor = { };
+    public int i { get; set; } = 0;
 
     public BarDataset<int> dataset = new BarDataset<int>();
+    public string[]? chart_color_assey = new string[10000];
 
     protected override void OnInitialized()
-    {     
+    {
         _config = new BarConfig
             {
                 Options = new BarOptions
@@ -165,28 +204,6 @@
                     }
                 }
             };
-
-        /*
-    foreach (string color in new[] { "Red", "Yellow", "Green", "Blue" })
-        {
-          _config.Data.Labels.Add(color);
-        }
-        */
-
-        /*
-        BarDataset<int> dataset = new BarDataset<int>(new[] { 6, 5, 3, 7 })
-        {
-                BackgroundColor = new[]
-                {
-                ColorUtil.ColorHexString(255, 99, 132), // Slice 1 aka "Red"
-                ColorUtil.ColorHexString(255, 205, 86), // Slice 2 aka "Yellow"
-                ColorUtil.ColorHexString(75, 192, 192), // Slice 3 aka "Green"
-                ColorUtil.ColorHexString(54, 162, 235), // Slice 4 aka "Blue"
-        }
-        };
-
-        _config.Data.Datasets.Add(dataset);
-    */
     }
 
     private async Task All(int numrecord)
