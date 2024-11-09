@@ -1,4 +1,4 @@
-﻿@page "/categoria"
+﻿@page "/categoria/{tipocategoria:int?}"
 @using System.ComponentModel.DataAnnotations;
 @using Shared.Class
 @inject NavigationManager Navigation
@@ -8,7 +8,7 @@
 
 <PageTitle>Categoria</PageTitle>
 
-<h1><i class="bi bi-card-list"></i> Trend</h1>
+<h1><i class="bi bi-card-list"></i> Categoria</h1>
 <hr />
 
 <div class="container-fluid">
@@ -17,23 +17,25 @@
         {
             @if (categoriaOUT.StatusError == null)
             {
-                <p><em>Loading...</em></p>
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             }
             else
             {
                 <div class="col-md-12">
                     <div class="alert alert-primary" role="alert">
                         <div class="box-body">
-                            <p>
-                                Trend relativo all'intervallo indicato: <b>@descrizione</b>&nbsp;&nbsp;&nbsp;&nbsp;Bilancio del periodo:<b>@totale</b> &euro;
-                            </p>
+                            <p>Categoria richiesta: <b>@descrizione</b> di tipo: <b>@descrizione_tipo</b></p>
+                            <p>Valore Medio <b>@media</b>&euro; Percentuale Media sul mese: <b>@mediaperc</b>%</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="box-body">
                         <div class="alert alert-primary" role="alert">
-                            <InputSelect id="department" @bind-Value="tipocategoria" @bind-Value:after="ValueChanged">
+                            Selezeiona la categoria desisderata:
+                            <InputSelect id="department" @bind-Value="tipocategoria" @bind-Value:after="ValueChanged" class="form-select" aria-label="Default select example">
                                 @foreach (var dept in tipoattOUT.TipoAttivita)
                                 {
                                     <option value="@dept.ID">@dept.Tipo</option>
@@ -69,31 +71,24 @@
                                     @{
                                         _config.Data.Labels.Clear();
                                         _config.Data.Datasets.Clear();
+                                        dataset.Clear();
+                                        i = 0;
                                     }
                                     @foreach (var categoria in categoriaOUT.Categoria)
-                                    {
-                                        _config.Data.Labels.Add(trend.Descrizione);
-                                        dataset.Add(Convert.ToInt32(trend.Bilancio));
+                                    {                                      
+                                        _config.Data.Labels.Add(categoria.Descrizione);
+                                        dataset.Add(Convert.ToInt32(categoria.Valore));
+                                        dataset.BackgroundColor = categoria.ColoreHTML.ToString();
                                         <tr>
-                                            <td>@trend.Descrizione</td>
-                                            @if ((decimal)trend.Bilancio < 0)
-                                            {
-                                                <td><font color="red">@Math.Round((decimal)trend.Bilancio, 0)</font></td>
-                                                chart_color_assey[i] = "ORANGERED";
-                                                <td><font color="red"><i class="bi bi-calendar-minus"></i></font></td>
-                                            }
-                                            else
-                                            {
-                                                <td><font color="green">@Math.Round((decimal)trend.Bilancio, 0)</font></td>
-                                                chart_color_assey[i] = "YELLOWGREEN";
-                                                <td><font color="green"><i class="bi bi-calendar-plus"></i></font></td>
-                                            }
+                                            <td><b><font color="@categoria.ColoreHTML.ToString()">@categoria.Descrizione.ToString()</font></b></td>
+                                            <td>@Math.Round((decimal)categoria.Valore, 0)</td>
+                                            <td>@Math.Round((decimal)categoria.Media, 0)</td>
+                                            <td>@Math.Round((decimal)categoria.PercentualeSulTotale, 0)%</td>
                                         </tr>
                                         i = i + 1;
                                     }
                                     @if (i > 1)
                                     {
-                                        dataset.BackgroundColor = chart_color_assey;
                                         _config.Data.Datasets.Add(dataset);
                                     }
                                 </tbody>
@@ -112,18 +107,23 @@
         }
         else
         {
-            <div class="col-md-12">
-                <div class="box-body">
-                    <div class="alert alert-primary" role="alert">
-                        <InputSelect id="department" @bind-Value="tipocategoria" @bind-Value:after="ValueChanged">
-                            @foreach (var dept in tipoattOUT.TipoAttivita)
-                            {
-                                <option value="@dept.ID">@dept.Tipo</option>
-                            }
-                        </InputSelect>
+            @if (tipoattOUT.Status == "OK")
+            {
+                <div class="col-md-6">
+                    <div class="box-body">
+                        <div class="alert alert-primary" role="alert">
+                            Selezeiona la categoria desisderata:
+                            <InputSelect id="department" @bind-Value="tipocategoria" @bind-Value:after="ValueChanged" class="form-select" aria-label="Default select example">
+                                <option value="0">Seleziona una categoria</option>
+                                @foreach (var dept in tipoattOUT.TipoAttivita)
+                                {
+                                    <option value="@dept.ID">@dept.Tipo</option>
+                                }
+                            </InputSelect>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         }
     </div>
 </div>
@@ -134,11 +134,13 @@
     public HttpClient httpClient = new HttpClient();
 
     private CategoriaOUT categoriaOUT { get; set; } = new CategoriaOUT();
-    private TipoAttivitaOUT tipoattOUT { get; set; } = new TipoAttivitaOUT();
+    public TipoAttivitaOUT tipoattOUT = new TipoAttivitaOUT();
+
+    [Parameter]
+    public int? tipocategoria { get; set; } = null;
 
     public decimal? media { get; set; } = 0;
     public decimal? mediaperc { get; set; } = 0;
-    public int? tipocategoria { get; set; } = 0;
     public string? descrizione { get; set; } = "";
     public string? descrizione_tipo { get; set; } = "";
 
@@ -149,39 +151,34 @@
     public BarDataset<int> dataset = new BarDataset<int>();
     public string[]? chart_color_assey = new string[10000];
 
-    public class ShowIN
+    protected override async Task OnInitializedAsync()
     {
-        public int? rifcategoria { get; set; }
-    }
-
-    private ShowIN model { get; set; } = new();
-
-    protected async override void OnInitialized()
-    {
-        _config = new BarConfig
-            {
-                Options = new BarOptions
-                {
-                    Responsive = true,
-                    Legend = new Legend
-                    {
-                        Position = Position.Top
-                    },
-                    Title = new OptionsTitle
-                    {
-                        Display = true,
-                        Text = "Grafico per Categoria"
-                    }
-                }
-            };
-
         try
         {
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            var response = await httpClient.GetStringAsync("/api/Attivita/TipoAttivitaList");
+            var response = await httpClient.GetStringAsync("http://api.admincoreblazor.it/api/Attivita/TipoAttivitaList");
             response = JsonNormalized(response);
 
-            tipoattOUT = System.Text.Json.JsonSerializer.Deserialize<TipoAttivitaOUT>(response);
+            tipoattOUT = System.Text.Json.JsonSerializer.Deserialize<TipoAttivitaOUT>(response);      
+
+            _config = new BarConfig
+                {
+                    Options = new BarOptions
+                    {
+                        Responsive = true,
+                        Legend = new Legend
+                        {
+                            Position = Position.Top,
+                            Display = false 
+                        },
+                        Title = new OptionsTitle
+                        {
+                            Display = true,
+                            Text = "Grafico per Categoria"
+                        }
+                    }
+                };
+
         }
         catch (Exception e)
         {
@@ -191,37 +188,23 @@
 
     private async Task ValueChanged()
     {
-        Console.WriteLine("tipocategoria: " + tipocategoria);
-    }
-
-    /*
-    private async Task OnValueChanged()
-    {
-        parola = model.parola;
-
         try
         {
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            var response = await httpClient.GetStringAsync("http://api.admincoreblazor.it/api/Cerca/" + parola);
+            var response = await httpClient.GetStringAsync("http://api.admincoreblazor.it/api/Categoria/" + tipocategoria);
             response = JsonNormalized(response);
 
-            cercaOUT = System.Text.Json.JsonSerializer.Deserialize<CercaOUT>(response);
-            totale = 0;
-            numattivita = 0;
-            totale = cercaOUT.Cerca.Sum(item => Convert.ToInt32(item.Costo));
-            numattivita = cercaOUT.Cerca.Count();
-
-            // DEBUG
-            //parola = response;
+            categoriaOUT = System.Text.Json.JsonSerializer.Deserialize<CategoriaOUT>(response);
+            descrizione = categoriaOUT.Categoria.Max(item => item.TipoAttivita.ToString());
+            descrizione_tipo = categoriaOUT.Categoria.Max(item => item.Tipologia.ToString());
+            media = categoriaOUT.Categoria.Max(item => Convert.ToInt32(item.Media));
+            mediaperc = Math.Round(categoriaOUT.Categoria.Average(item => item.PercentualeSulTotale),2);
         }
         catch (Exception e)
         {
-            // DEBUG
-            //parola = e.ToString();
             Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
         }
     }
-    */
 
     public string JsonNormalized(string json)
     {
