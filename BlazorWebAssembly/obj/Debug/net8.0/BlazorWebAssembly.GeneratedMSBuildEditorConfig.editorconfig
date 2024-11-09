@@ -30,6 +30,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQm90dG9tLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/PC/Desktop/GitHub/AdminCoreBlazor/BlazorWebAssembly/Pages/Categoria.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0ZWdvcmlhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/PC/Desktop/GitHub/AdminCoreBlazor/BlazorWebAssembly/Pages/Cerca.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2VyY2EucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
