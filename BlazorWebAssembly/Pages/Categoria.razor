@@ -5,6 +5,7 @@
 @using System.Net.Http
 @inject HttpClient Http
 @using ChartJs.Blazor.BarChart
+@inject StateMenagement StateMenagement
 
 <PageTitle>Categoria</PageTitle>
 
@@ -23,7 +24,7 @@
             }
             else
             {
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="alert alert-primary" role="alert">
                         <div class="box-body">
                             <p>Categoria richiesta: <b>@descrizione</b> di tipo: <b>@descrizione_tipo</b></p>
@@ -156,8 +157,8 @@
         try
         {
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            var response = await httpClient.GetStringAsync("http://api.admincoreblazor.it/api/Attivita/TipoAttivitaList");
-            response = JsonNormalized(response);
+            var response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Attivita/TipoAttivitaList");
+            response = StateMenagement.JsonNormalized(response);
 
             tipoattOUT = System.Text.Json.JsonSerializer.Deserialize<TipoAttivitaOUT>(response);      
 
@@ -191,8 +192,8 @@
         try
         {
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            var response = await httpClient.GetStringAsync("http://api.admincoreblazor.it/api/Categoria/" + tipocategoria);
-            response = JsonNormalized(response);
+            var response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Categoria/" + tipocategoria);
+            response = StateMenagement.JsonNormalized(response);
 
             categoriaOUT = System.Text.Json.JsonSerializer.Deserialize<CategoriaOUT>(response);
             descrizione = categoriaOUT.Categoria.Max(item => item.TipoAttivita.ToString());
@@ -204,14 +205,5 @@
         {
             Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
         }
-    }
-
-    public string JsonNormalized(string json)
-    {
-        json = json.ToString().Replace("\\u0022", "\"");
-        json = json.ToString().Replace("\"{", "{");
-        json = json.ToString().Replace("}\"", "}");
-
-        return json;
     }
 }

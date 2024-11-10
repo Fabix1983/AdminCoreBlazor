@@ -8273,6 +8273,10 @@
       "PackagePath": "staticwebassets\\index.html"
     },
     {
+      "Id": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\lib\\Chart.min.js",
+      "PackagePath": "staticwebassets\\lib\\Chart.min.js"
+    },
+    {
       "Id": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\lib\\moment.min.js",
       "PackagePath": "staticwebassets\\lib\\moment.min.js"
     },

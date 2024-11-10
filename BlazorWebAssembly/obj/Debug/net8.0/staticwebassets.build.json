@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "EdZDZV3yB83jBPS/GRXXSyOcuRpR4viKg18gt0stCk8=",
+  "Hash": "dlVD/boEMvEFwKjngBcZP9y/7YQJY3D+FTRI9spbevw=",
   "Source": "BlazorWebAssembly",
   "BasePath": "/",
   "Mode": "Root",
@@ -47135,6 +47135,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\index.html"
+    },
+    {
+      "Identity": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\lib\\Chart.min.js",
+      "SourceId": "BlazorWebAssembly",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "lib/Chart.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\Chart.min.js"
     },
     {
       "Identity": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\wwwroot\\lib\\moment.min.js",

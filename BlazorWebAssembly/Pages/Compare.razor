@@ -1,0 +1,54 @@
+﻿@page "/compare"
+@using System.ComponentModel.DataAnnotations;
+@using Shared.Class
+@inject NavigationManager Navigation
+@using System.Net.Http
+@inject HttpClient Http
+@inject StateMenagement StateMenagement
+
+<PageTitle>Compare</PageTitle>
+
+<h1><i class="bi bi-card-list"></i> Compare</h1>
+<hr />
+
+@code {
+    public HttpClient httpClient = new HttpClient();
+
+    private CompareOUT compareOUT_1 { get; set; } = new CompareOUT();
+    private CompareOUT compareOUT_2 { get; set; } = new CompareOUT();
+    private CompareOUT compareOUT_3 { get; set; } = new CompareOUT();
+    private CompareOUT compareOUT_4 { get; set; } = new CompareOUT();
+    private CompareOUT compareOUT_5 { get; set; } = new CompareOUT();
+    private CompareOUT compareOUT_6 { get; set; } = new CompareOUT();
+
+    public decimal? totspese_1 { get; set; } = 0;
+    public decimal? totentrate_1 { get; set; } = 0;
+    public decimal? bilancio_1 { get; set; } = 0;
+    public string? periodo_1 { get; set; } = "";
+
+    public decimal? totspese_2 { get; set; } = 0;
+    public decimal? totentrate_2 { get; set; } = 0;
+    public decimal? bilancio_2 { get; set; } = 0;
+    public string? periodo_2 { get; set; } = "";
+
+    public decimal? totspese_3 { get; set; } = 0;
+    public decimal? totentrate_3 { get; set; } = 0;
+    public decimal? bilancio_3 { get; set; } = 0;
+    public string? periodo_3 { get; set; } = "";
+
+    public decimal? totspese_4 { get; set; } = 0;
+    public decimal? totentrate_4 { get; set; } = 0;
+    public decimal? bilancio_4 { get; set; } = 0;
+    public string? periodo_4 { get; set; } = "";
+
+    public decimal? totspese_5 { get; set; } = 0;
+    public decimal? totentrate_5 { get; set; } = 0;
+    public decimal? bilancio_5 { get; set; } = 0;
+    public string? periodo_5 { get; set; } = "";
+
+    public decimal? totspese_6 { get; set; } = 0;
+    public decimal? totentrate_6 { get; set; } = 0;
+    public decimal? bilancio_6 { get; set; } = 0;
+    public string? periodo_6 { get; set; } = "";
+
+}

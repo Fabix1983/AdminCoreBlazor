@@ -4,6 +4,7 @@
 @inject NavigationManager Navigation
 @using System.Net.Http
 @inject HttpClient Http
+@inject StateMenagement StateMenagement
 
 <PageTitle>Cerca</PageTitle>
 
@@ -22,7 +23,7 @@
             }
             else
             {          
-                <div class="col-md-10">
+                <div class="col-md-8">
                     <div class="alert alert-primary" role="alert">
                         <div class="box-body">
                             <p>Hai cercato il seguente testo: <b>@parola</b></p>
@@ -42,9 +43,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2 justify-content-center">
+                <div class="col-md-4 justify-content-center">
                     <div class="box-body">
-                        <button type="button" class="btn btn-primary width:20px; " @onclick="NewSearch">Nuova Ricerca</button>
+                        <div class="alert alert-primary" role="alert">
+                            <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+                                <DataAnnotationsValidator />
+                                Testo da cercare:
+                                <InputText id="name" @bind-Value="model.parola" required />
+                                <ValidationMessage For="@(() => model.parola)"></ValidationMessage>
+                                <button type="submit" value="Cerca" class="btn btn-primary">Cerca</button>
+                            </EditForm>
+                        </div>
                     </div>
                 </div>
                 <hr />
@@ -146,8 +155,8 @@
         try
         {
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            var response = await httpClient.GetStringAsync("http://api.admincoreblazor.it/api/Cerca/" + parola);
-            response = JsonNormalized(response);
+            var response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Cerca/" + parola);
+            response = StateMenagement.JsonNormalized(response);
 
             cercaOUT = System.Text.Json.JsonSerializer.Deserialize<CercaOUT>(response);
             totale = 0;
@@ -165,15 +174,6 @@
             Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
         }
     }   
-
-    public string JsonNormalized(string json)
-    {
-        json = json.ToString().Replace("\\u0022", "\"");
-        json = json.ToString().Replace("\"{", "{");
-        json = json.ToString().Replace("}\"", "}");
-
-        return json;
-    }
 
     private void NewSearch()
     {
