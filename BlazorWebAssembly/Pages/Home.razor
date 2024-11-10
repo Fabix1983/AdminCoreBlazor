@@ -1,7 +1,101 @@
-﻿@page "/"
+﻿@page "/home/{anno:int?}/{mese:int?}"
+@page "/"
+@using System.ComponentModel.DataAnnotations;
+@using Shared.Class
+@inject NavigationManager Navigation
+@using System.Net.Http
+@inject HttpClient Http
+@using ChartJs.Blazor.BarChart
+@using ChartJs.Blazor.PieChart
+@inject StateMenagement StateMenagement
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1><i class="bi bi-house-gear"></i> Home</h1>
+<hr />
 
-Welcome to your new app.
+@periodoOUT.Descrizione
+
+@code {
+    [Parameter]
+    public int? anno { get; set; } = 0;
+    [Parameter]
+    public int? mese { get; set; } = 0;
+
+    public HttpClient httpClient = new HttpClient();
+    public TipoAttivitaOUT tipoattOUT = new TipoAttivitaOUT();
+    public PeriodoOUT periodoOUT = new PeriodoOUT();
+
+    public int? annoNext { get; set; } = 0;
+    public int? meseNext { get; set; } = 0;
+
+    public int? annoPre { get; set; } = 0;
+    public int? mesePre { get; set; } = 0;
+
+    public string? descrizionedelmese = "";
+
+    private AttivitaIN model { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (anno is null)
+        {
+            anno = Int32.Parse(DateTime.Now.ToString("yyyy"));
+        }
+
+        if (mese is null)
+        {
+            mese = Int32.Parse(DateTime.Now.ToString("MM"));
+        }
+
+        if (mese == 1)
+        {
+            annoPre = 12;
+            mesePre = anno - 1;
+        }
+        else
+        {
+            mesePre = mese - 1;
+            annoPre = anno;
+        }
+
+        if (mese == 12)
+        { 
+            meseNext = 1;
+            annoNext = anno + 1;
+        }
+        else
+        {
+            meseNext = mese + 1;
+            annoNext = anno;
+        }
+
+        if (anno == Int32.Parse(DateTime.Now.ToString("yyyy")) && mese == Int32.Parse(DateTime.Now.ToString("MM")))
+        {
+            descrizionedelmese = "mese in corso";
+        }
+        else
+        {
+            descrizionedelmese = "mese concluso";
+        }
+
+        try
+        {
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            var response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Attivita/TipoAttivitaList");
+            response = StateMenagement.JsonNormalized(response);
+
+            tipoattOUT = System.Text.Json.JsonSerializer.Deserialize<TipoAttivitaOUT>(response);
+
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Attivita/Periodo/" + anno + "/" + mese + "");
+            response = StateMenagement.JsonNormalized(response);
+
+            periodoOUT = System.Text.Json.JsonSerializer.Deserialize<PeriodoOUT>(response);
+        }
+        catch (Exception e)
+        {
+            Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
+        }
+    }
+}
