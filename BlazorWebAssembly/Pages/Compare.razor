@@ -8,8 +8,343 @@
 
 <PageTitle>Compare</PageTitle>
 
-<h1><i class="bi bi-card-list"></i> Compare</h1>
+<h1><i class="bi bi-calendar3-range"></i> Compare</h1>
 <hr />
+
+<div class="container-fluid">
+    <div class="row">
+        @if (compareOUT_1.Status != null)
+        {
+            @if (compareOUT_1.StatusError == null)
+            {
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            }
+            else
+            {
+                @if ( (compareOUT_1.StatusError != null && compareOUT_1.StatusError != "") || (compareOUT_2.StatusError != null && compareOUT_2.StatusError != "") || (compareOUT_3.StatusError != null && compareOUT_3.StatusError != "") || (compareOUT_4.StatusError != null && compareOUT_4.StatusError != "") || (compareOUT_5.StatusError != null && compareOUT_5.StatusError != "") || (compareOUT_6.StatusError != null && compareOUT_6.StatusError != "") )
+                {
+                    <div class="col-md-12">
+                        <div class="alert alert-warning" role="alert">
+                            <p><b>@compareOUT_1.StatusError</b></p>
+                            <p><b>@compareOUT_2.StatusError</b></p>
+                            <p><b>@compareOUT_3.StatusError</b></p>
+                            <p><b>@compareOUT_4.StatusError</b></p>
+                            <p><b>@compareOUT_5.StatusError</b></p>
+                            <p><b>@compareOUT_6.StatusError</b></p>
+                        </div>
+                    </div>
+                }
+
+                <div class="col-md-12">
+                    <div class="alert alert-primary" role="alert">
+                        <div class="box-body">
+                            <p>Comparativo degli aggregati di spesa e entrata degli ultimi 6 Mesi.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="box-body">
+                        <p class="text-center"><b><i class="bi bi-table"></i> @periodo_6</b></p>
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Tipo Attivita</th>
+                                    <th>Valore &euro;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var compare6 in compareOUT_6.Compare)
+                                {
+                                    <tr>
+                                        <td><b><font color="@compare6.ColoreHTML.ToString()">@compare6.TipoAttivita.ToString()</font></b></td>
+                                        @if (Math.Round((decimal)compare6.TotAtt, 0) < 0)
+                                        {
+                                            <td><font color="red">@Math.Round((decimal)compare6.TotAtt, 0)</font></td>
+                                        }
+                                        else
+                                        {
+                                            <td><font color="green">@Math.Round((decimal)compare6.TotAtt, 0)</font></td>
+                                        }
+                                    </tr>
+                                }
+                                <tr>
+                                    <td><b>TOTALE SPESE</b></td>
+                                    <td><font color="red">@totspese_6</font></td>
+                                </tr>
+                                <tr>
+                                    <td><b>TOTALE ENTRATE</b></td>
+                                    <td><font color="green">@totentrate_6</font></td>
+                                </tr>
+                                <tr>
+                                    <td><b>BILANCIO</b></td>
+                                    @if (bilancio_6 < 0)
+                                    {
+                                        <td><font color="red">@bilancio_6</font></td>
+                                    }
+                                    else
+                                    {
+                                        <td><font color="green">@bilancio_6</font></td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="box-body">
+                        <p class="text-center"><b><i class="bi bi-table"></i> @periodo_5</b></p>
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Tipo Attivita</th>
+                                    <th>Valore &euro;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var compare5 in compareOUT_5.Compare)
+                                {
+                                    <tr>
+                                        <td><b><font color="@compare5.ColoreHTML.ToString()">@compare5.TipoAttivita.ToString()</font></b></td>
+                                        @if (Math.Round((decimal)compare5.TotAtt, 0) < 0)
+                                        {
+                                            <td><font color="red">@Math.Round((decimal)compare5.TotAtt, 0)</font></td>
+                                        }
+                                        else
+                                        {
+                                            <td><font color="green">@Math.Round((decimal)compare5.TotAtt, 0)</font></td>
+                                        }
+                                    </tr>
+                                }
+                                <tr>
+                                    <td><b>TOTALE SPESE</b></td>
+                                    <td><font color="red">@totspese_5</font></td>
+                                </tr>
+                                <tr>
+                                    <td><b>TOTALE ENTRATE</b></td>
+                                    <td><font color="green">@totentrate_5</font></td>
+                                </tr>
+                                <tr>
+                                    <td><b>BILANCIO</b></td>
+                                    @if (bilancio_5 < 0)
+                                    {
+                                        <td><font color="red">@bilancio_5</font></td>
+                                    }
+                                    else
+                                    {
+                                        <td><font color="green">@bilancio_5</font></td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="box-body">
+                        <p class="text-center"><b><i class="bi bi-table"></i> @periodo_4</b></p>
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Tipo Attivita</th>
+                                    <th>Valore &euro;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var compare4 in compareOUT_4.Compare)
+                                {
+                                    <tr>
+                                        <td><b><font color="@compare4.ColoreHTML.ToString()">@compare4.TipoAttivita.ToString()</font></b></td>
+                                        @if (Math.Round((decimal)compare4.TotAtt, 0) < 0)
+                                        {
+                                            <td><font color="red">@Math.Round((decimal)compare4.TotAtt, 0)</font></td>
+                                        }
+                                        else
+                                        {
+                                            <td><font color="green">@Math.Round((decimal)compare4.TotAtt, 0)</font></td>
+                                        }
+                                    </tr>
+                                }
+                                <tr>
+                                    <td><b>TOTALE SPESE</b></td>
+                                    <td><font color="red">@totspese_4</font></td>
+                                </tr>
+                                <tr>
+                                    <td><b>TOTALE ENTRATE</b></td>
+                                    <td><font color="green">@totentrate_4</font></td>
+                                </tr>
+                                <tr>
+                                    <td><b>BILANCIO</b></td>
+                                    @if (bilancio_4 < 0)
+                                    {
+                                        <td><font color="red">@bilancio_4</font></td>
+                                    }
+                                    else
+                                    {
+                                        <td><font color="green">@bilancio_4</font></td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="box-body">
+                        <p class="text-center"><b><i class="bi bi-table"></i> @periodo_3</b></p>
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Tipo Attivita</th>
+                                    <th>Valore &euro;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var compare3 in compareOUT_3.Compare)
+                                {
+                                    <tr>
+                                        <td><b><font color="@compare3.ColoreHTML.ToString()">@compare3.TipoAttivita.ToString()</font></b></td>
+                                        @if (Math.Round((decimal)compare3.TotAtt, 0) < 0)
+                                        {
+                                            <td><font color="red">@Math.Round((decimal)compare3.TotAtt, 0)</font></td>
+                                        }
+                                        else
+                                        {
+                                            <td><font color="green">@Math.Round((decimal)compare3.TotAtt, 0)</font></td>
+                                        }
+                                    </tr>
+                                }
+                                <tr>
+                                    <td><b>TOTALE SPESE</b></td>
+                                    <td><font color="red">@totspese_3</font></td>
+                                </tr>
+                                <tr>
+                                    <td><b>TOTALE ENTRATE</b></td>
+                                    <td><font color="green">@totentrate_3</font></td>
+                                </tr>
+                                <tr>
+                                    <td><b>BILANCIO</b></td>
+                                    @if (bilancio_3 < 0)
+                                    {
+                                        <td><font color="red">@bilancio_3</font></td>
+                                    }
+                                    else
+                                    {
+                                        <td><font color="green">@bilancio_3</font></td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="box-body">
+                        <p class="text-center"><b><i class="bi bi-table"></i> @periodo_2</b></p>
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Tipo Attivita</th>
+                                    <th>Valore &euro;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var compare2 in compareOUT_2.Compare)
+                                {
+                                    <tr>
+                                        <td><b><font color="@compare2.ColoreHTML.ToString()">@compare2.TipoAttivita.ToString()</font></b></td>
+                                        @if (Math.Round((decimal)compare2.TotAtt, 0) < 0)
+                                        {
+                                            <td><font color="red">@Math.Round((decimal)compare2.TotAtt, 0)</font></td>
+                                        }
+                                        else
+                                        {
+                                            <td><font color="green">@Math.Round((decimal)compare2.TotAtt, 0)</font></td>
+                                        }
+                                    </tr>
+                                }
+                                <tr>
+                                    <td><b>TOTALE SPESE</b></td>
+                                    <td><font color="red">@totspese_2</font></td>
+                                </tr>
+                                <tr>
+                                    <td><b>TOTALE ENTRATE</b></td>
+                                    <td><font color="green">@totentrate_2</font></td>
+                                </tr>
+                                <tr>
+                                    <td><b>BILANCIO</b></td>
+                                    @if (bilancio_2 < 0)
+                                    {
+                                        <td><font color="red">@bilancio_2</font></td>
+                                    }
+                                    else
+                                    {
+                                        <td><font color="green">@bilancio_2</font></td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="box-body">
+                        <p class="text-center"><b><i class="bi bi-table"></i> @periodo_1</b></p>
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Tipo Attivita</th>
+                                    <th>Valore &euro;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var compare1 in compareOUT_1.Compare)
+                                {
+                                    <tr>
+                                        <td><b><font color="@compare1.ColoreHTML.ToString()">@compare1.TipoAttivita.ToString()</font></b></td>
+                                        @if (Math.Round((decimal)compare1.TotAtt, 0) < 0)
+                                        {
+                                            <td><font color="red">@Math.Round((decimal)compare1.TotAtt, 0)</font></td>
+                                        }
+                                        else
+                                        {
+                                            <td><font color="green">@Math.Round((decimal)compare1.TotAtt, 0)</font></td>
+                                        }                                    
+                                    </tr>
+                                }
+                                <tr>
+                                    <td><b>TOTALE SPESE</b></td>
+                                    <td><font color="red">@totspese_1</font></td>
+                                </tr>
+                                <tr>
+                                    <td><b>TOTALE ENTRATE</b></td>
+                                    <td><font color="green">@totentrate_1</font></td>
+                                </tr>
+                                <tr>
+                                    <td><b>BILANCIO</b></td>
+                                    @if (bilancio_1 < 0)
+                                    {
+                                        <td><font color="red">@bilancio_1</font></td>
+                                    }
+                                    else
+                                    {
+                                        <td><font color="green">@bilancio_1</font></td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                    </div>
+                </div>
+                <br />
+            }
+        }
+    </div>
+</div>
+<hr />
+<Bottom></Bottom>
 
 @code {
     public HttpClient httpClient = new HttpClient();
@@ -20,6 +355,24 @@
     private CompareOUT compareOUT_4 { get; set; } = new CompareOUT();
     private CompareOUT compareOUT_5 { get; set; } = new CompareOUT();
     private CompareOUT compareOUT_6 { get; set; } = new CompareOUT();
+
+    public int? anno1 { get; set; } = 0;
+    public int? mese1 { get; set; } = 0;
+
+    public int? anno2 { get; set; } = 0;
+    public int? mese2 { get; set; } = 0;
+
+    public int? anno3 { get; set; } = 0;
+    public int? mese3 { get; set; } = 0;
+
+    public int? anno4 { get; set; } = 0;
+    public int? mese4 { get; set; } = 0;
+
+    public int? anno5 { get; set; } = 0;
+    public int? mese5 { get; set; } = 0;
+
+    public int? anno6 { get; set; } = 0;
+    public int? mese6 { get; set; } = 0;
 
     public decimal? totspese_1 { get; set; } = 0;
     public decimal? totentrate_1 { get; set; } = 0;
@@ -50,5 +403,134 @@
     public decimal? totentrate_6 { get; set; } = 0;
     public decimal? bilancio_6 { get; set; } = 0;
     public string? periodo_6 { get; set; } = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        anno1 = Int32.Parse(DateTime.Now.ToString("yyyy"));
+        mese1 = Int32.Parse(DateTime.Now.ToString("MM"));
+
+        if (mese1 == 1)
+        {
+            mese2 = 12;
+            anno2 = anno1 - 1;
+        }
+        else
+        {
+            mese2 = mese1 - 1;
+            anno2 = anno1;
+        }
+
+        if (mese2 == 1)
+        {
+            mese3 = 12;
+            anno3 = anno2 - 1;
+        }
+        else
+        {
+            mese3 = mese2 - 1;
+            anno3 = anno2;
+        }
+
+        if (mese3 == 1)
+        {
+            mese4 = 12;
+            anno4 = anno3 - 1;
+        }
+        else
+        {
+            mese4 = mese3 - 1;
+            anno4 = anno3;
+        }
+
+        if (mese4 == 1)
+        {
+            mese5 = 12;
+            anno5 = anno4 - 1;
+        }
+        else
+        {
+            mese5 = mese4 - 1;
+            anno5 = anno4;
+        }
+
+        if (mese5 == 1)
+        {
+            mese6 = 12;
+            anno6 = anno5 - 1;
+        }
+        else
+        {
+            mese6 = mese5 - 1;
+            anno6 = anno5;
+        }
+
+        try
+        {
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            var response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Compare/" + anno1 + "/" + mese1);
+            response = StateMenagement.JsonNormalized(response);
+
+            compareOUT_1 = System.Text.Json.JsonSerializer.Deserialize<CompareOUT>(response);
+            periodo_1 = compareOUT_1.Compare.Max(item => item.Descrizione.ToString());
+            totspese_1 = compareOUT_1.Compare.Where(item => Convert.ToInt32(item.TotAtt) <= 0).Sum(item => Convert.ToInt32(item.TotAtt));
+            totentrate_1 = compareOUT_1.Compare.Where(item => Convert.ToInt32(item.TotAtt) > 0).Sum(item => Convert.ToInt32(item.TotAtt));
+            bilancio_1 = compareOUT_1.Compare.Sum(item => Convert.ToInt32(item.TotAtt));
+
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Compare/" + anno2 + "/" + mese2);
+            response = StateMenagement.JsonNormalized(response);
+
+            compareOUT_2 = System.Text.Json.JsonSerializer.Deserialize<CompareOUT>(response);
+            periodo_2 = compareOUT_2.Compare.Max(item => item.Descrizione.ToString());
+            totspese_2 = compareOUT_2.Compare.Where(item => Convert.ToInt32(item.TotAtt) <= 0).Sum(item => Convert.ToInt32(item.TotAtt));
+            totentrate_2 = compareOUT_2.Compare.Where(item => Convert.ToInt32(item.TotAtt) > 0).Sum(item => Convert.ToInt32(item.TotAtt));
+            bilancio_2 = compareOUT_2.Compare.Sum(item => Convert.ToInt32(item.TotAtt));
+
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Compare/" + anno3 + "/" + mese3);
+            response = StateMenagement.JsonNormalized(response);
+
+            compareOUT_3 = System.Text.Json.JsonSerializer.Deserialize<CompareOUT>(response);
+            periodo_3 = compareOUT_3.Compare.Max(item => item.Descrizione.ToString());
+            totspese_3 = compareOUT_3.Compare.Where(item => Convert.ToInt32(item.TotAtt) <= 0).Sum(item => Convert.ToInt32(item.TotAtt));
+            totentrate_3 = compareOUT_3.Compare.Where(item => Convert.ToInt32(item.TotAtt) > 0).Sum(item => Convert.ToInt32(item.TotAtt));
+            bilancio_3 = compareOUT_3.Compare.Sum(item => Convert.ToInt32(item.TotAtt));
+
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Compare/" + anno4 + "/" + mese4);
+            response = StateMenagement.JsonNormalized(response);
+
+            compareOUT_4 = System.Text.Json.JsonSerializer.Deserialize<CompareOUT>(response);
+            periodo_4 = compareOUT_4.Compare.Max(item => item.Descrizione.ToString());
+            totspese_4 = compareOUT_4.Compare.Where(item => Convert.ToInt32(item.TotAtt) <= 0).Sum(item => Convert.ToInt32(item.TotAtt));
+            totentrate_4 = compareOUT_4.Compare.Where(item => Convert.ToInt32(item.TotAtt) > 0).Sum(item => Convert.ToInt32(item.TotAtt));
+            bilancio_4 = compareOUT_4.Compare.Sum(item => Convert.ToInt32(item.TotAtt));
+
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Compare/" + anno5 + "/" + mese5);
+            response = StateMenagement.JsonNormalized(response);
+
+            compareOUT_5 = System.Text.Json.JsonSerializer.Deserialize<CompareOUT>(response);
+            periodo_5 = compareOUT_5.Compare.Max(item => item.Descrizione.ToString());
+            totspese_5 = compareOUT_5.Compare.Where(item => Convert.ToInt32(item.TotAtt) <= 0).Sum(item => Convert.ToInt32(item.TotAtt));
+            totentrate_5 = compareOUT_5.Compare.Where(item => Convert.ToInt32(item.TotAtt) > 0).Sum(item => Convert.ToInt32(item.TotAtt));
+            bilancio_5 = compareOUT_5.Compare.Sum(item => Convert.ToInt32(item.TotAtt));
+
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Compare/" + anno6 + "/" + mese6);
+            response = StateMenagement.JsonNormalized(response);
+
+            compareOUT_6 = System.Text.Json.JsonSerializer.Deserialize<CompareOUT>(response);
+            periodo_6 = compareOUT_6.Compare.Max(item => item.Descrizione.ToString());
+            totspese_6 = compareOUT_6.Compare.Where(item => Convert.ToInt32(item.TotAtt) <= 0).Sum(item => Convert.ToInt32(item.TotAtt));
+            totentrate_6 = compareOUT_6.Compare.Where(item => Convert.ToInt32(item.TotAtt) > 0).Sum(item => Convert.ToInt32(item.TotAtt));
+            bilancio_6 = compareOUT_6.Compare.Sum(item => Convert.ToInt32(item.TotAtt));
+
+        }
+        catch (Exception e)
+        {
+            Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
+        }
+    }
 
 }
