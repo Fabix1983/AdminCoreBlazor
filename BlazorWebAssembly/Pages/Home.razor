@@ -14,7 +14,156 @@
 <h1><i class="bi bi-house-gear"></i> Home</h1>
 <hr />
 
-@periodoOUT.Descrizione
+<div class="container-fluid">
+    <div class="row">
+        @if (attivitaOUT.StatusError != "Nessuna attivita trovata.")
+        {
+            @if (attivitaOUT.Status == null)
+            {
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-6">
+                    <div class="alert alert-primary" role="alert">
+                        <div class="box-body">
+                            <h2>
+                                <b>@periodoOUT.Descrizione</b>&nbsp;
+                                @if (bilancio <= 0)
+                                {
+                                    <div class="spinner-grow text-danger" role="status">
+                                        <span class="visually-hidden"></span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="spinner-grow text-success" role="status">
+                                        <span class="visually-hidden"></span>
+                                    </div>
+                                }
+                            </h2>
+                            <p>
+                                Bilancio: <b>@bilancio &euro;</b> Totale Spese: <b>@totspese &euro;</b> Totale entrate: <b>@totentrate &euro;</b>
+                            </p>
+                            @{
+                                DateTime now = DateTime.Now;
+                                var startDate = new DateTime(now.Year, now.Month, 1);
+                                var endDate = startDate.AddMonths(1).AddDays(-1);
+                                String Dato;
+                                Dato = Math.Round( (Convert.ToDecimal(now.Day) / Convert.ToDecimal(endDate.Day) ) * 100, 0).ToString();
+                            }
+                            @if (descrizionedelmese == "mese in corso")
+                            {
+                                <p class="col-md-8">
+                                    Giorno <b>@now.Day</b> di <b>@endDate.Day</b>
+                                    <div class="box-body no-padding">
+                                        <div class="progress" role="progressbar" aria-label="Animated striped example 20px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
+                                            <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" style="width: @Dato%">@Dato%</div>
+                                        </div>
+                                    </div>
+                                </p>
+                            }
+                            else
+                            {
+                                <p><b>@descrizionedelmese</b></p>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="box-body">
+                        <div class="alert alert-primary" role="alert">
+                           
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                @if (attivitaOUT.StatusError != null && attivitaOUT.StatusError != "")
+                {
+                    <div class="col-md-12">
+                        <div class="alert alert-warning" role="alert">
+                            <p><b>@attivitaOUT.StatusError</b></p>
+                        </div>
+                    </div>
+                }
+
+                @if (attivitaOUT.Attivita != null)
+                {
+                    <div class="col-md-5">
+                        <div class="box-body">
+                            <table class="table table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Giorno</th>
+                                        <th>Tipologia</th>
+                                        <th>Dettagli</th>
+                                        <th>Valore &euro;</th>
+                                        <th>Totale &euro;</th>
+                                        <th>Azioni</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        totaleincrementale = 0;
+                                        i = 0;
+                                    }
+                                    @foreach (var att in attivitaOUT.Attivita)
+                                    {
+                                        totaleincrementale = totaleincrementale + Math.Round((decimal)att.Costo, 0);
+                                        <tr>
+                                            <td>@att.Giorno</td>
+                                            <td><b><font color="@att.ColoreHTML.ToString()">@att.TipoAttivita.ToString()</font></b></td>
+                                            <td>@att.Dettagli</td>
+                                            @if (Math.Round((decimal)att.Costo, 0) < 0)
+                                            {
+                                                <td><font color="red">@Math.Round((decimal)att.Costo, 0)</font></td>
+                                            }
+                                            else
+                                            {
+                                                <td><font color="green">@Math.Round((decimal)att.Costo, 0)</font></td>
+                                            }
+                                            <td>@totaleincrementale</td>
+                                            <td></td>
+                                        </tr>
+                                        i = i + 1;
+                                    }
+                                </tbody>
+                            </table>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="box-body">
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="box-body">
+                        </div>
+                    </div>
+                    <br />
+                }
+            }
+        }
+        else
+        {
+            @if (tipoattOUT.Status == "OK")
+            {
+                <div class="col-md-12">
+                    <div class="box-body">
+                        <div class="alert alert-danger" role="alert">
+                            <p>Attenzione: Periodo senza alacuna attività</p> 
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+<hr />
+<Bottom></Bottom>
 
 @code {
     [Parameter]
@@ -22,9 +171,13 @@
     [Parameter]
     public int? mese { get; set; } = 0;
 
+    public int i { get; set; } = 0;
+
     public HttpClient httpClient = new HttpClient();
     public TipoAttivitaOUT tipoattOUT = new TipoAttivitaOUT();
     public PeriodoOUT periodoOUT = new PeriodoOUT();
+    public AttivitaOUT attivitaOUT = new AttivitaOUT();
+    public AggregatoAttivitaOUT aggregatoAttivitaOUT = new AggregatoAttivitaOUT();
 
     public int? annoNext { get; set; } = 0;
     public int? meseNext { get; set; } = 0;
@@ -35,6 +188,13 @@
     public string? descrizionedelmese = "";
 
     private AttivitaIN model { get; set; } = new();
+
+    public decimal? totspese { get; set; } = 0;
+    public decimal? totentrate { get; set; } = 0;
+    public decimal? bilancio { get; set; } = 0;
+    public string? periodo { get; set; } = "";
+
+    public decimal totaleincrementale { get; set; } = 0;
 
     protected override async Task OnInitializedAsync()
     {
@@ -92,6 +252,22 @@
             response = StateMenagement.JsonNormalized(response);
 
             periodoOUT = System.Text.Json.JsonSerializer.Deserialize<PeriodoOUT>(response);
+
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Attivita/Attivita/" + anno + "/" + mese + "/none/none");
+            response = StateMenagement.JsonNormalized(response);
+
+            attivitaOUT = System.Text.Json.JsonSerializer.Deserialize<AttivitaOUT>(response);
+
+            totspese = attivitaOUT.Attivita.Where(item => Convert.ToInt32(item.Costo) <= 0).Sum(item => Convert.ToInt32(item.Costo));
+            totentrate = attivitaOUT.Attivita.Where(item => Convert.ToInt32(item.Costo) > 0).Sum(item => Convert.ToInt32(item.Costo));
+            bilancio = attivitaOUT.Attivita.Sum(item => Convert.ToInt32(item.Costo));
+
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Attivita/AttivitaAggregate/" + anno + "/" + mese + "");
+            response = StateMenagement.JsonNormalized(response);
+
+            aggregatoAttivitaOUT = System.Text.Json.JsonSerializer.Deserialize<AggregatoAttivitaOUT>(response);
         }
         catch (Exception e)
         {
