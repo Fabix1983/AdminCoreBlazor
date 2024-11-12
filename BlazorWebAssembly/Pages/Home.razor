@@ -30,7 +30,11 @@
                     <div class="alert alert-primary" role="alert">
                         <div class="box-body">
                             <h2>
-                                <b>@periodoOUT.Descrizione</b>&nbsp;
+                                <button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => previous())"><i class="bi bi-arrow-left"></i></button>
+                                <b>@periodoOUT.Descrizione</b>
+                                <button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => next())"><i class="bi bi-arrow-right"></i></button>
+                            </h2>
+                            <p>
                                 @if (bilancio <= 0)
                                 {
                                     <div class="spinner-grow text-danger" role="status">
@@ -42,10 +46,16 @@
                                     <div class="spinner-grow text-success" role="status">
                                         <span class="visually-hidden"></span>
                                     </div>
+                                }&nbsp;
+                                Bilancio:
+                                @if (bilancio <= 0)
+                                {
+                                    <font color="red"><b>@bilancio &euro;</b></font>
                                 }
-                            </h2>
-                            <p>
-                                Bilancio: <b>@bilancio &euro;</b> Totale Spese: <b>@totspese &euro;</b> Totale entrate: <b>@totentrate &euro;</b>
+                                else
+                                {
+                                    <font color="green"><b>@bilancio &euro;</b></font>
+                                } Totale Spese: <b>@totspese &euro;</b> Totale entrate: <b>@totentrate &euro;</b>
                             </p>
                             @{
                                 DateTime now = DateTime.Now;
@@ -54,7 +64,7 @@
                                 String Dato;
                                 Dato = Math.Round( (Convert.ToDecimal(now.Day) / Convert.ToDecimal(endDate.Day) ) * 100, 0).ToString();
                             }
-                            @if (descrizionedelmese == "mese in corso")
+                            @if (descrizionedelmese == "Mese in corso")
                             {
                                 <p class="col-md-8">
                                     Giorno <b>@now.Day</b> di <b>@endDate.Day</b>
@@ -75,19 +85,20 @@
                 <div class="col-md-6">
                     <div class="box-body">
                         <div class="alert alert-primary" role="alert">
-                           
+                           ... nuova attivita
                         </div>
                     </div>
                 </div>
-                <hr />
                 @if (attivitaOUT.StatusError != null && attivitaOUT.StatusError != "")
                 {
                     <div class="col-md-12">
-                        <div class="alert alert-warning" role="alert">
-                            <p><b>@attivitaOUT.StatusError</b></p>
+                        <div class="alert alert-info" role="alert">
+                            <p><b>@attivitaOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-danger btn-sm" @onclick="(e => refresh())"><i class="bi bi-x-lg"></i></button></p>
+
                         </div>
                     </div>
                 }
+                <hr />
 
                 @if (attivitaOUT.Attivita != null)
                 {
@@ -125,7 +136,7 @@
                                                 <td><font color="green">@Math.Round((decimal)att.Costo, 0)</font></td>
                                             }
                                             <td>@totaleincrementale</td>
-                                            <td></td>
+                                            <td><button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => order())"><i class="bi bi-triangle"></i></button></td>
                                         </tr>
                                         i = i + 1;
                                     }
@@ -136,7 +147,55 @@
                     </div>
                     <div class="col-md-3">
                         <div class="box-body">
-                            
+                            <table class="table table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>TipoAttivita</th>
+                                        <th>Valore &euro;</th>
+                                        <th>% sul totale</th>
+                                        <th>Azioni</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        y = 0;
+                                    }
+                                    @foreach (var attagg in aggregatoAttivitaOUT.AggregatoAttivita)
+                                    {
+                                        <tr>
+                                            <td><b><font color="@attagg.ColoreHTML.ToString()">@attagg.TipoAttivita.ToString()</font></b></td>
+                                            @if (Math.Round((decimal)attagg.TotAtt, 0) < 0)
+                                            {
+                                                <td><font color="red">@Math.Round((decimal)attagg.TotAtt, 0)</font></td>
+                                                if (totspese != 0)
+                                                {
+                                                    <td>@Math.Round(Math.Round((decimal)attagg.TotAtt, 0) * 100 / Math.Round((decimal)totspese, 0), 2)</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                                
+                                            }
+                                            else
+                                            {
+                                                <td><font color="green">@Math.Round((decimal)attagg.TotAtt, 0)</font></td>
+                                                if (totentrate != 0)
+                                                {
+                                                    <td>@Math.Round(Math.Round((decimal)attagg.TotAtt, 0) * 100 / Math.Round((decimal)totentrate, 0), 2)</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }                                           
+                                            }
+                                            <td><button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => filter(attagg.TipoAttivita.ToString()))"><i class="bi bi-search"></i></button></td>
+                                        </tr>
+                                        y = y + 1;
+                                    }
+                                </tbody>
+                            </table>
+                            <br />
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -154,7 +213,7 @@
                 <div class="col-md-12">
                     <div class="box-body">
                         <div class="alert alert-danger" role="alert">
-                            <p>Attenzione: Periodo senza alacuna attività</p> 
+                            <p><button type="button" class="btn btn-outline-danger btn-sm" @onclick="(e => previous())"><i class="bi bi-arrow-left"></i></button> &nbsp; Attenzione: Periodo senza alacuna attività</p>
                         </div>
                     </div>
                 </div>
@@ -168,10 +227,15 @@
 @code {
     [Parameter]
     public int? anno { get; set; } = 0;
+
     [Parameter]
     public int? mese { get; set; } = 0;
 
+    public string? filtro { get; set; } = "";
+    public string? ordinamento { get; set; } = "";
+
     public int i { get; set; } = 0;
+    public int y { get; set; } = 0;
 
     public HttpClient httpClient = new HttpClient();
     public TipoAttivitaOUT tipoattOUT = new TipoAttivitaOUT();
@@ -198,6 +262,11 @@
 
     protected override async Task OnInitializedAsync()
     {
+        await DataCharge("","");
+    }
+
+    private async Task DataCharge(string filter, string order)
+    {
         if (anno is null)
         {
             anno = Int32.Parse(DateTime.Now.ToString("yyyy"));
@@ -220,7 +289,7 @@
         }
 
         if (mese == 12)
-        { 
+        {
             meseNext = 1;
             annoNext = anno + 1;
         }
@@ -232,11 +301,38 @@
 
         if (anno == Int32.Parse(DateTime.Now.ToString("yyyy")) && mese == Int32.Parse(DateTime.Now.ToString("MM")))
         {
-            descrizionedelmese = "mese in corso";
+            descrizionedelmese = "Mese in corso";
         }
         else
         {
-            descrizionedelmese = "mese concluso";
+            descrizionedelmese = "Mese concluso";
+        }
+
+        if (filtro is null)
+        {
+            filtro = "";
+        }
+
+        if (filter != "")
+        {
+            filtro = filter;
+            ordinamento = "none";
+        }
+
+        if (filter == "")
+        {
+            filtro = "none";
+        }
+
+        if (order == "")
+        {
+            ordinamento = "none";
+        }
+
+        if (order != "")
+        {
+            ordinamento = order;
+            filtro = "none";
         }
 
         try
@@ -254,24 +350,62 @@
             periodoOUT = System.Text.Json.JsonSerializer.Deserialize<PeriodoOUT>(response);
 
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Attivita/Attivita/" + anno + "/" + mese + "/none/none");
+
+            if (filtro != "" || ordinamento != "")
+            {
+                response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Attivita/Attivita/" + anno + "/" + mese + "/" + filtro.ToString() + "/" + ordinamento);
+            }
+            else
+            {
+                response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Attivita/Attivita/" + anno + "/" + mese + "/none/none");
+            }
+
             response = StateMenagement.JsonNormalized(response);
 
             attivitaOUT = System.Text.Json.JsonSerializer.Deserialize<AttivitaOUT>(response);
-
-            totspese = attivitaOUT.Attivita.Where(item => Convert.ToInt32(item.Costo) <= 0).Sum(item => Convert.ToInt32(item.Costo));
-            totentrate = attivitaOUT.Attivita.Where(item => Convert.ToInt32(item.Costo) > 0).Sum(item => Convert.ToInt32(item.Costo));
-            bilancio = attivitaOUT.Attivita.Sum(item => Convert.ToInt32(item.Costo));
 
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
             response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Attivita/AttivitaAggregate/" + anno + "/" + mese + "");
             response = StateMenagement.JsonNormalized(response);
 
             aggregatoAttivitaOUT = System.Text.Json.JsonSerializer.Deserialize<AggregatoAttivitaOUT>(response);
+
+            totspese = aggregatoAttivitaOUT.AggregatoAttivita.Where(item => Convert.ToInt32(item.TotAtt) <= 0).Sum(item => Convert.ToInt32(item.TotAtt));
+            totentrate = aggregatoAttivitaOUT.AggregatoAttivita.Where(item => Convert.ToInt32(item.TotAtt) > 0).Sum(item => Convert.ToInt32(item.TotAtt));
+            bilancio = aggregatoAttivitaOUT.AggregatoAttivita.Sum(item => Convert.ToInt32(item.TotAtt));
         }
         catch (Exception e)
         {
             Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
         }
+    }
+
+    private async Task filter(string typefilter)
+    {      
+        await DataCharge(typefilter, "");
+    }
+
+    private async Task refresh()
+    {
+        await DataCharge("", "");
+    }
+
+    private async Task order()
+    {
+        await DataCharge("", "crescente");
+    }
+
+    private async Task previous()
+    {
+        anno = annoPre;
+        mese = mesePre;
+        await DataCharge("", "");
+    }
+
+    private async Task next()
+    {
+        anno = annoNext;
+        mese = meseNext;
+        await DataCharge("", "");
     }
 }
