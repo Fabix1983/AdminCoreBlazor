@@ -260,9 +260,43 @@
 
     public decimal totaleincrementale { get; set; } = 0;
 
+    public BarConfig _config;
+    private PieConfig _configPie;
+
     protected override async Task OnInitializedAsync()
     {
         await DataCharge("","");
+
+        _config = new BarConfig
+            {
+                Options = new BarOptions
+                {
+                    Responsive = true,
+                    Legend = new Legend
+                    {
+                        Position = Position.Top,
+                        Display = false
+                    },
+                    Title = new OptionsTitle
+                    {
+                        Display = true,
+                        Text = "Grafico Aggregati"
+                    }
+                }
+            };
+
+        _configPie = new PieConfig
+            {
+                Options = new PieOptions
+                {
+                    Responsive = true,
+                    Title = new OptionsTitle
+                    {
+                        Display = true,
+                        Text = "Grafico Aggregati"
+                    }
+                }
+            };
     }
 
     private async Task DataCharge(string filter, string order)
