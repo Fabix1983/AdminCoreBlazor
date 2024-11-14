@@ -35,19 +35,7 @@
                                 <button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => next())"><i class="bi bi-arrow-right"></i></button>
                             </h2>
                             <p>
-                                @if (bilancio <= 0)
-                                {
-                                    <div class="spinner-grow text-danger" role="status">
-                                        <span class="visually-hidden"></span>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="spinner-grow text-success" role="status">
-                                        <span class="visually-hidden"></span>
-                                    </div>
-                                }&nbsp;
-                                Bilancio:
+                                <h4>Bilancio:
                                 @if (bilancio <= 0)
                                 {
                                     <font color="red"><b>@bilancio &euro;</b></font>
@@ -55,7 +43,9 @@
                                 else
                                 {
                                     <font color="green"><b>@bilancio &euro;</b></font>
-                                } Totale Spese: <b>@totspese &euro;</b> Totale entrate: <b>@totentrate &euro;</b>
+                                }
+                                </h4>
+                                <i class="bi bi-arrow-down-circle"></i>&nbsp; Totale Spese: <b>@totspese &euro;</b> &nbsp;&nbsp;<i class="bi bi-arrow-up-circle"></i>&nbsp; Totale entrate: <b>@totentrate &euro;</b>
                             </p>
                             @{
                                 DateTime now = DateTime.Now;
@@ -98,7 +88,26 @@
                         </div>
                     </div>
                 }
-                <hr />
+                @if (genericOUT.StatusError != null && genericOUT.StatusError != "")
+                {
+                    if (genericOUT.Status == "OK")
+                    {
+                        <div class="col-md-12">
+                            <div class="alert alert-success" role="alert">
+                                <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-danger btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
+
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-12">
+                            <div class="alert alert-warning" role="alert">
+                                <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-danger btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
+                            </div>
+                        </div>
+                    }
+                }
 
                 @if (attivitaOUT.Attivita != null)
                 {
@@ -110,9 +119,9 @@
                                         <th>Giorno</th>
                                         <th>Tipologia</th>
                                         <th>Dettagli</th>
-                                        <th>Valore &euro;</th>
-                                        <th>Totale &euro;</th>
-                                        <th>Azioni</th>
+                                        <th>Valore</th>
+                                        <th>Totale</th>
+                                        <th>Azioni <button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => order())"><i class="bi bi-triangle"></i></button></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -136,7 +145,7 @@
                                                 <td><font color="green">@Math.Round((decimal)att.Costo, 0)</font></td>
                                             }
                                             <td>@totaleincrementale</td>
-                                            <td><button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => order())"><i class="bi bi-triangle"></i></button></td>
+                                            <td><button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => delete(att.ID))"><i class="bi bi-x-lg"></i></button></td>
                                         </tr>
                                         i = i + 1;
                                     }
@@ -150,14 +159,20 @@
                             <table class="table table-striped">
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th>TipoAttivita</th>
-                                        <th>Valore &euro;</th>
-                                        <th>% sul totale</th>
+                                        <th>Tipologia</th>
+                                        <th>Valore</th>
+                                        <th>%</th>
                                         <th>Azioni</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @{
+                                        _configBar.Data.Labels.Clear();
+                                        _configBar.Data.Datasets.Clear();
+                                        _configPie.Data.Labels.Clear();
+                                        _configPie.Data.Datasets.Clear();
+                                        bardataset.Clear();
+                                        piedataset.Clear();
                                         y = 0;
                                     }
                                     @foreach (var attagg in aggregatoAttivitaOUT.AggregatoAttivita)
@@ -169,6 +184,11 @@
                                                 <td><font color="red">@Math.Round((decimal)attagg.TotAtt, 0)</font></td>
                                                 if (totspese != 0)
                                                 {
+                                                    _configBar.Data.Labels.Add(attagg.TipoAttivita.ToString());
+                                                    _configPie.Data.Labels.Add(attagg.TipoAttivita.ToString());
+                                                    bardataset.Add(Convert.ToInt32(attagg.TotAtt) * -1);
+                                                    piedataset.Add(Convert.ToInt32(attagg.TotAtt) * -1);
+                                                    chart_color_assey[y] = attagg.ColoreHTML.ToString();
                                                     <td>@Math.Round(Math.Round((decimal)attagg.TotAtt, 0) * 100 / Math.Round((decimal)totspese, 0), 2)</td>
                                                 }
                                                 else
@@ -193,13 +213,24 @@
                                         </tr>
                                         y = y + 1;
                                     }
+                                    @if (y > 1)
+                                    {
+                                        bardataset.BackgroundColor = chart_color_assey;
+                                        piedataset.BackgroundColor = chart_color_assey;
+                                        _configBar.Data.Datasets.Add(bardataset);
+                                        _configPie.Data.Datasets.Add(piedataset);
+                                    }
                                 </tbody>
                             </table>
                             <br />
+                            
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="box-body">
+                            <Chart Config="_configBar"></Chart>
+                            <br />
+                            <Chart Config="_configPie"></Chart>
                         </div>
                     </div>
                     <br />
@@ -242,6 +273,7 @@
     public PeriodoOUT periodoOUT = new PeriodoOUT();
     public AttivitaOUT attivitaOUT = new AttivitaOUT();
     public AggregatoAttivitaOUT aggregatoAttivitaOUT = new AggregatoAttivitaOUT();
+    public GenericOUT genericOUT = new GenericOUT();
 
     public int? annoNext { get; set; } = 0;
     public int? meseNext { get; set; } = 0;
@@ -260,14 +292,18 @@
 
     public decimal totaleincrementale { get; set; } = 0;
 
-    public BarConfig _config;
+    public BarConfig _configBar;
     private PieConfig _configPie;
+
+    public BarDataset<int> bardataset = new BarDataset<int>();
+    public PieDataset<int> piedataset = new PieDataset<int>();
+    public string[]? chart_color_assey = new string[10000];
 
     protected override async Task OnInitializedAsync()
     {
         await DataCharge("","");
 
-        _config = new BarConfig
+        _configBar = new BarConfig
             {
                 Options = new BarOptions
                 {
@@ -292,9 +328,14 @@
                     Responsive = true,
                     Title = new OptionsTitle
                     {
-                        Display = true,
+                        Display = false,
                         Text = "Grafico Aggregati"
-                    }
+                    },
+                    Legend = new Legend
+                    {
+                        Position = Position.Bottom,
+                        Display = true
+                    },
                 }
             };
     }
@@ -407,6 +448,7 @@
             totspese = aggregatoAttivitaOUT.AggregatoAttivita.Where(item => Convert.ToInt32(item.TotAtt) <= 0).Sum(item => Convert.ToInt32(item.TotAtt));
             totentrate = aggregatoAttivitaOUT.AggregatoAttivita.Where(item => Convert.ToInt32(item.TotAtt) > 0).Sum(item => Convert.ToInt32(item.TotAtt));
             bilancio = aggregatoAttivitaOUT.AggregatoAttivita.Sum(item => Convert.ToInt32(item.TotAtt));
+
         }
         catch (Exception e)
         {
@@ -441,5 +483,48 @@
         anno = annoNext;
         mese = meseNext;
         await DataCharge("", "");
+    }
+
+    private async Task refreshdel()
+    {
+        genericOUT.Status = null;
+        genericOUT.StatusError = null;
+        await DataCharge("", "");
+    }
+
+    private async Task delete(int id)
+    {
+        //DEBUG
+        //Console.WriteLine("id:" + id.ToString());
+
+        try
+        {
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            var response = await httpClient.DeleteAsync(StateMenagement.api_url + "/api/Attivita/Delete/" + id);
+
+            if (response.IsSuccessStatusCode)
+            {
+                HttpResponseMessage resp = response;
+                string res = await resp.Content.ReadAsStringAsync();
+                var responseJS = StateMenagement.JsonNormalized(res);
+
+                genericOUT = System.Text.Json.JsonSerializer.Deserialize<GenericOUT>(responseJS);
+
+                if (genericOUT.Status == "OK")
+                {
+                    genericOUT.StatusError = "Cancellazione Attività eseguita correttamente";
+                }
+
+                await DataCharge("", "");
+            }
+            else
+            {
+                Navigation.NavigateTo("/errore?errdesc=Si è verificato un errore nella cancellazione dell'attività");
+            }
+        }
+        catch (Exception e)
+        {
+            Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
+        }
     }
 }
