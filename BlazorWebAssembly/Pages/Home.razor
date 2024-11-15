@@ -72,17 +72,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="box-body">
-                        <div class="alert alert-primary" role="alert">
-                           ... nuova attivita
-                        </div>
-                    </div>
-                </div>
                 @if (attivitaOUT.StatusError != null && attivitaOUT.StatusError != "")
                 {
-                    <div class="col-md-12">
-                        <div class="alert alert-info" role="alert">
+                    <div class="col-md-2">
+                        <div class="alert alert-secondary" role="alert">
                             <p><b>@attivitaOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-danger btn-sm" @onclick="(e => refresh())"><i class="bi bi-x-lg"></i></button></p>
 
                         </div>
@@ -92,8 +85,8 @@
                 {
                     if (genericOUT.Status == "OK")
                     {
-                        <div class="col-md-12">
-                            <div class="alert alert-success" role="alert">
+                        <div class="col-md-2">
+                            <div class="alert alert-secondary" role="alert">
                                 <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-danger btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
 
                             </div>
@@ -101,14 +94,70 @@
                     }
                     else
                     {
-                        <div class="col-md-12">
-                            <div class="alert alert-warning" role="alert">
+                        <div class="col-md-2">
+                            <div class="alert alert-secondary" role="alert">
                                 <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-danger btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
                             </div>
                         </div>
                     }
                 }
+                <div class="col-md-4">
+                    <div class="box-body">
+                        <div class="alert alert-dark" role="alert">
+                            <b>Inserisci una Nuova Attività</b>:
+                            <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+                                <DataAnnotationsValidator />
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label>
+                                            Giorno:
+                                            <InputNumber @bind-Value="model.Giorno" required class="form-control" style="width: 4em" Min="1" Max="@ultimogiornodelmese" />
+                                            <ValidationMessage For="@(() => model.Giorno)"></ValidationMessage>
+                                        </label>
+                                    </div>
 
+                                    <div class="col-md-6">
+                                        <label>
+                                            Tipo Attivita:
+                                            <InputSelect id="department" @bind-Value="model.RifTipoAttivita" class="form-select" aria-label="Default select example">
+                                                <option value="0">Seleziona una tipologia</option>
+                                                @foreach (var dept in tipoattOUT.TipoAttivita)
+                                                {
+                                                    <option value="@dept.ID">@dept.Tipo</option>
+                                                }
+                                            </InputSelect>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label>
+                                            Importo &euro;:
+                                            <InputNumber @bind-Value="model.Costo" required class="form-control" style="width: 6em" Min="1" />
+                                            <ValidationMessage For="@(() => model.Costo)"></ValidationMessage>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <label>
+                                            Dettagli:
+                                            <InputText @bind-Value="model.Dettagli" class="form-control" />
+                                            <ValidationMessage For="@(() => model.Dettagli)"></ValidationMessage>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label>
+                                            Procedi:
+                                            <button type="submit" value="Inserisci" class="btn btn-success">Inserisci</button>
+                                        </label>                                       
+                                    </div>
+                                </div>
+                                
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
                 @if (attivitaOUT.Attivita != null)
                 {
                     <div class="col-md-5">
@@ -283,6 +332,7 @@
 
     public string? descrizionedelmese = "";
 
+    [SupplyParameterFromForm]
     private AttivitaIN model { get; set; } = new();
 
     public decimal? totspese { get; set; } = 0;
@@ -299,9 +349,13 @@
     public PieDataset<int> piedataset = new PieDataset<int>();
     public string[]? chart_color_assey = new string[10000];
 
+    public int ultimogiornodelmese { get; set; } = 0;
+
     protected override async Task OnInitializedAsync()
     {
         await DataCharge("","");
+
+        model.Giorno = Convert.ToInt32(DateTime.Now.ToString("dd"));
 
         _configBar = new BarConfig
             {
@@ -342,6 +396,7 @@
 
     private async Task DataCharge(string filter, string order)
     {
+
         if (anno is null)
         {
             anno = Int32.Parse(DateTime.Now.ToString("yyyy"));
@@ -373,6 +428,8 @@
             meseNext = mese + 1;
             annoNext = anno;
         }
+
+        ultimogiornodelmese = DateTime.DaysInMonth(Convert.ToInt32(anno), Convert.ToInt32(mese));
 
         if (anno == Int32.Parse(DateTime.Now.ToString("yyyy")) && mese == Int32.Parse(DateTime.Now.ToString("MM")))
         {
@@ -423,6 +480,8 @@
             response = StateMenagement.JsonNormalized(response);
 
             periodoOUT = System.Text.Json.JsonSerializer.Deserialize<PeriodoOUT>(response);
+
+            model.RifPeriodo = periodoOUT.ID;
 
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
 
@@ -526,5 +585,17 @@
         {
             Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
         }
+    }
+
+    private async Task OnValidSubmit()
+    {
+        //Controllo su attivita selezionata
+
+        Console.WriteLine("Giorno:" + model.Giorno);
+        Console.WriteLine("RifPeriodo:" + model.RifPeriodo);
+        Console.WriteLine("RifTipoAttivita:" + model.RifTipoAttivita);
+        Console.WriteLine("Dettagli:" + model.Dettagli);
+        Console.WriteLine("Costo:" + model.Costo);
+
     }
 }
