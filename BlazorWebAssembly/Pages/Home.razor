@@ -76,7 +76,7 @@
                 {
                     <div class="col-md-2">
                         <div class="alert alert-secondary" role="alert">
-                            <p><b>@attivitaOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-danger btn-sm" @onclick="(e => refresh())"><i class="bi bi-x-lg"></i></button></p>
+                            <p><b>@attivitaOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary btn-sm" @onclick="(e => refresh())"><i class="bi bi-x-lg"></i></button></p>
 
                         </div>
                     </div>
@@ -86,8 +86,8 @@
                     if (genericOUT.Status == "OK")
                     {
                         <div class="col-md-2">
-                            <div class="alert alert-secondary" role="alert">
-                                <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-danger btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
+                            <div class="alert alert-success" role="alert">
+                                <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-success btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
 
                             </div>
                         </div>
@@ -95,7 +95,7 @@
                     else
                     {
                         <div class="col-md-2">
-                            <div class="alert alert-secondary" role="alert">
+                            <div class="alert alert-danger" role="alert">
                                 <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-danger btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
                             </div>
                         </div>
@@ -104,7 +104,7 @@
                 <div class="col-md-4">
                     <div class="box-body">
                         <div class="alert alert-dark" role="alert">
-                            <b>Inserisci una Nuova Attività</b>:
+                            <b>Nuova Attività</b>
                             <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
                                 <DataAnnotationsValidator />
                                 <div class="row">
@@ -589,13 +589,59 @@
 
     private async Task OnValidSubmit()
     {
-        //Controllo su attivita selezionata
 
+        // DEBUG
+        /*
         Console.WriteLine("Giorno:" + model.Giorno);
         Console.WriteLine("RifPeriodo:" + model.RifPeriodo);
         Console.WriteLine("RifTipoAttivita:" + model.RifTipoAttivita);
         Console.WriteLine("Dettagli:" + model.Dettagli);
         Console.WriteLine("Costo:" + model.Costo);
+        */
+
+        if (model.RifTipoAttivita == 0)
+        {
+            genericOUT.Status = "KO";
+            genericOUT.StatusError = "ERRORE: Tipo di attivita non indicata!";
+            return;
+        }
+
+        try
+        {
+
+            var json = System.Text.Json.JsonSerializer.Serialize(model);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            httpClient.DefaultRequestHeaders.Accept.Clear();
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
+          
+            var response = await httpClient.PostAsync(StateMenagement.api_url + "/api/Attivita/AttivitaNew", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                HttpResponseMessage resp = response;
+                string res = await resp.Content.ReadAsStringAsync();
+                var responseJS = StateMenagement.JsonNormalized(res);
+
+                genericOUT = System.Text.Json.JsonSerializer.Deserialize<GenericOUT>(responseJS);
+
+                if (genericOUT.Status == "OK")
+                {
+                    genericOUT.StatusError = "Nuova attività inserita correttamente";
+                }
+
+                await DataCharge("", "");
+            }
+            else
+            {
+                Navigation.NavigateTo("/errore?errdesc=Si è verificato un errore nell'inserimento della nuova attività");
+            }
+        }
+        catch (Exception e)
+        {
+            Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
+        }
 
     }
 }

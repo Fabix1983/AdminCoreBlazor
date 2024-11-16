@@ -26,20 +26,36 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/PC/Desktop/GitHub/AdminCoreBlazor/BlazorWebAssembly/Pages/Bottom.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQm90dG9tLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/PC/Desktop/GitHub/AdminCoreBlazor/BlazorWebAssembly/Pages/Categoria.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0ZWdvcmlhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/PC/Desktop/GitHub/AdminCoreBlazor/BlazorWebAssembly/Pages/Cerca.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2VyY2EucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/PC/Desktop/GitHub/AdminCoreBlazor/BlazorWebAssembly/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
+[C:/Users/PC/Desktop/GitHub/AdminCoreBlazor/BlazorWebAssembly/Pages/Compare.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcGFyZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/PC/Desktop/GitHub/AdminCoreBlazor/BlazorWebAssembly/Pages/Errore.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3JlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/PC/Desktop/GitHub/AdminCoreBlazor/BlazorWebAssembly/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/PC/Desktop/GitHub/AdminCoreBlazor/BlazorWebAssembly/Pages/Weather.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcV2VhdGhlci5yYXpvcg==
+[C:/Users/PC/Desktop/GitHub/AdminCoreBlazor/BlazorWebAssembly/Pages/License.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGljZW5zZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/PC/Desktop/GitHub/AdminCoreBlazor/BlazorWebAssembly/Pages/Trend.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVHJlbmQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/PC/Desktop/GitHub/AdminCoreBlazor/BlazorWebAssembly/_Imports.razor]

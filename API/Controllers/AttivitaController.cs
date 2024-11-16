@@ -28,7 +28,7 @@ namespace API.Controllers
             _configuration = configuration;
         }
 
-        // GET: AttivitaController/Periodo/anno/mese
+        // GET: api/Attivita/Periodo/anno/mese
         [HttpGet("[action]/{anno}/{mese}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -79,7 +79,7 @@ namespace API.Controllers
             return Json(json);
         }
 
-        // GET: AttivitaController/Riepilogo/anno/mese
+        // GET: api/Attivita/Riepilogo/anno/mese
         [HttpGet("[action]/{anno}/{mese}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -201,7 +201,7 @@ namespace API.Controllers
             return Json(json);
         }
 
-        // GET: AttivitaController/Attivita/anno/mese/filter/order
+        // GET: api/Attivita/Attivita/anno/mese/filter/order
         [HttpGet("[action]/{anno}/{mese}/{filter}/{order}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -318,7 +318,7 @@ namespace API.Controllers
             return Json(json);
         }
 
-        // GET: AttivitaController/AttivitaAggregate/anno/mese
+        // GET: api/Attivita/AttivitaAggregate/anno/mese
         [HttpGet("[action]/{anno}/{mese}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -378,7 +378,7 @@ namespace API.Controllers
             return Json(json);
         }
 
-        // GET: AttivitaController/TipoAttivitaList
+        // GET: api/Attivita/TipoAttivitaList
         [HttpGet("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -435,7 +435,7 @@ namespace API.Controllers
             return Json(json);
         }
 
-        // DELETE: AttivitaController/Delete/id
+        // DELETE: api/Attivita/Delete/id
         [HttpDelete("[action]/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -483,11 +483,11 @@ namespace API.Controllers
             return Json(json);
         }
 
-        // PUT: AttivitaController/AttivitaNew/attivita
-        [HttpPut("[action]/{attivita}")]
+        // POST: api/Attivita/AttivitaNew/attivita
+        [HttpPost("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public JsonResult AttivitaNew(AttivitaIN attivita)
+        public JsonResult AttivitaNew([FromBody]  AttivitaIN attivita)
         {
             string json = "";
             GenericOUT attivitaNewOUT = new GenericOUT();
