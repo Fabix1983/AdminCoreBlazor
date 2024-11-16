@@ -14,6 +14,8 @@ namespace Shared.Class
     {
         public int ID { get; set; }
         public string? Descrizione { get; set; }
+        public int Anno { get; set; }
+        public int Mese { get; set; }
         public decimal Bilancio { get; set; }
     }
 }

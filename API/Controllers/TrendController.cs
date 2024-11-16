@@ -64,6 +64,8 @@ namespace API.Controllers
                         {
                             ID = Convert.ToInt32(row["ID"]),
                             Descrizione = row["Descrizione"].ToString(),
+                            Anno = Convert.ToInt32(row["Anno"]),
+                            Mese = Convert.ToInt32(row["Mese"]),
                             Bilancio = Convert.ToDecimal(row["Bilancio"])
                         };
                         TrendOUT.Trend.Add(trend);

@@ -20,5 +20,7 @@ namespace Shared.Class
         public decimal PercentualeSulTotale { get; set; }
         public string? Tipologia { get; set; }
         public string? ColoreHTML { get; set; }
+        public int Anno { get; set; }
+        public int Mese { get; set; }
     }
 }

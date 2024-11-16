@@ -88,6 +88,7 @@
                                         <th>Mese</th>
                                         <th>Valore &euro;</th>
                                         <th>Esito</th>
+                                        <th>Azione</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -115,6 +116,7 @@
                                                 chart_color_assey[i] = "YELLOWGREEN";
                                                 <td><font color="green"><i class="bi bi-calendar-plus"></i></font></td>
                                             }
+                                            <td><button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => GoToHome(trend.Anno, trend.Mese))"><i class="bi bi-search"></i></button></td>
                                         </tr>
                                         i = i + 1;
                                     }
@@ -247,5 +249,10 @@
         {
             Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
         }
+    }
+
+    private async Task GoToHome(int anno, int mese)
+    {
+        Navigation.NavigateTo("/home/"+anno.ToString()+"/"+mese.ToString());
     }
 }

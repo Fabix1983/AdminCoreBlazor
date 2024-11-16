@@ -70,7 +70,9 @@ namespace API.Controllers
                             TotaleMese = Convert.ToDecimal(row["TotaleMese"]),
                             PercentualeSulTotale = Convert.ToDecimal(row["PercentualeSulTotale"]),
                             Tipologia = row["Tipologia"].ToString(),
-                            ColoreHTML = row["ColoreHTML"].ToString(),                                                                           
+                            ColoreHTML = row["ColoreHTML"].ToString(),
+                            Anno = Convert.ToInt32(row["Anno"]),
+                            Mese = Convert.ToInt32(row["Mese"]),
                         };
                         categoriaOUT.Categoria.Add(categoria);
                     }
