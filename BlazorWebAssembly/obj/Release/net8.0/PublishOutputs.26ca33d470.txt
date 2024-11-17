@@ -1,0 +1,2 @@
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\browser-wasm\PubTmp\Out\libman.json
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\browser-wasm\PubTmp\Out\web.config
