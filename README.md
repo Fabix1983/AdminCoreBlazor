@@ -1,4 +1,4 @@
-<b>Admin Core Blazor Web App<b>
+<b>Admin Core Blazor Web App</b>
 
 <b>Full Stack Web Application</b> realizzata in .NET CORE composta completa di lato CLIENT che del lato SERVER.
 
