@@ -16,6 +16,6 @@ Anche se desktop oriented il template bootstrap rende l'applicazione full respon
 
 Nella directory SERVER è presente la cartella DB-Structure contenente i file sql delle tabelle e stored procedure del DB SQL SERVER di storage, nonché il modello ER.
 
-Licenza di rilascio: MIT
+Licenza di rilascio: <b>MIT</b>
 
 
