@@ -1,10 +1,10 @@
-Admin Core Blazor Web App
+<b>Admin Core Blazor Web App<b>
 
-Full Stack Web Application realizzata in .NET CORE composta completa di lato CLIENT che del lato SERVER.
+<b>Full Stack Web Application</b> realizzata in .NET CORE composta completa di lato CLIENT che del lato SERVER.
 
-La parte SERVER si compone di WEB API Rest in .NET CORE documentate Swagger che si inteffacisno tramite operazioni CRUD e Stored Procedure a SQL SERVER utilizzato come DB Storage.
+La parte SERVER si compone di <b>WEB API Rest</b> in .NET CORE documentate <b>Swagger</b> che si inteffacisno tramite operazioni <b>CRUD e Stored Procedure a SQL SERVER</b> utilizzato come DB Storage.
 
-La componente CLIENT è invece una applicazione .NET Blazor WebAssembly che utilizza chiamate asincrone alle API lato server per il recupero pubblicazione e modifica dei dati stessi.
+La componente CLIENT Ã¨ invece una applicazione <b>.NET Blazor WebAssembly</b> che utilizza chiamate asincrone alle API lato server per il recupero pubblicazione e modifica dei dati stessi.
 
 L'applicazione ha lo scopo di aiutare nel controllo del budget e delle spese familiari.
 
@@ -14,7 +14,7 @@ Realizzata con linguaggio C# e l'utilizzo di Chart JS per i grafici.
 
 Anche se desktop oriented il template bootstrap rende l'applicazione full responsive per il mobile.
 
-Nella directory SERVER è presente la cartella DB-Structure contenente i file sql delle tabelle e stored procedure del DB SQL SERVER di storage, nonché il modello ER.
+Nella directory SERVER Ã¨ presente la cartella DB-Structure contenente i file sql delle tabelle e stored procedure del DB SQL SERVER di storage, nonchÃ© il modello ER.
 
 Licenza di rilascio: MIT
 
