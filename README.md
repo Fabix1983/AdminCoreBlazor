@@ -10,7 +10,7 @@ L'applicazione ha lo scopo di aiutare nel controllo del budget e delle spese fam
 
 Composta dalla dashboard per il controllo delle spese del mese in corso e di quelli passati censiti, il trend mensile storico, la spesa per tipo di categoria e la ricerca delle spese. 
 
-Realizzata con linguaggio C# e l'utilizzo di Chart JS per i grafici.
+Realizzata con <b>linguaggio C#</b> e l'utilizzo di <b>Chart JS</b> per i grafici.
 
 Anche se desktop oriented il template bootstrap rende l'applicazione full responsive per il mobile.
 
