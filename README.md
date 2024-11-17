@@ -18,4 +18,7 @@ Nella directory SERVER è presente la cartella DB-Structure contenente i file sq
 
 Licenza di rilascio: <b>MIT</b>
 
+![Model](https://github.com/user-attachments/assets/ddec89fa-166a-43d0-a88f-c57980e4815c)
+
+
 
