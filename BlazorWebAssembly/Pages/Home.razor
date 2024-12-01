@@ -16,7 +16,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        @if (attivitaOUT.StatusError != "Nessuna attivita trovata.")
+        @if (attivitaOUT.StatusError != "Nessuna attivita trovata." || descrizionedelmese == "Mese in corso")
         {
             @if (attivitaOUT.Status == null)
             {
