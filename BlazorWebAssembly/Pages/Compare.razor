@@ -46,7 +46,7 @@
                 </div>
                 <div class="col-md-2">
                     <div class="box-body">
-                        <p class="text-center"><b><i class="bi bi-table"></i> @periodo_6</b></p>
+                        <p class="text-center"><b><i class="bi bi-table"></i> @periodo_6</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => GoToHome((int)anno6, (int)mese6))"><i class="bi bi-search"></i></button></p>
                         <table class="table table-striped">
                             <thead class="thead-dark">
                                 <tr>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="col-md-2">
                     <div class="box-body">
-                        <p class="text-center"><b><i class="bi bi-table"></i> @periodo_5</b></p>
+                        <p class="text-center"><b><i class="bi bi-table"></i> @periodo_5</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => GoToHome((int)anno5, (int)mese5))"><i class="bi bi-search"></i></button></p>
                         <table class="table table-striped">
                             <thead class="thead-dark">
                                 <tr>
@@ -144,7 +144,7 @@
                 </div>
                 <div class="col-md-2">
                     <div class="box-body">
-                        <p class="text-center"><b><i class="bi bi-table"></i> @periodo_4</b></p>
+                        <p class="text-center"><b><i class="bi bi-table"></i> @periodo_4</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => GoToHome((int)anno4, (int)mese4))"><i class="bi bi-search"></i></button></p>
                         <table class="table table-striped">
                             <thead class="thead-dark">
                                 <tr>
@@ -193,7 +193,7 @@
                 </div>
                 <div class="col-md-2">
                     <div class="box-body">
-                        <p class="text-center"><b><i class="bi bi-table"></i> @periodo_3</b></p>
+                        <p class="text-center"><b><i class="bi bi-table"></i> @periodo_3</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => GoToHome((int)anno3, (int)mese3))"><i class="bi bi-search"></i></button></p>
                         <table class="table table-striped">
                             <thead class="thead-dark">
                                 <tr>
@@ -242,7 +242,7 @@
                 </div>
                 <div class="col-md-2">
                     <div class="box-body">
-                        <p class="text-center"><b><i class="bi bi-table"></i> @periodo_2</b></p>
+                        <p class="text-center"><b><i class="bi bi-table"></i> @periodo_2</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => GoToHome((int)anno2, (int)mese2))"><i class="bi bi-search"></i></button></p>
                         <table class="table table-striped">
                             <thead class="thead-dark">
                                 <tr>
@@ -291,7 +291,7 @@
                 </div>
                 <div class="col-md-2">
                     <div class="box-body">
-                        <p class="text-center"><b><i class="bi bi-table"></i> @periodo_1</b></p>
+                        <p class="text-center"><b><i class="bi bi-table"></i> @periodo_1</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => GoToHome((int)anno1, (int)mese1))"><i class="bi bi-search"></i></button></p>
                         <table class="table table-striped">
                             <thead class="thead-dark">
                                 <tr>
@@ -531,6 +531,11 @@
         {
             Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
         }
+    }
+
+    private async Task GoToHome(int anno, int mese)
+    {
+        Navigation.NavigateTo("/home/" + anno.ToString() + "/" + mese.ToString());
     }
 
 }
