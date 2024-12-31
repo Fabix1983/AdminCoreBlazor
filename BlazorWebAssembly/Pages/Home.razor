@@ -615,7 +615,7 @@
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
             httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
-          
+
             var response = await httpClient.PostAsync(StateMenagement.api_url + "/api/Attivita/AttivitaNew", content);
 
             if (response.IsSuccessStatusCode)
@@ -629,6 +629,12 @@
                 if (genericOUT.Status == "OK")
                 {
                     genericOUT.StatusError = "Nuova attività inserita correttamente";
+
+                    model.Giorno = Convert.ToInt32(DateTime.Now.ToString("dd"));
+                    model.RifPeriodo = periodoOUT.ID;
+                    model.RifTipoAttivita = 0;
+                    model.Dettagli = "";
+                    model.Costo = 0;
                 }
 
                 await DataCharge("", "");
