@@ -26,7 +26,7 @@
             }
             else
             {
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="alert alert-primary" role="alert">
                         <div class="box-body">
                             <h2>
@@ -72,35 +72,7 @@
                         </div>
                     </div>
                 </div>
-                @if (attivitaOUT.StatusError != null && attivitaOUT.StatusError != "")
-                {
-                    <div class="col-md-2">
-                        <div class="alert alert-secondary" role="alert">
-                            <p><b>@attivitaOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary btn-sm" @onclick="(e => refresh())"><i class="bi bi-x-lg"></i></button></p>
 
-                        </div>
-                    </div>
-                }
-                @if (genericOUT.StatusError != null && genericOUT.StatusError != "")
-                {
-                    if (genericOUT.Status == "OK")
-                    {
-                        <div class="col-md-2">
-                            <div class="alert alert-success" role="alert">
-                                <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-success btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
-
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="col-md-2">
-                            <div class="alert alert-danger" role="alert">
-                                <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-danger btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
-                            </div>
-                        </div>
-                    }
-                }
                 <div class="col-md-4">
                     <div class="box-body">
                         <div class="alert alert-dark" role="alert">
@@ -148,7 +120,6 @@
 
                                     <div class="col-md-4">
                                         <label>
-                                            Procedi:
                                             <button type="submit" value="Inserisci" class="btn btn-success">Inserisci</button>
                                         </label>                                       
                                     </div>
@@ -158,131 +129,212 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-4">
+                    <div class="box-body">
+                        <div class="alert alert-warning" role="alert">
+                            <b>Nuova Previsione</b>
+                            <EditForm Model="@modelPre" OnValidSubmit="OnValidSubmitPre">
+                                <DataAnnotationsValidator />
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>
+                                            Giorno:
+                                            <InputNumber @bind-Value="modelPre.Giorno" required class="form-control" style="width: 4em" Min="1" Max="@ultimogiornodelmese" />
+                                            <ValidationMessage For="@(() => modelPre.Giorno)"></ValidationMessage>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label>
+                                            Dettagli:
+                                            <InputText @bind-Value="modelPre.Descrizione" class="form-control" />
+                                            <ValidationMessage For="@(() => modelPre.Descrizione)"></ValidationMessage>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-1">
+                                        <label>
+                                            Importo &euro;:
+                                            <InputNumber @bind-Value="modelPre.Costo" required class="form-control" style="width: 6em" Min="1" />
+                                            <ValidationMessage For="@(() => modelPre.Costo)"></ValidationMessage>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label>
+                                            <button type="submit" value="Inserisci" class="btn btn-success">>></button>
+                                        </label>
+                                    </div>
+                                </div>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+
+                @if (attivitaOUT.StatusError != null && attivitaOUT.StatusError != "")
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-info" role="alert">
+                                <p><b>@attivitaOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary btn-sm" @onclick="(e => refresh())"><i class="bi bi-x-lg"></i></button></p>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (genericOUT.StatusError != null && genericOUT.StatusError != "")
+                {
+                    if (genericOUT.Status == "OK")
+                    {
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="alert alert-success" role="alert">
+                                    <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-success btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="alert alert-danger" role="alert">
+                                    <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-danger btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
                 @if (attivitaOUT.Attivita != null)
                 {
-                    <div class="col-md-5">
-                        <div class="box-body">
-                            <table class="table table-striped">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th>Giorno</th>
-                                        <th>Tipologia</th>
-                                        <th>Dettagli</th>
-                                        <th>Valore</th>
-                                        <th>Totale</th>
-                                        <th>Azioni <button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => order())"><i class="bi bi-triangle"></i></button></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        totaleincrementale = 0;
-                                        i = 0;
-                                    }
-                                    @foreach (var att in attivitaOUT.Attivita)
-                                    {
-                                        totaleincrementale = totaleincrementale + Math.Round((decimal)att.Costo, 0);
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="box-body">
+                                <table class="table table-striped">
+                                    <thead class="thead-dark">
                                         <tr>
-                                            <td>@att.Giorno</td>
-                                            <td><b><font color="@att.ColoreHTML.ToString()">@att.TipoAttivita.ToString()</font></b></td>
-                                            <td>@att.Dettagli</td>
-                                            @if (Math.Round((decimal)att.Costo, 0) < 0)
-                                            {
-                                                <td><font color="red">@Math.Round((decimal)att.Costo, 0)</font></td>
-                                            }
-                                            else
-                                            {
-                                                <td><font color="green">@Math.Round((decimal)att.Costo, 0)</font></td>
-                                            }
-                                            <td>@totaleincrementale</td>
-                                            <td><button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => delete(att.ID))"><i class="bi bi-x-lg"></i></button></td>
+                                            <th>Giorno</th>
+                                            <th>Tipologia</th>
+                                            <th>Dettagli</th>
+                                            <th>Valore</th>
+                                            <th>Totale</th>
+                                            <th>Azioni <button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => order())"><i class="bi bi-triangle"></i></button></th>
                                         </tr>
-                                        i = i + 1;
-                                    }
-                                </tbody>
-                            </table>
-                            <br />
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="box-body">
-                            <table class="table table-striped">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th>Tipologia</th>
-                                        <th>Valore</th>
-                                        <th>%</th>
-                                        <th>Azioni</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        _configBar.Data.Labels.Clear();
-                                        _configBar.Data.Datasets.Clear();
-                                        _configPie.Data.Labels.Clear();
-                                        _configPie.Data.Datasets.Clear();
-                                        bardataset.Clear();
-                                        piedataset.Clear();
-                                        y = 0;
-                                    }
-                                    @foreach (var attagg in aggregatoAttivitaOUT.AggregatoAttivita)
-                                    {
-                                        <tr>
-                                            <td><b><font color="@attagg.ColoreHTML.ToString()">@attagg.TipoAttivita.ToString()</font></b></td>
-                                            @if (Math.Round((decimal)attagg.TotAtt, 0) < 0)
-                                            {
-                                                <td><font color="red">@Math.Round((decimal)attagg.TotAtt, 0)</font></td>
-                                                if (totspese != 0)
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            totaleincrementale = 0;
+                                            i = 0;
+                                        }
+                                        @foreach (var att in attivitaOUT.Attivita)
+                                        {
+                                            totaleincrementale = totaleincrementale + Math.Round((decimal)att.Costo, 0);
+                                            <tr>
+                                                <td>@att.Giorno</td>
+                                                <td><b><font color="@att.ColoreHTML.ToString()">@att.TipoAttivita.ToString()</font></b></td>
+                                                <td>@att.Dettagli</td>
+                                                @if (Math.Round((decimal)att.Costo, 0) < 0)
                                                 {
-                                                    _configBar.Data.Labels.Add(attagg.TipoAttivita.ToString());
-                                                    _configPie.Data.Labels.Add(attagg.TipoAttivita.ToString());
-                                                    bardataset.Add(Convert.ToInt32(attagg.TotAtt) * -1);
-                                                    piedataset.Add(Convert.ToInt32(attagg.TotAtt) * -1);
-                                                    chart_color_assey[y] = attagg.ColoreHTML.ToString();
-                                                    <td>@Math.Round(Math.Round((decimal)attagg.TotAtt, 0) * 100 / Math.Round((decimal)totspese, 0), 2)</td>
+                                                    <td><font color="red">@Math.Round((decimal)att.Costo, 0)</font></td>
                                                 }
                                                 else
                                                 {
-                                                    <td></td>
+                                                    <td><font color="green">@Math.Round((decimal)att.Costo, 0)</font></td>
                                                 }
+                                                <td>@totaleincrementale</td>
+                                                <td><button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => delete(att.ID))"><i class="bi bi-x-lg"></i></button></td>
+                                            </tr>
+                                            i = i + 1;
+                                        }
+                                    </tbody>
+                                </table>
+                                <br />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="box-body">
+                                <table class="table table-striped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Tipologia</th>
+                                            <th>Valore</th>
+                                            <th>%</th>
+                                            <th>Azioni</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            _configBar.Data.Labels.Clear();
+                                            _configBar.Data.Datasets.Clear();
+                                            _configPie.Data.Labels.Clear();
+                                            _configPie.Data.Datasets.Clear();
+                                            bardataset.Clear();
+                                            piedataset.Clear();
+                                            y = 0;
+                                        }
+                                        @foreach (var attagg in aggregatoAttivitaOUT.AggregatoAttivita)
+                                        {
+                                            <tr>
+                                                <td><b><font color="@attagg.ColoreHTML.ToString()">@attagg.TipoAttivita.ToString()</font></b></td>
+                                                @if (Math.Round((decimal)attagg.TotAtt, 0) < 0)
+                                                {
+                                                    <td><font color="red">@Math.Round((decimal)attagg.TotAtt, 0)</font></td>
+                                                    if (totspese != 0)
+                                                    {
+                                                        _configBar.Data.Labels.Add(attagg.TipoAttivita.ToString());
+                                                        _configPie.Data.Labels.Add(attagg.TipoAttivita.ToString());
+                                                        bardataset.Add(Convert.ToInt32(attagg.TotAtt) * -1);
+                                                        piedataset.Add(Convert.ToInt32(attagg.TotAtt) * -1);
+                                                        chart_color_assey[y] = attagg.ColoreHTML.ToString();
+                                                        <td>@Math.Round(Math.Round((decimal)attagg.TotAtt, 0) * 100 / Math.Round((decimal)totspese, 0), 2)</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td></td>
+                                                    }
                                                 
-                                            }
-                                            else
-                                            {
-                                                <td><font color="green">@Math.Round((decimal)attagg.TotAtt, 0)</font></td>
-                                                if (totentrate != 0)
-                                                {
-                                                    <td>@Math.Round(Math.Round((decimal)attagg.TotAtt, 0) * 100 / Math.Round((decimal)totentrate, 0), 2)</td>
                                                 }
                                                 else
                                                 {
-                                                    <td></td>
-                                                }                                           
-                                            }
-                                            <td><button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => filter(attagg.TipoAttivita.ToString()))"><i class="bi bi-search"></i></button></td>
-                                        </tr>
-                                        y = y + 1;
-                                    }
-                                    @if (y > 1)
-                                    {
-                                        bardataset.BackgroundColor = chart_color_assey;
-                                        piedataset.BackgroundColor = chart_color_assey;
-                                        _configBar.Data.Datasets.Add(bardataset);
-                                        _configPie.Data.Datasets.Add(piedataset);
-                                    }
-                                </tbody>
-                            </table>
-                            <br />
+                                                    <td><font color="green">@Math.Round((decimal)attagg.TotAtt, 0)</font></td>
+                                                    if (totentrate != 0)
+                                                    {
+                                                        <td>@Math.Round(Math.Round((decimal)attagg.TotAtt, 0) * 100 / Math.Round((decimal)totentrate, 0), 2)</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td></td>
+                                                    }                                           
+                                                }
+                                                <td><button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => filter(attagg.TipoAttivita.ToString()))"><i class="bi bi-search"></i></button></td>
+                                            </tr>
+                                            y = y + 1;
+                                        }
+                                        @if (y > 1)
+                                        {
+                                            bardataset.BackgroundColor = chart_color_assey;
+                                            piedataset.BackgroundColor = chart_color_assey;
+                                            _configBar.Data.Datasets.Add(bardataset);
+                                            _configPie.Data.Datasets.Add(piedataset);
+                                        }
+                                    </tbody>
+                                </table>
+                                <br />
                             
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="box-body">
-                            <Chart Config="_configBar"></Chart>
-                            <br />
-                            <Chart Config="_configPie"></Chart>
+                        <div class="col-md-4">
+                            <div class="box-body">
+                                <Chart Config="_configBar"></Chart>
+                                <br />
+                                <Chart Config="_configPie"></Chart>
+                            </div>
                         </div>
+                        <br />
                     </div>
-                    <br />
                 }
             }
         }
@@ -290,10 +342,12 @@
         {
             @if (tipoattOUT.Status == "OK")
             {
-                <div class="col-md-12">
-                    <div class="box-body">
-                        <div class="alert alert-danger" role="alert">
-                            <p><button type="button" class="btn btn-outline-danger btn-sm" @onclick="(e => previous())"><i class="bi bi-arrow-left"></i></button> &nbsp; Attenzione: Periodo senza alcuna attività</p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box-body">
+                            <div class="alert alert-danger" role="alert">
+                                <p><button type="button" class="btn btn-outline-danger btn-sm" @onclick="(e => previous())"><i class="bi bi-arrow-left"></i></button> &nbsp; Attenzione: Periodo senza alcuna attività</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -323,6 +377,7 @@
     public AttivitaOUT attivitaOUT = new AttivitaOUT();
     public AggregatoAttivitaOUT aggregatoAttivitaOUT = new AggregatoAttivitaOUT();
     public GenericOUT genericOUT = new GenericOUT();
+    public PrevisioneOUT previsioneOUT = new PrevisioneOUT();
 
     public int? annoNext { get; set; } = 0;
     public int? meseNext { get; set; } = 0;
@@ -334,6 +389,8 @@
 
     [SupplyParameterFromForm]
     private AttivitaIN model { get; set; } = new();
+
+    private PrevisioneIN modelPre { get; set; } = new();
 
     public decimal? totspese { get; set; } = 0;
     public decimal? totentrate { get; set; } = 0;
@@ -356,6 +413,7 @@
         await DataCharge("","");
 
         model.Giorno = Convert.ToInt32(DateTime.Now.ToString("dd"));
+        modelPre.Giorno = Convert.ToInt32(DateTime.Now.ToString("dd"));
 
         _configBar = new BarConfig
             {
@@ -476,12 +534,19 @@
             tipoattOUT = System.Text.Json.JsonSerializer.Deserialize<TipoAttivitaOUT>(response);
 
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Previsioni/Lista/" + anno + "/" + mese + "");
+            response = StateMenagement.JsonNormalized(response);
+
+            previsioneOUT = System.Text.Json.JsonSerializer.Deserialize<PrevisioneOUT>(response);
+
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
             response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Attivita/Periodo/" + anno + "/" + mese + "");
             response = StateMenagement.JsonNormalized(response);
 
             periodoOUT = System.Text.Json.JsonSerializer.Deserialize<PeriodoOUT>(response);
 
             model.RifPeriodo = periodoOUT.ID;
+            modelPre.RifPeriodo = periodoOUT.ID;
 
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
 
@@ -642,6 +707,83 @@
             else
             {
                 Navigation.NavigateTo("/errore?errdesc=Si è verificato un errore nell'inserimento della nuova attività");
+            }
+        }
+        catch (Exception e)
+        {
+            Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
+        }
+
+    }
+
+    private async Task OnValidSubmitPre()
+    {
+
+        // DEBUG
+        /*
+        Console.WriteLine("Giorno:" + modelPre.Giorno);
+        Console.WriteLine("RifPeriodo:" + modelPre.RifPeriodo);
+        Console.WriteLine("Descrizione:" + modelPre.Descrizione);
+        Console.WriteLine("Costo:" + modelPre.Costo);
+        */
+
+        if (modelPre.RifPeriodo == 0)
+        {
+            genericOUT.Status = "KO";
+            genericOUT.StatusError = "ERRORE: Riferimento Periodo Assente!";
+            return;
+        }
+
+        if (modelPre.Descrizione == "")
+        {
+            genericOUT.Status = "KO";
+            genericOUT.StatusError = "ERRORE: Descrizione Previsione Assente!";
+            return;
+        }
+
+        if (modelPre.Costo == 0 || modelPre.Giorno == 0)
+        {
+            genericOUT.Status = "KO";
+            genericOUT.StatusError = "ERRORE: Dati Mancanti!";
+            return;
+        }
+
+        try
+        {
+
+            var json = System.Text.Json.JsonSerializer.Serialize(modelPre);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            httpClient.DefaultRequestHeaders.Accept.Clear();
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
+
+            var response = await httpClient.PostAsync(StateMenagement.api_url + "/api/Previsioni/New", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                HttpResponseMessage resp = response;
+                string res = await resp.Content.ReadAsStringAsync();
+                var responseJS = StateMenagement.JsonNormalized(res);
+
+                genericOUT = System.Text.Json.JsonSerializer.Deserialize<GenericOUT>(responseJS);
+
+                if (genericOUT.Status == "OK")
+                {
+                    genericOUT.StatusError = "Nuova previsione di spesa/entrata inserita correttamente";
+
+                    model.Giorno = Convert.ToInt32(DateTime.Now.ToString("dd"));
+                    model.RifPeriodo = periodoOUT.ID;
+                    model.RifTipoAttivita = 0;
+                    model.Dettagli = "";
+                    model.Costo = 0;
+                }
+
+                await DataCharge("", "");
+            }
+            else
+            {
+                Navigation.NavigateTo("/errore?errdesc=Si è verificato un errore nell'inserimento della nuova previsione");
             }
         }
         catch (Exception e)

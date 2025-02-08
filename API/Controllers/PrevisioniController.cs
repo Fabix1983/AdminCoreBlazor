@@ -158,7 +158,7 @@ namespace API.Controllers
             return Json(json);
         }
 
-        // POST: api/Previsioni/New/attivita
+        // POST: api/Previsioni/New/previsione
         [HttpPost("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
