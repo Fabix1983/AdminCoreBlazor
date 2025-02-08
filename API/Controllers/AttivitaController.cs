@@ -469,7 +469,7 @@ namespace API.Controllers
                     else
                     {
                         deleteOUT.Status = "KO";
-                        deleteOUT.StatusError = "Errore Attivita da cancellare non trovata!";
+                        deleteOUT.StatusError = "Errore Attivita da eliminare non trovata!";
                     }
                     connection.Close(); 
                 }
