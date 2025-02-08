@@ -79,12 +79,14 @@
                             <b>Nuova Attività</b>
                             <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
                                 <DataAnnotationsValidator />
+                                <ValidationMessage For="@(() => model.Giorno)"></ValidationMessage>
+                                <ValidationMessage For="@(() => model.Costo)"></ValidationMessage>
+                                <ValidationMessage For="@(() => model.Dettagli)"></ValidationMessage>
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label>
                                             Giorno:
-                                            <InputNumber @bind-Value="model.Giorno" required class="form-control" style="width: 4em" Min="1" Max="@ultimogiornodelmese" />
-                                            <ValidationMessage For="@(() => model.Giorno)"></ValidationMessage>
+                                            <InputNumber @bind-Value="model.Giorno" required class="form-control" style="width: 4em" Min="1" Max="@ultimogiornodelmese" />                                           
                                         </label>
                                     </div>
 
@@ -104,8 +106,7 @@
                                     <div class="col-md-3">
                                         <label>
                                             Importo &euro;:
-                                            <InputNumber @bind-Value="model.Costo" required class="form-control" style="width: 6em" Min="1" />
-                                            <ValidationMessage For="@(() => model.Costo)"></ValidationMessage>
+                                            <InputNumber @bind-Value="model.Costo" required class="form-control" style="width: 6em" Min="1" />                                        
                                         </label>
                                     </div>
                                 </div>
@@ -114,13 +115,13 @@
                                         <label>
                                             Dettagli:
                                             <InputText @bind-Value="model.Dettagli" class="form-control" />
-                                            <ValidationMessage For="@(() => model.Dettagli)"></ValidationMessage>
                                         </label>
                                     </div>
 
                                     <div class="col-md-4">
                                         <label>
-                                            <button type="submit" value="Inserisci" class="btn btn-success">Inserisci</button>
+                                            <br>
+                                            <button type="submit" value="Inserisci" class="btn btn-success">Procedi</button>
                                         </label>                                       
                                     </div>
                                 </div>
@@ -133,15 +134,17 @@
                 <div class="col-md-4">
                     <div class="box-body">
                         <div class="alert alert-warning" role="alert">
-                            <b>Nuova Previsione</b>
+                            <b>Previsione di spesa</b>
                             <EditForm Model="@modelPre" OnValidSubmit="OnValidSubmitPre">
                                 <DataAnnotationsValidator />
+                                <ValidationMessage For="@(() => modelPre.Giorno)"></ValidationMessage>
+                                <ValidationMessage For="@(() => modelPre.Descrizione)"></ValidationMessage>
+                                <ValidationMessage For="@(() => modelPre.Costo)"></ValidationMessage>
                                 <div class="row">
                                     <div class="col-md-2">
                                         <label>
                                             Giorno:
                                             <InputNumber @bind-Value="modelPre.Giorno" required class="form-control" style="width: 4em" Min="1" Max="@ultimogiornodelmese" />
-                                            <ValidationMessage For="@(() => modelPre.Giorno)"></ValidationMessage>
                                         </label>
                                     </div>
 
@@ -149,21 +152,20 @@
                                         <label>
                                             Dettagli:
                                             <InputText @bind-Value="modelPre.Descrizione" class="form-control" />
-                                            <ValidationMessage For="@(() => modelPre.Descrizione)"></ValidationMessage>
                                         </label>
                                     </div>
 
-                                    <div class="col-md-1">
+                                    <div class="col-md-4">
                                         <label>
                                             Importo &euro;:
                                             <InputNumber @bind-Value="modelPre.Costo" required class="form-control" style="width: 6em" Min="1" />
-                                            <ValidationMessage For="@(() => modelPre.Costo)"></ValidationMessage>
                                         </label>
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <label>
-                                            <button type="submit" value="Inserisci" class="btn btn-success">>></button>
+                                            <br>
+                                            <button type="submit" value="Inserisci" class="btn btn-success">Procedi</button>
                                         </label>
                                     </div>
                                 </div>
@@ -178,7 +180,6 @@
                         <div class="col-md-12">
                             <div class="alert alert-info" role="alert">
                                 <p><b>@attivitaOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary btn-sm" @onclick="(e => refresh())"><i class="bi bi-x-lg"></i></button></p>
-
                             </div>
                         </div>
                     </div>
@@ -191,7 +192,6 @@
                             <div class="col-md-12">
                                 <div class="alert alert-success" role="alert">
                                     <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-success btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
-
                                 </div>
                             </div>
                         </div>
@@ -211,7 +211,7 @@
                 @if (attivitaOUT.Attivita != null)
                 {
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-4">
                             <div class="box-body">
                                 <table class="table table-striped">
                                     <thead class="thead-dark">
@@ -221,7 +221,7 @@
                                             <th>Dettagli</th>
                                             <th>Valore</th>
                                             <th>Totale</th>
-                                            <th>Azioni <button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => order())"><i class="bi bi-triangle"></i></button></th>
+                                            <th><button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => order())"><i class="bi bi-triangle"></i></button></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -254,7 +254,7 @@
                                 <br />
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="box-body">
                                 <table class="table table-striped">
                                     <thead class="thead-dark">
@@ -323,14 +323,12 @@
                                     </tbody>
                                 </table>
                                 <br />
-                            
+                                <Chart Config="_configPie"></Chart>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="box-body">
-                                <Chart Config="_configBar"></Chart>
-                                <br />
-                                <Chart Config="_configPie"></Chart>
+                                <Chart Config="_configBar"></Chart>                           
                             </div>
                         </div>
                         <br />
@@ -770,7 +768,7 @@
 
                 if (genericOUT.Status == "OK")
                 {
-                    genericOUT.StatusError = "Nuova previsione di spesa/entrata inserita correttamente";
+                    genericOUT.StatusError = "Nuova spesa prevista inserita correttamente";
 
                     model.Giorno = Convert.ToInt32(DateTime.Now.ToString("dd"));
                     model.RifPeriodo = periodoOUT.ID;

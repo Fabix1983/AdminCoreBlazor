@@ -179,13 +179,15 @@ namespace API.Controllers
                 try
                 {
                     connection.Open();
-                    var command = new SqlCommand("EXEC spPrevisione_Nuova @Giorno, @RifPeriodo, @Descrizione, @Costo", connection);
+                    var command = new SqlCommand("EXEC spPrevisione_Nuova @Giorno, @RifPeriodo, @Descrizione, @Tipologia, @Costo", connection);
                     command.Parameters.Add("@Giorno", SqlDbType.Int, 4);
                     command.Parameters["@Giorno"].Value = previsione.Giorno;
                     command.Parameters.Add("@RifPeriodo", SqlDbType.Int, 4);
                     command.Parameters["@RifPeriodo"].Value = previsione.RifPeriodo;
                     command.Parameters.Add("@Descrizione", SqlDbType.VarChar, 250);
                     command.Parameters["@Descrizione"].Value = previsione.Descrizione;
+                    command.Parameters.Add("@Tipologia", SqlDbType.VarChar, 50);
+                    command.Parameters["@Tipologia"].Value = "Costo";
                     command.Parameters.Add("@Costo", SqlDbType.Money, 8);
                     command.Parameters["@Costo"].Value = previsione.Costo;
                     command.ExecuteNonQuery();
