@@ -134,7 +134,7 @@
                 <div class="col-md-4">
                     <div class="box-body">
                         <div class="alert alert-warning" role="alert">
-                            <b>Previsione di spesa</b>
+                            <b>Nuova Previsione di spesa</b>
                             <EditForm Model="@modelPre" OnValidSubmit="OnValidSubmitPre">
                                 <DataAnnotationsValidator />
                                 <ValidationMessage For="@(() => modelPre.Giorno)"></ValidationMessage>
@@ -207,12 +207,13 @@
                         </div>
                     }
                 }
-
+                <hr noshade>
                 @if (attivitaOUT.Attivita != null)
                 {
                     <div class="row">
                         <div class="col-md-4">
                             <div class="box-body">
+                                <b>Dettaglio attività del mese</b>
                                 <table class="table table-striped">
                                     <thead class="thead-dark">
                                         <tr>
@@ -256,6 +257,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="box-body">
+                                <b>Aggregati di Spesa</b>
                                 <table class="table table-striped">
                                     <thead class="thead-dark">
                                         <tr>
@@ -322,13 +324,50 @@
                                         }
                                     </tbody>
                                 </table>
+
                                 <br />
-                                <Chart Config="_configPie"></Chart>
+
+                                <div class="alert alert-secondary" role="alert">
+                                    <Chart Config="_configPie"></Chart>
+                                </div>
+
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="box-body">
-                                <Chart Config="_configBar"></Chart>                           
+                                
+                                @if (previsioneOUT.Previsione.Count > 0)
+                                {
+                                    <b>Previsioni di spesa del mese ( Totale: <font color="red">@totprevisionespesaprevista</font> &euro; )</b>
+                                    <table class="table table-striped">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>Giorno</th>
+                                                <th>Descrizione</th>
+                                                <th>Costo</th>
+                                                <th>Azioni</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var prev in previsioneOUT.Previsione)
+                                            {
+                                                <tr>
+                                                    <td>@prev.Giorno.ToString()</td>
+                                                    <td>@prev.Descrizione.ToString()</td>
+                                                    <td>@Math.Round((decimal)prev.Costo, 0)</td>
+                                                    <td><button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => deletePrev(prev.ID))"><i class="bi bi-x-lg"></i></button></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                    <br />
+                                }
+                                
+
+                                <div class="alert alert-secondary" role="alert">
+                                    <Chart Config="_configBar"></Chart>
+                                </div>
+                                                         
                             </div>
                         </div>
                         <br />
@@ -376,6 +415,8 @@
     public AggregatoAttivitaOUT aggregatoAttivitaOUT = new AggregatoAttivitaOUT();
     public GenericOUT genericOUT = new GenericOUT();
     public PrevisioneOUT previsioneOUT = new PrevisioneOUT();
+
+    public decimal? totprevisionespesaprevista = 0;
 
     public int? annoNext { get; set; } = 0;
     public int? meseNext { get; set; } = 0;
@@ -536,6 +577,8 @@
             response = StateMenagement.JsonNormalized(response);
 
             previsioneOUT = System.Text.Json.JsonSerializer.Deserialize<PrevisioneOUT>(response);
+
+            totprevisionespesaprevista = previsioneOUT.Previsione.Sum(item => Convert.ToInt32(item.Costo));
 
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
             response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Attivita/Periodo/" + anno + "/" + mese + "");
@@ -770,11 +813,10 @@
                 {
                     genericOUT.StatusError = "Nuova spesa prevista inserita correttamente";
 
-                    model.Giorno = Convert.ToInt32(DateTime.Now.ToString("dd"));
-                    model.RifPeriodo = periodoOUT.ID;
-                    model.RifTipoAttivita = 0;
-                    model.Dettagli = "";
-                    model.Costo = 0;
+                    modelPre.Giorno = Convert.ToInt32(DateTime.Now.ToString("dd"));
+                    modelPre.RifPeriodo = periodoOUT.ID;
+                    modelPre.Descrizione = "";
+                    modelPre.Costo = 0;
                 }
 
                 await DataCharge("", "");
@@ -789,5 +831,41 @@
             Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
         }
 
+    }
+
+    private async Task deletePrev(int id)
+    {
+        //DEBUG
+        //Console.WriteLine("id:" + id.ToString());
+
+        try
+        {
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            var response = await httpClient.DeleteAsync(StateMenagement.api_url + "/api/Previsioni/Delete/" + id);
+
+            if (response.IsSuccessStatusCode)
+            {
+                HttpResponseMessage resp = response;
+                string res = await resp.Content.ReadAsStringAsync();
+                var responseJS = StateMenagement.JsonNormalized(res);
+
+                genericOUT = System.Text.Json.JsonSerializer.Deserialize<GenericOUT>(responseJS);
+
+                if (genericOUT.Status == "OK")
+                {
+                    genericOUT.StatusError = "Cancellazione Previsione di spesa eseguita correttamente";
+                }
+
+                await DataCharge("", "");
+            }
+            else
+            {
+                Navigation.NavigateTo("/errore?errdesc=Si è verificato un errore nella cancellazione della Previsione di spesa");
+            }
+        }
+        catch (Exception e)
+        {
+            Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
+        }
     }
 }
