@@ -28,7 +28,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        @if (attivitaOUT.StatusError != "Nessuna attivita trovata." || descrizionedelmese == "Mese in corso")
+        @if (attivitaOUT.StatusError != "Nessuna attivita trovata." || descrizionedelmese == "Mese in corso" || mesefuturo == 1)
         {
             @if (attivitaOUT.Status == null)
             {
@@ -82,12 +82,20 @@
                             }
                             else
                             {
-                                <p><b>@descrizionedelmese</b></p>
+                                @if (mesefuturo == 1)
+                                {
+                                    <p><b>MESE FUTURO</b></p>
+                                }else
+                                {
+                                    <p><b>@descrizionedelmese.ToUpper()</b></p>
+                                }                         
                             }
                         </div>
                     </div>
                 </div>
 
+                @if (mesefuturo != 1)
+                {
                 <div class="col-md-4">
                     <div class="box-body">
                         <div class="alert alert-info" role="alert">
@@ -145,7 +153,10 @@
                         </div>
                     </div>
                 </div>
+                }
 
+                @if (descrizionedelmese == "Mese in corso" || mesefuturo == 1)
+                {
                 <div class="col-md-4">
                     <div class="box-body">
                         <div class="alert alert-warning" role="alert">
@@ -188,8 +199,9 @@
                         </div>
                     </div>
                 </div>
+                }
 
-                @if (attivitaOUT.StatusError != null && attivitaOUT.StatusError != "")
+                @if (attivitaOUT.StatusError != null && attivitaOUT.StatusError != "" && mesefuturo != 1)
                 {
                     <div class="row">
                         <div class="col-md-12">
@@ -223,7 +235,7 @@
                     }
                 }
                 <hr noshade>
-                @if (attivitaOUT.Attivita != null)
+                @if (attivitaOUT.Attivita.Count > 0 || previsioneOUT.Previsione.Count > 0)
                 {
                     <div class="row">
                         <div class="col-md-4">
@@ -342,10 +354,6 @@
 
                                 <br />
 
-                                <div class="alert alert-secondary" role="alert">
-                                    <Chart Config="_configPie"></Chart>
-                                </div>
-
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -377,32 +385,23 @@
                                     </table>
                                     <br />
                                 }
-                                
 
-                                <div class="alert alert-secondary" role="alert">
-                                    <Chart Config="_configBar"></Chart>
-                                </div>
-                                                         
+                                @if (mesefuturo != 1)
+                                {
+                                    <div class="alert alert-secondary" role="alert">
+                                        <Chart Config="_configBar"></Chart>
+                                    </div>
+
+                                    <div class="alert alert-secondary" role="alert">
+                                        <Chart Config="_configPie"></Chart>
+                                    </div>
+                                }
+
                             </div>
                         </div>
                         <br />
                     </div>
                 }
-            }
-        }
-        else
-        {
-            @if (tipoattOUT.Status == "OK")
-            {
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="box-body">
-                            <div class="alert alert-danger" role="alert">
-                                <p><button type="button" class="btn btn-outline-danger btn-sm" @onclick="(e => previous())"><i class="bi bi-arrow-left"></i></button> &nbsp; Attenzione: Periodo senza alcuna attività</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             }
         }
     </div>
@@ -462,6 +461,7 @@
     public string[]? chart_color_assey = new string[10000];
 
     public int ultimogiornodelmese { get; set; } = 0;
+    public int mesefuturo { get; set; } = 0;
 
     protected override async Task OnInitializedAsync()
     {
@@ -511,6 +511,7 @@
 
     private async Task DataCharge(string filter, string order)
     {
+        mesefuturo = 0;
 
         if (anno is null)
         {
@@ -553,6 +554,16 @@
         else
         {
             descrizionedelmese = "Mese concluso";
+        }
+
+        if (anno == Int32.Parse(DateTime.Now.ToString("yyyy")) && mese > Int32.Parse(DateTime.Now.ToString("MM")))
+        {
+            mesefuturo = 1;
+        }
+
+        if (anno > Int32.Parse(DateTime.Now.ToString("yyyy")) )
+        {
+            mesefuturo = 1;
         }
 
         if (filtro is null)
@@ -659,6 +670,8 @@
         anno = annoPre;
         mese = mesePre;
         await DataCharge("", "");
+        attivitaOUT.StatusError = null;
+        genericOUT.StatusError = null;
     }
 
     private async Task next()
@@ -666,6 +679,8 @@
         anno = annoNext;
         mese = meseNext;
         await DataCharge("", "");
+        attivitaOUT.StatusError = null;
+        genericOUT.StatusError = null;
     }
 
     private async Task refreshdel()
