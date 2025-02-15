@@ -11,7 +11,11 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1><i class="bi bi-house-gear"></i> Home</h1>
+<h1>
+    <button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => previous())"><i class="bi bi-arrow-left"></i></button>
+    <b>@periodoOUT.Descrizione</b>
+    <button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => next())"><i class="bi bi-arrow-right"></i></button>
+</h1>
 <hr />
 
 <div class="container-fluid">
@@ -29,23 +33,33 @@
                 <div class="col-md-4">
                     <div class="alert alert-primary" role="alert">
                         <div class="box-body">
-                            <h2>
-                                <button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => previous())"><i class="bi bi-arrow-left"></i></button>
-                                <b>@periodoOUT.Descrizione</b>
-                                <button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => next())"><i class="bi bi-arrow-right"></i></button>
-                            </h2>
                             <p>
-                                <h4>Bilancio:
+                                <h4>Bilancio Attuale:
                                 @if (bilancio <= 0)
-                                {
-                                    <font color="red"><b>@bilancio &euro;</b></font>
-                                }
-                                else
-                                {
-                                    <font color="green"><b>@bilancio &euro;</b></font>
-                                }
+                                    {
+                                        <font color="red"><b>@bilancio &euro;</b></font>
+                                    }
+                                    else
+                                    {
+                                        <font color="green"><b>@bilancio &euro;</b></font>
+                                    }
                                 </h4>
-                                <i class="bi bi-arrow-down-circle"></i>&nbsp; Totale Spese: <b>@totspese &euro;</b> &nbsp;&nbsp;<i class="bi bi-arrow-up-circle"></i>&nbsp; Totale entrate: <b>@totentrate &euro;</b>
+                                @if (totprevisionespesaprevista!=0)
+                                {                                                                
+                                <h4>Bilancio Previsionale:
+                                    @if (bilancio_previsionale <= 0)
+                                    {
+                                        <font color="red"><b>@bilancio_previsionale &euro;</b></font>
+                                    }
+                                    else
+                                    {
+                                        <font color="green"><b>@bilancio_previsionale &euro;</b></font>
+                                    }
+                                </h4>
+                                }
+                                <i class="bi bi-arrow-down-circle"></i>&nbsp;Uscite: <b>@totspese &euro;</b> &nbsp;&nbsp;
+                                <i class="bi bi-arrow-down-square"></i>&nbsp;Uscite Previste: <b>@totprevisionespesaprevista &euro;</b>
+                                <i class="bi bi-arrow-up-circle"></i>&nbsp;Entrate: <b>@totentrate &euro;</b>
                             </p>
                             @{
                                 DateTime now = DateTime.Now;
@@ -213,7 +227,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="box-body">
-                                <b>Dettaglio attività del mese</b>
+                                <i class="bi bi-card-text"></i>&nbsp;<b>Dettaglio attività del mese</b>
                                 <table class="table table-striped">
                                     <thead class="thead-dark">
                                         <tr>
@@ -257,7 +271,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="box-body">
-                                <b>Aggregati di Spesa</b>
+                                <i class="bi bi-card-list"></i>&nbsp;<b>Aggregati di Spesa</b>
                                 <table class="table table-striped">
                                     <thead class="thead-dark">
                                         <tr>
@@ -338,7 +352,7 @@
                                 
                                 @if (previsioneOUT.Previsione.Count > 0)
                                 {
-                                    <b>Previsioni di spesa del mese ( Totale: <font color="red">@totprevisionespesaprevista</font> &euro; )</b>
+                                    <i class="bi bi-card-checklist"></i><b>&nbsp;Previsioni di spesa del mese ( Totale: <font color="red">@totprevisionespesaprevista</font> &euro; )</b>
                                     <table class="table table-striped">
                                         <thead class="thead-dark">
                                             <tr>
@@ -434,6 +448,7 @@
     public decimal? totspese { get; set; } = 0;
     public decimal? totentrate { get; set; } = 0;
     public decimal? bilancio { get; set; } = 0;
+    public decimal? bilancio_previsionale { get; set; } = 0;
     public string? periodo { get; set; } = "";
 
     public decimal totaleincrementale { get; set; } = 0;
@@ -466,8 +481,9 @@
                     },
                     Title = new OptionsTitle
                     {
-                        Display = true,
-                        Text = "Grafico Aggregati"
+                        Display = false,
+                        Text = "Bar Chart",
+                        FontColor = "DARKSLATEBLUE",
                     }
                 }
             };
@@ -480,7 +496,8 @@
                     Title = new OptionsTitle
                     {
                         Display = false,
-                        Text = "Grafico Aggregati"
+                        Text = "Pie Chart",
+                        FontColor = "DARKSLATEBLUE",
                     },
                     Legend = new Legend
                     {
@@ -613,7 +630,7 @@
             totspese = aggregatoAttivitaOUT.AggregatoAttivita.Where(item => Convert.ToInt32(item.TotAtt) <= 0).Sum(item => Convert.ToInt32(item.TotAtt));
             totentrate = aggregatoAttivitaOUT.AggregatoAttivita.Where(item => Convert.ToInt32(item.TotAtt) > 0).Sum(item => Convert.ToInt32(item.TotAtt));
             bilancio = aggregatoAttivitaOUT.AggregatoAttivita.Sum(item => Convert.ToInt32(item.TotAtt));
-
+            bilancio_previsionale = bilancio + totprevisionespesaprevista;
         }
         catch (Exception e)
         {
