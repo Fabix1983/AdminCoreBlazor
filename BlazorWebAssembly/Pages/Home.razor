@@ -11,10 +11,18 @@
 
 <PageTitle>Home</PageTitle>
 
+@{
+    DateTime now = DateTime.Now;
+    var startDate = new DateTime(now.Year, now.Month, 1);
+    var endDate = startDate.AddMonths(1).AddDays(-1);
+    String Dato;
+    Dato = Math.Round((Convert.ToDecimal(now.Day) / Convert.ToDecimal(endDate.Day)) * 100, 0).ToString();
+}
+
 <h1>
-    <button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => previous())"><i class="bi bi-arrow-left"></i></button>
+    <button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => previous())"><i class="bi bi-arrow-left"></i></button>&nbsp;&nbsp
     <b>@periodoOUT.Descrizione</b>
-    <button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => next())"><i class="bi bi-arrow-right"></i></button>
+    &nbsp;&nbsp;<button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => next())"><i class="bi bi-arrow-right"></i></button>
 </h1>
 <hr />
 
@@ -61,13 +69,6 @@
                                 <i class="bi bi-arrow-down-square"></i>&nbsp;Uscite Previste: <b>@totprevisionespesaprevista &euro;</b>
                                 <i class="bi bi-arrow-up-circle"></i>&nbsp;Entrate: <b>@totentrate &euro;</b>
                             </p>
-                            @{
-                                DateTime now = DateTime.Now;
-                                var startDate = new DateTime(now.Year, now.Month, 1);
-                                var endDate = startDate.AddMonths(1).AddDays(-1);
-                                String Dato;
-                                Dato = Math.Round( (Convert.ToDecimal(now.Day) / Convert.ToDecimal(endDate.Day) ) * 100, 0).ToString();
-                            }
                             @if (descrizionedelmese == "Mese in corso")
                             {
                                 <p class="col-md-8">
@@ -89,7 +90,7 @@
 
                 <div class="col-md-4">
                     <div class="box-body">
-                        <div class="alert alert-dark" role="alert">
+                        <div class="alert alert-info" role="alert">
                             <b>Nuova Attività</b>
                             <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
                                 <DataAnnotationsValidator />
@@ -135,7 +136,7 @@
                                     <div class="col-md-4">
                                         <label>
                                             <br>
-                                            <button type="submit" value="Inserisci" class="btn btn-success">Procedi</button>
+                                            <button type="submit" value="Inserisci" class="btn btn-info">Procedi</button>
                                         </label>                                       
                                     </div>
                                 </div>
@@ -179,7 +180,7 @@
                                     <div class="col-md-4">
                                         <label>
                                             <br>
-                                            <button type="submit" value="Inserisci" class="btn btn-success">Procedi</button>
+                                            <button type="submit" value="Inserisci" class="btn btn-warning">Procedi</button>
                                         </label>
                                     </div>
                                 </div>
