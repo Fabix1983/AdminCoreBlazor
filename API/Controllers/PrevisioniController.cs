@@ -110,6 +110,86 @@ namespace API.Controllers
             return Json(json);
         }
 
+        // GET: api/Previsioni/ListaTotale/
+        [HttpGet("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public JsonResult ListaTotale()
+        {
+            string json = "";
+            PrevisioneTotaleListaOUT previsioneOUT = new PrevisioneTotaleListaOUT();
+
+            var connString = _configuration.GetConnectionString("Default");
+
+            string connStringEscape = connString.ToString().Replace("\\\\", "\\");
+
+            // dichiaro il chiamante con Certificato Valido
+            connStringEscape = connStringEscape + ";TrustServerCertificate=true";
+
+            using (SqlConnection connection = new SqlConnection(connStringEscape))
+            {
+                try
+                {
+                    connection.Open();
+                    int i = 0;
+                    DataTable dt = new DataTable();
+
+                    string sSQL_Select = "SELECT " +
+                                        "   Pre.ID, " +
+                                        "   Pre.Giorno, " +
+                                        "   Pre.Descrizione, " +
+                                        "   Pre.Costo, " +
+                                        "   Per.Anno, " +
+                                        "   Per.Mese, " +
+                                        "   Per.Descrizione AS DescrizionePeriodo " +
+                                        "FROM " +
+                                        "   tblPrevisioni Pre " +
+                                        "   INNER JOIN tblPeriodi Per ON Per.ID = Pre.RifPeriodo " +
+                                        "ORDER BY " +
+                                        "   Per.Anno, Per.Mese, Pre.Giorno ";
+
+
+                    previsioneOUT.Status = "OK";
+
+                    SqlCommand cmd = new SqlCommand(sSQL_Select, connection);
+
+                    SqlDataAdapter adp = new SqlDataAdapter(cmd);
+                    adp.Fill(dt);
+
+                    previsioneOUT.Previsione = new List<PrevisioneTotale>();
+
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        i++;
+                        PrevisioneTotale previsione = new PrevisioneTotale
+                        {
+                            ID = Convert.ToInt32(row["ID"]),
+                            Giorno = Convert.ToInt32(row["Giorno"]),
+                            Descrizione = row["Descrizione"].ToString(),
+                            Costo = Convert.ToDecimal(row["Costo"]),
+                            DescrizionePeriodo = row["DescrizionePeriodo"].ToString(),
+                        };
+                        previsioneOUT.Previsione.Add(previsione);
+                    }
+
+                    if (i <= 0)
+                    {
+                        previsioneOUT.StatusError = "Nessuna previsione trovata.";
+                    }
+                }
+                catch (Exception e)
+                {
+                    previsioneOUT.Status = "KO";
+                    previsioneOUT.StatusError = e.ToString();
+
+                }
+                connection.Close();
+            }
+
+            json = JsonConvert.SerializeObject(previsioneOUT, Formatting.None);
+            return Json(json);
+        }
+
         // DELETE: api/Previsioni/Delete/id
         [HttpDelete("[action]/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
