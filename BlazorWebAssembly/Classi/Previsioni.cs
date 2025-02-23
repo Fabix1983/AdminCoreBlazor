@@ -34,4 +34,20 @@ namespace Shared.Class
         [Required]
         public decimal Costo { get; set; }
     }
+
+    public class PrevisioneTotaleListaOUT
+    {
+        public String? Status { get; set; }
+        public String? StatusError { get; set; }
+        public List<PrevisioneTotale>? Previsione { get; set; }
+    }
+
+    public class PrevisioneTotale
+    {
+        public int ID { get; set; }
+        public int Giorno { get; set; }
+        public string? Descrizione { get; set; }
+        public decimal Costo { get; set; }
+        public string? DescrizionePeriodo { get; set; }
+    }
 }
