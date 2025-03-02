@@ -110,7 +110,7 @@ namespace API.Controllers
             return Json(json);
         }
 
-        // GET: api/Previsioni/ListaTotale/
+        // GET: api/Previsioni/ListaTotale
         [HttpGet("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

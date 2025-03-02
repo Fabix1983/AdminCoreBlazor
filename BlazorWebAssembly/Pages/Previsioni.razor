@@ -8,12 +8,12 @@
 
 <PageTitle>Previsioni</PageTitle>
 
-<h1><i class="bi bi-crop"></i> Previsioni</h1>
+<h1><i class="bi bi-crop"></i> Previsioni di Spesa</h1>
 <hr />
 
 <div class="container-fluid">
     <div class="row">
-        @if (previsioneTotaleListaOUT.StatusError == null)
+        @if (previsioneTotaleListaOUT.Status == null)
         {
             <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Loading...</span>
@@ -21,14 +21,10 @@
         }
         else
         {
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="alert alert-primary" role="alert">
                     <div class="box-body">
-                        <p>Num. Spese previste trovate:<b>@numattivita</b></p>
-                        <p>
-                            Totale Spese previste: <b>@totale &euro;</b>&nbsp;&nbsp;
-                        </p>
-
+                        <p>Num. Spese previste trovate:<b>@numattivita</b>&nbsp;&nbsp;&nbsp;Totale Spese previste: <b>@totale &euro;</b></p>
                     </div>
                 </div>
             </div>
@@ -42,7 +38,7 @@
                 </div>
             }
 
-            @if (previsioneTotaleListaOUT.Cerca != null)
+            @if (previsioneTotaleListaOUT.Previsione != null)
             {
                 <div class="col-md-12">
                     <div class="box-body">
@@ -50,28 +46,21 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th>Giorno</th>
-                                    <th>Tipo</th>
-                                    <th>Dettagli</th>
+                                    <th>Periodo</th>
+                                    <th>Descrizione</th>
                                     <th>Costo</th>
-                                    <th>Tipo</th>
+                                    <th>Azione</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var cerca in cercaOUT.Cerca)
+                                @foreach (var previsione in previsioneTotaleListaOUT.Previsione)
                                 {
                                     <tr>
-                                        <td>@cerca.DataSpesa.ToString().Replace("00:00:00", "")</td>
-                                        <td><b><font color="@cerca.ColoreHTML.ToString()">@cerca.TipoAttivita.ToString()</font></b></td>
-                                        <td>@cerca.Dettagli.ToString()</td>
-                                        <td>@Math.Round((decimal)@cerca.Costo, 0)</td>
-                                        @if ((decimal)cerca.Costo < 0)
-                                        {
-                                            <td><font color="red"><i class="bi bi-arrow-down-circle-fill"></i></font></td>
-                                        }
-                                        else
-                                        {
-                                            <td><font color="green"><i class="bi bi-arrow-up-circle-fill"></i></font></td>
-                                        }
+                                        <td>@previsione.Giorno.ToString()</td>
+                                        <td>@previsione.DescrizionePeriodo.ToString()</td>
+                                        <td>@previsione.Descrizione.ToString()</td>
+                                        <td>@Math.Round((decimal)@previsione.Costo, 0)&nbsp;&euro;</td>
+                                        <td></td>
                                     </tr>
                                 }
                             </tbody>
@@ -107,7 +96,7 @@
         try
         {
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            var response = await httpClient.GetStringAsync(StateMenagement.api_url + "api/Previsioni/ListaTotale/");
+            var response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Previsioni/ListaTotale");
             response = StateMenagement.JsonNormalized(response);
             previsioneTotaleListaOUT = System.Text.Json.JsonSerializer.Deserialize<PrevisioneTotaleListaOUT>(response);
             totale = previsioneTotaleListaOUT.Previsione.Sum(item => Convert.ToInt32(item.Costo));
