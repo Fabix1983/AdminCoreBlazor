@@ -1,5 +1,123 @@
-﻿<h3>Previsioni</h3>
+﻿@page "/previsioni"
+@using System.ComponentModel.DataAnnotations;
+@using Shared.Class
+@inject NavigationManager Navigation
+@using System.Net.Http
+@inject HttpClient Http
+@inject StateMenagement StateMenagement
+
+<PageTitle>Previsioni</PageTitle>
+
+<h1><i class="bi bi-crop"></i> Previsioni</h1>
+<hr />
+
+<div class="container-fluid">
+    <div class="row">
+        @if (previsioneTotaleListaOUT.StatusError == null)
+        {
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        }
+        else
+        {
+            <div class="col-md-8">
+                <div class="alert alert-primary" role="alert">
+                    <div class="box-body">
+                        <p>Num. Spese previste trovate:<b>@numattivita</b></p>
+                        <p>
+                            Totale Spese previste: <b>@totale &euro;</b>&nbsp;&nbsp;
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            <hr />
+            @if (previsioneTotaleListaOUT.StatusError != null && previsioneTotaleListaOUT.StatusError != "")
+            {
+                <div class="col-md-12">
+                    <div class="alert alert-warning" role="alert">
+                        <p><b>@previsioneTotaleListaOUT.StatusError</b></p>
+                    </div>
+                </div>
+            }
+
+            @if (previsioneTotaleListaOUT.Cerca != null)
+            {
+                <div class="col-md-12">
+                    <div class="box-body">
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Giorno</th>
+                                    <th>Tipo</th>
+                                    <th>Dettagli</th>
+                                    <th>Costo</th>
+                                    <th>Tipo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var cerca in cercaOUT.Cerca)
+                                {
+                                    <tr>
+                                        <td>@cerca.DataSpesa.ToString().Replace("00:00:00", "")</td>
+                                        <td><b><font color="@cerca.ColoreHTML.ToString()">@cerca.TipoAttivita.ToString()</font></b></td>
+                                        <td>@cerca.Dettagli.ToString()</td>
+                                        <td>@Math.Round((decimal)@cerca.Costo, 0)</td>
+                                        @if ((decimal)cerca.Costo < 0)
+                                        {
+                                            <td><font color="red"><i class="bi bi-arrow-down-circle-fill"></i></font></td>
+                                        }
+                                        else
+                                        {
+                                            <td><font color="green"><i class="bi bi-arrow-up-circle-fill"></i></font></td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <br />
+                    </div>
+                </div>
+                <br />
+            }
+            else
+            {
+                <div class="col-md-12">
+                    <div class="alert alert-primary" role="alert">
+                        <p><b>Non sono presenti Previsioni di Spese future.</b></p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+<hr />
+<Bottom></Bottom>
 
 @code {
+
+    private PrevisioneTotaleListaOUT previsioneTotaleListaOUT { get; set; } = new PrevisioneTotaleListaOUT();
+    public HttpClient httpClient = new HttpClient();
+    public decimal? totale { get; set; } = 0;
+    public int? numattivita { get; set; } = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            var response = await httpClient.GetStringAsync(StateMenagement.api_url + "api/Previsioni/ListaTotale/");
+            response = StateMenagement.JsonNormalized(response);
+            previsioneTotaleListaOUT = System.Text.Json.JsonSerializer.Deserialize<PrevisioneTotaleListaOUT>(response);
+            totale = previsioneTotaleListaOUT.Previsione.Sum(item => Convert.ToInt32(item.Costo));
+            numattivita = previsioneTotaleListaOUT.Previsione.Count();
+
+        }
+        catch (Exception e)
+        {
+            Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
+        }
+    }
 
 }
