@@ -21,13 +21,36 @@
         }
         else
         {
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="alert alert-primary" role="alert">
                     <div class="box-body">
                         <p>Num. Spese previste trovate:<b>@numattivita</b>&nbsp;&nbsp;&nbsp;Totale Spese previste: <b>@totale &euro;</b></p>
                     </div>
                 </div>
             </div>
+            @if (genericOUT.StatusError != null && genericOUT.StatusError != "")
+            {
+                if (genericOUT.Status == "OK")
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-success" role="alert">
+                                <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-success btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger" role="alert">
+                                <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-danger btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
             <hr />
             @if (previsioneTotaleListaOUT.StatusError != null && previsioneTotaleListaOUT.StatusError != "")
             {
@@ -60,7 +83,7 @@
                                         <td>@previsione.DescrizionePeriodo.ToString()</td>
                                         <td>@previsione.Descrizione.ToString()</td>
                                         <td>@Math.Round((decimal)@previsione.Costo, 0)&nbsp;&euro;</td>
-                                        <td></td>
+                                        <td><button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => deletePrev(previsione.ID))"><i class="bi bi-x-lg"></i></button></td>
                                     </tr>
                                 }
                             </tbody>
@@ -90,6 +113,7 @@
     public HttpClient httpClient = new HttpClient();
     public decimal? totale { get; set; } = 0;
     public int? numattivita { get; set; } = 0;
+    public GenericOUT genericOUT = new GenericOUT();
 
     protected override async Task OnInitializedAsync()
     {
@@ -107,6 +131,49 @@
         {
             Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
         }
+    }
+
+    private async Task deletePrev(int id)
+    {
+        //DEBUG
+        //Console.WriteLine("id:" + id.ToString());
+
+        try
+        {
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            var response = await httpClient.DeleteAsync(StateMenagement.api_url + "/api/Previsioni/Delete/" + id);
+
+            if (response.IsSuccessStatusCode)
+            {
+                HttpResponseMessage resp = response;
+                string res = await resp.Content.ReadAsStringAsync();
+                var responseJS = StateMenagement.JsonNormalized(res);
+
+                genericOUT = System.Text.Json.JsonSerializer.Deserialize<GenericOUT>(responseJS);
+
+                if (genericOUT.Status == "OK")
+                {
+                    genericOUT.StatusError = "Cancellazione Previsione di spesa eseguita correttamente";
+                }
+
+                await OnInitializedAsync();
+            }
+            else
+            {
+                Navigation.NavigateTo("/errore?errdesc=Si è verificato un errore nella cancellazione della Previsione di spesa");
+            }
+        }
+        catch (Exception e)
+        {
+            Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
+        }
+    }
+
+    private async Task refreshdel()
+    {
+        genericOUT.Status = null;
+        genericOUT.StatusError = null;
+        await OnInitializedAsync();
     }
 
 }
