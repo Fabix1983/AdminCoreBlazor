@@ -8,6 +8,7 @@
 @using ChartJs.Blazor.BarChart
 @using ChartJs.Blazor.PieChart
 @inject StateMenagement StateMenagement
+@inject IJSRuntime JsRuntime
 
 <PageTitle>Home</PageTitle>
 
@@ -694,35 +695,38 @@
     {
         //DEBUG
         //Console.WriteLine("id:" + id.ToString());
-
-        try
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Vuoi eliminare la voce?");
+        if (confirmed)
         {
-            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            var response = await httpClient.DeleteAsync(StateMenagement.api_url + "/api/Attivita/Delete/" + id);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                HttpResponseMessage resp = response;
-                string res = await resp.Content.ReadAsStringAsync();
-                var responseJS = StateMenagement.JsonNormalized(res);
+                httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+                var response = await httpClient.DeleteAsync(StateMenagement.api_url + "/api/Attivita/Delete/" + id);
 
-                genericOUT = System.Text.Json.JsonSerializer.Deserialize<GenericOUT>(responseJS);
-
-                if (genericOUT.Status == "OK")
+                if (response.IsSuccessStatusCode)
                 {
-                    genericOUT.StatusError = "Cancellazione Attività eseguita correttamente";
-                }
+                    HttpResponseMessage resp = response;
+                    string res = await resp.Content.ReadAsStringAsync();
+                    var responseJS = StateMenagement.JsonNormalized(res);
 
-                await DataCharge("", "");
+                    genericOUT = System.Text.Json.JsonSerializer.Deserialize<GenericOUT>(responseJS);
+
+                    if (genericOUT.Status == "OK")
+                    {
+                        genericOUT.StatusError = "Cancellazione Attività eseguita correttamente";
+                    }
+
+                    await DataCharge("", "");
+                }
+                else
+                {
+                    Navigation.NavigateTo("/errore?errdesc=Si è verificato un errore nella cancellazione dell'attività");
+                }
             }
-            else
+            catch (Exception e)
             {
-                Navigation.NavigateTo("/errore?errdesc=Si è verificato un errore nella cancellazione dell'attività");
+                Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
             }
-        }
-        catch (Exception e)
-        {
-            Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
         }
     }
 
@@ -870,35 +874,38 @@
     {
         //DEBUG
         //Console.WriteLine("id:" + id.ToString());
-
-        try
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Vuoi eliminare la previsione di spesa?");
+        if (confirmed)
         {
-            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            var response = await httpClient.DeleteAsync(StateMenagement.api_url + "/api/Previsioni/Delete/" + id);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                HttpResponseMessage resp = response;
-                string res = await resp.Content.ReadAsStringAsync();
-                var responseJS = StateMenagement.JsonNormalized(res);
+                httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+                var response = await httpClient.DeleteAsync(StateMenagement.api_url + "/api/Previsioni/Delete/" + id);
 
-                genericOUT = System.Text.Json.JsonSerializer.Deserialize<GenericOUT>(responseJS);
-
-                if (genericOUT.Status == "OK")
+                if (response.IsSuccessStatusCode)
                 {
-                    genericOUT.StatusError = "Cancellazione Previsione di spesa eseguita correttamente";
-                }
+                    HttpResponseMessage resp = response;
+                    string res = await resp.Content.ReadAsStringAsync();
+                    var responseJS = StateMenagement.JsonNormalized(res);
 
-                await DataCharge("", "");
+                    genericOUT = System.Text.Json.JsonSerializer.Deserialize<GenericOUT>(responseJS);
+
+                    if (genericOUT.Status == "OK")
+                    {
+                        genericOUT.StatusError = "Cancellazione Previsione di spesa eseguita correttamente";
+                    }
+
+                    await DataCharge("", "");
+                }
+                else
+                {
+                    Navigation.NavigateTo("/errore?errdesc=Si è verificato un errore nella cancellazione della Previsione di spesa");
+                }
             }
-            else
+            catch (Exception e)
             {
-                Navigation.NavigateTo("/errore?errdesc=Si è verificato un errore nella cancellazione della Previsione di spesa");
+                Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
             }
-        }
-        catch (Exception e)
-        {
-            Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
         }
     }
 }
