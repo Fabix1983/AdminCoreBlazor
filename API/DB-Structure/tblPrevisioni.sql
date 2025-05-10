@@ -4,6 +4,8 @@ CREATE TABLE [dbo].[tblPrevisioni](
 	[Giorno] [int] NOT NULL,
 	[Descrizione] [varchar](250) NOT NULL,
 	[Costo] [money] NOT NULL,
+	[AddebitoAutomatico] [int] NOT NULL,
+	[RifTipoAttivita] [int] NOT NULL,
  CONSTRAINT [PK_tblPrevisioni] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -11,11 +13,21 @@ CREATE TABLE [dbo].[tblPrevisioni](
 ) ON [PRIMARY]
 GO
 
+ALTER TABLE [dbo].[tblPrevisioni] ADD  CONSTRAINT [DF_tblPrevisioni_AddebitoAutomatico]  DEFAULT ((0)) FOR [AddebitoAutomatico]
+GO
+
 ALTER TABLE [dbo].[tblPrevisioni]  WITH CHECK ADD  CONSTRAINT [FK_tblPrevisioni_tblPeriodi] FOREIGN KEY([RifPeriodo])
 REFERENCES [dbo].[tblPeriodi] ([ID])
 GO
 
 ALTER TABLE [dbo].[tblPrevisioni] CHECK CONSTRAINT [FK_tblPrevisioni_tblPeriodi]
+GO
+
+ALTER TABLE [dbo].[tblPrevisioni]  WITH CHECK ADD  CONSTRAINT [FK_tblPrevisioni_tblTipoAttivita] FOREIGN KEY([RifTipoAttivita])
+REFERENCES [dbo].[tblTipoAttivita] ([ID])
+GO
+
+ALTER TABLE [dbo].[tblPrevisioni] CHECK CONSTRAINT [FK_tblPrevisioni_tblTipoAttivita]
 GO
 
 

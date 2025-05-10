@@ -18,6 +18,7 @@ namespace Shared.Class
         public int Giorno { get; set; }
         public string? Descrizione { get; set; }
         public decimal Costo { get; set; }
+        public int AddebitoAutomatico { get; set; }
     }
 
     public class PrevisioneIN
@@ -33,6 +34,10 @@ namespace Shared.Class
         [Display(Name = "Valore")]
         [Required]
         public decimal Costo { get; set; }
+        [Required]
+        public int AddebitoAutomatico { get; set; }
+        [Required]
+        public int RifTipoAttivita { get; set; }
     }
 
     public class PrevisioneTotaleListaOUT
@@ -49,5 +54,6 @@ namespace Shared.Class
         public string? Descrizione { get; set; }
         public decimal Costo { get; set; }
         public string? DescrizionePeriodo { get; set; }
+        public string? TipoAttivita { get; set; }
     }
 }
