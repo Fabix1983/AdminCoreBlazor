@@ -20,5 +20,8 @@ Licenza di rilascio: <b>MIT</b>
 
 ![Model](https://github.com/user-attachments/assets/ddec89fa-166a-43d0-a88f-c57980e4815c)
 
+![ModelloER-DB](https://github.com/user-attachments/assets/4c3029f1-3439-43f1-94d6-b4c4922b4809)
+
+
 
 
