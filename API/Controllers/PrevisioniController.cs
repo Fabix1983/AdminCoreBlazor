@@ -56,10 +56,15 @@ namespace API.Controllers
                                         "   Pre.Descrizione, " +
                                         "   Pre.Costo, " +
                                         "   Per.Anno, " +
-                                        "   Per.Mese " +
+                                        "   Per.Mese, " +
+                                        "   Pre.AddebitoAutomatico, " +
+                                        "   TA.Tipologia, " +
+                                        "   TA.ColoreHTML, " +
+                                        "   TA.TipoAttivita " +
                                         "FROM " +
                                         "   tblPrevisioni Pre " +
                                         "   INNER JOIN tblPeriodi Per ON Per.ID = Pre.RifPeriodo " +
+                                        "   INNER JOIN tblTipoAttivita TA ON TA.ID = Pre.RifTipoAttivita " +
                                         "WHERE " +
                                         "   Per.Anno = @Anno AND Per.Mese = @Mese " +
                                         "ORDER BY " +
@@ -87,7 +92,11 @@ namespace API.Controllers
                             ID = Convert.ToInt32(row["ID"]),
                             Giorno = Convert.ToInt32(row["Giorno"]),
                             Descrizione = row["Descrizione"].ToString(),
-                            Costo = Convert.ToDecimal(row["Costo"])                         
+                            Costo = Convert.ToDecimal(row["Costo"]) ,
+                            AddebitoAutomatico = Convert.ToInt32(row["AddebitoAutomatico"]),
+                            Tipologia = row["Tipologia"].ToString(),
+                            TipoAttivita = row["TipoAttivita"].ToString(),
+                            ColoreHTML = row["ColoreHTML"].ToString()
                         };
                         previsioneOUT.Previsione.Add(previsione);
                     }
@@ -141,10 +150,15 @@ namespace API.Controllers
                                         "   Pre.Costo, " +
                                         "   Per.Anno, " +
                                         "   Per.Mese, " +
-                                        "   Per.Descrizione AS DescrizionePeriodo " +
+                                        "   Per.Descrizione AS DescrizionePeriodo, " +
+                                        "   Pre.AddebitoAutomatico, " +
+                                        "   TA.Tipologia, " +
+                                        "   TA.ColoreHTML, " +
+                                        "   TA.TipoAttivita " +
                                         "FROM " +
                                         "   tblPrevisioni Pre " +
                                         "   INNER JOIN tblPeriodi Per ON Per.ID = Pre.RifPeriodo " +
+                                        "   INNER JOIN tblTipoAttivita TA ON TA.ID = Pre.RifTipoAttivita " +
                                         "ORDER BY " +
                                         "   Per.Anno, Per.Mese, Pre.Giorno ";
 
@@ -168,6 +182,10 @@ namespace API.Controllers
                             Descrizione = row["Descrizione"].ToString(),
                             Costo = Convert.ToDecimal(row["Costo"]),
                             DescrizionePeriodo = row["DescrizionePeriodo"].ToString(),
+                            AddebitoAutomatico = Convert.ToInt32(row["AddebitoAutomatico"]),
+                            Tipologia = row["Tipologia"].ToString(),
+                            TipoAttivita = row["TipoAttivita"].ToString(),
+                            ColoreHTML = row["ColoreHTML"].ToString()
                         };
                         previsioneOUT.Previsione.Add(previsione);
                     }
@@ -259,7 +277,7 @@ namespace API.Controllers
                 try
                 {
                     connection.Open();
-                    var command = new SqlCommand("EXEC spPrevisione_Nuova @Giorno, @RifPeriodo, @Descrizione, @Tipologia, @Costo", connection);
+                    var command = new SqlCommand("EXEC spPrevisione_Nuova @Giorno, @RifPeriodo, @Descrizione, @Tipologia, @Costo, @AddebitoAutomatico, @RifTipoAttivita", connection);
                     command.Parameters.Add("@Giorno", SqlDbType.Int, 4);
                     command.Parameters["@Giorno"].Value = previsione.Giorno;
                     command.Parameters.Add("@RifPeriodo", SqlDbType.Int, 4);
@@ -270,6 +288,10 @@ namespace API.Controllers
                     command.Parameters["@Tipologia"].Value = "Costo";
                     command.Parameters.Add("@Costo", SqlDbType.Money, 8);
                     command.Parameters["@Costo"].Value = previsione.Costo;
+                    command.Parameters.Add("@AddebitoAutomatico", SqlDbType.Int, 4);
+                    command.Parameters["@AddebitoAutomatico"].Value = previsione.AddebitoAutomatico;
+                    command.Parameters.Add("@RifTipoAttivita", SqlDbType.Int, 4);
+                    command.Parameters["@RifTipoAttivita"].Value = previsione.RifTipoAttivita;
                     command.ExecuteNonQuery();
                     previsioneNewOUT.Status = "OK";
                     previsioneNewOUT.StatusError = "";

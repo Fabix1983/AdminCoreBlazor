@@ -19,6 +19,10 @@ namespace Shared.Class
         public string? Descrizione { get; set; }
         public decimal Costo { get; set; }
         public int AddebitoAutomatico { get; set; }
+        public string? Tipologia { get; set; }
+        public string? TipoAttivita { get; set; }
+        public string? ColoreHTML { get; set; }
+
     }
 
     public class PrevisioneIN
@@ -54,6 +58,9 @@ namespace Shared.Class
         public string? Descrizione { get; set; }
         public decimal Costo { get; set; }
         public string? DescrizionePeriodo { get; set; }
+        public int AddebitoAutomatico { get; set; }
+        public string? Tipologia { get; set; }
         public string? TipoAttivita { get; set; }
+        public string? ColoreHTML { get; set; }
     }
 }
