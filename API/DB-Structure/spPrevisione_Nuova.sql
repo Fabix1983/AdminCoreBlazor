@@ -28,8 +28,8 @@ SET @Descrizione = LTRIM(RTRIM(@Descrizione))
 SET XACT_ABORT ON
 BEGIN TRAN tr
 
-	INSERT INTO tblPrevisioni(Giorno, RifPeriodo, Descrizione, Costo, AddebitoAutomatico, RifTipoAttivita)
-	VALUES(@iGiorno, @RifPeriodo, @Descrizione, @Costo, @AddebitoAutomatico, @RifTipoAttivita)
+	INSERT INTO tblPrevisioni(Giorno, RifPeriodo, Descrizione, Costo, AddebitoAutomatico, RifTipoAttivita, Gestita)
+	VALUES(@iGiorno, @RifPeriodo, @Descrizione, @Costo, @AddebitoAutomatico, @RifTipoAttivita, 0)
 
 COMMIT TRAN tr
 
