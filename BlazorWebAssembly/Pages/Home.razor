@@ -189,7 +189,30 @@
                                         </label>
                                     </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
+                                        <label>
+                                            Tipo Attivita:
+                                                <InputSelect id="department" @bind-Value="modelPre.RifTipoAttivita" class="form-select" aria-label="Default select example">
+                                                <option value="0">Seleziona una tipologia</option>
+                                                @foreach (var dept in tipoattOUT.TipoAttivita)
+                                                {
+                                                    <option value="@dept.ID">@dept.Tipo</option>
+                                                }
+                                            </InputSelect>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label>
+                                            Auto:
+                                            <InputSelect id="department" @bind-Value="modelPre.AddebitoAutomatico" class="form-select" aria-label="Default select example">
+                                                <option value="0">NO</option>
+                                                <option value="1">SI</option>
+                                            </InputSelect>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-3">
                                         <label>
                                             <br>
                                             <button type="submit" value="Inserisci" class="btn btn-warning">Procedi</button>
@@ -368,8 +391,10 @@
                                             <tr>
                                                 <th>Giorno</th>
                                                 <th>Descrizione</th>
+                                                <th>Tipo</th>
                                                 <th>Costo</th>
-                                                <th>Azioni</th>
+                                                <th>Auto</th>
+                                                <th>Azione</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -378,7 +403,16 @@
                                                 <tr>
                                                     <td>@prev.Giorno.ToString()</td>
                                                     <td>@prev.Descrizione.ToString()</td>
+                                                    <td><b><font color="@prev.ColoreHTML.ToString()">@prev.TipoAttivita.ToString()</font></b></td>
                                                     <td>@Math.Round((decimal)prev.Costo, 0)</td>
+                                                    @if (Convert.ToInt32(prev.AddebitoAutomatico) == 1)
+                                                    {
+                                                        <td>SI</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>NO</td>
+                                                    }
                                                     <td><button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => deletePrev(prev.ID))"><i class="bi bi-x-lg"></i></button></td>
                                                 </tr>
                                             }
@@ -812,6 +846,13 @@
             return;
         }
 
+        if (modelPre.RifTipoAttivita == 0)
+        {
+            genericOUT.Status = "KO";
+            genericOUT.StatusError = "ERRORE: Riferimento Tipo Attivita Assente!";
+            return;
+        }
+
         if (modelPre.Descrizione == "")
         {
             genericOUT.Status = "KO";
@@ -854,6 +895,8 @@
                     modelPre.RifPeriodo = periodoOUT.ID;
                     modelPre.Descrizione = "";
                     modelPre.Costo = 0;
+                    modelPre.AddebitoAutomatico = 0;
+                    modelPre.RifTipoAttivita = 0;
                 }
 
                 await DataCharge("", "");

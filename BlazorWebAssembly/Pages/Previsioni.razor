@@ -64,7 +64,7 @@
 
             @if (previsioneTotaleListaOUT.Previsione != null)
             {
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <div class="box-body">
                         <table class="table table-striped">
                             <thead class="thead-dark">
@@ -72,7 +72,9 @@
                                     <th>Giorno</th>
                                     <th>Periodo</th>
                                     <th>Descrizione</th>
+                                    <th>Tipo Costo</th>
                                     <th>Costo</th>
+                                    <th>Addebito Automatico</th>
                                     <th>Azione</th>
                                 </tr>
                             </thead>
@@ -83,7 +85,15 @@
                                         <td>@previsione.Giorno.ToString()</td>
                                         <td>@previsione.DescrizionePeriodo.ToString()</td>
                                         <td>@previsione.Descrizione.ToString()</td>
+                                        <td><b><font color="@previsione.ColoreHTML.ToString()">@previsione.TipoAttivita.ToString()</font></b></td>
                                         <td>@Math.Round((decimal)@previsione.Costo, 0)&nbsp;&euro;</td>
+                                        @if (Convert.ToInt32(previsione.AddebitoAutomatico) == 1)
+                                        {
+                                            <td>SI</td>
+                                        }else
+                                        {
+                                            <td>NO</td>
+                                        }                                        
                                         <td><button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => deletePrev(previsione.ID))"><i class="bi bi-x-lg"></i></button></td>
                                     </tr>
                                 }
