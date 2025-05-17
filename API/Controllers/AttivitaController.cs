@@ -11,6 +11,7 @@ using System;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Reflection;
 using Shared.Class;
+using System.Diagnostics;
 
 namespace API.Controllers
 {
@@ -26,6 +27,47 @@ namespace API.Controllers
         {
             _logger = logger;
             _configuration = configuration;
+        }
+
+        // GET: api/Attivita/Inizialize
+        [HttpGet("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public JsonResult Inizialize()
+        {
+            string json = "";
+            GenericOUT genout = new GenericOUT();   
+
+            var connString = _configuration.GetConnectionString("Default");
+
+            string connStringEscape = connString.ToString().Replace("\\\\", "\\");
+
+            // dichiaro il chiamante con Certificato Valido
+            connStringEscape = connStringEscape + ";TrustServerCertificate=true";
+
+            using (SqlConnection connection = new SqlConnection(connStringEscape))
+            {
+                try
+                {
+                    connection.Open();
+                    var command = new SqlCommand("EXEC spInizialize", connection);
+                    command.ExecuteNonQuery();
+
+                    genout.Status = "OK";
+                    genout.StatusError = "";
+
+                }
+                catch (Exception e)
+                {
+                    genout.Status = "KO";
+                    genout.StatusError = "Error " + e.ToString();
+
+                }
+                connection.Close();
+            }
+
+            json = JsonConvert.SerializeObject(genout, Formatting.None);
+            return Json(json);
         }
 
         // GET: api/Attivita/Periodo/anno/mese
