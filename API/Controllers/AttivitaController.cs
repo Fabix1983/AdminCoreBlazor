@@ -303,13 +303,12 @@ namespace API.Controllers
                     if (i <= 0)
                     {
                         attivitaOUT.StatusError = "Nessuna attivita trovata.";
-                    }                 
+                    }
                 }
                 catch (Exception e)
                 {
                     attivitaOUT.Status = "KO";
                     attivitaOUT.StatusError = e.ToString();
-
                 }
                 connection.Close();
             }
