@@ -630,8 +630,12 @@
 
         try
         {
+            //SP inizializzazione elementi a DB
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            var response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Attivita/TipoAttivitaList");
+            var response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Attivita/Inizialize");
+
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Attivita/TipoAttivitaList");
             response = StateMenagement.JsonNormalized(response);
 
             tipoattOUT = System.Text.Json.JsonSerializer.Deserialize<TipoAttivitaOUT>(response);
