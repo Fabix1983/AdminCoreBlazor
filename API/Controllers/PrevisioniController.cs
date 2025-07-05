@@ -208,6 +208,76 @@ namespace API.Controllers
             return Json(json);
         }
 
+        // GET: api/Previsioni/ListaPeriodi
+        [HttpGet("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public JsonResult ListaPeriodi()
+        {
+            string json = "";
+            ListaPeriodiOUT periodiOUT = new ListaPeriodiOUT();
+
+            var connString = _configuration.GetConnectionString("Default");
+
+            string connStringEscape = connString.ToString().Replace("\\\\", "\\");
+
+            // dichiaro il chiamante con Certificato Valido
+            connStringEscape = connStringEscape + ";TrustServerCertificate=true";
+
+            using (SqlConnection connection = new SqlConnection(connStringEscape))
+            {
+                try
+                {
+                    connection.Open();
+                    int i = 0;
+                    DataTable dt = new DataTable();
+
+                    string sSQL_Select = "SELECT ID, Descrizione, Anno, Mese FROM tblPeriodi WHERE Anno >= YEAR(GETDATE()) AND Mese >= MONTH(GETDATE()) AND Anno <= YEAR(GETDATE())+5  ORDER BY Anno, Mese";
+
+
+                    periodiOUT.Status = "OK";
+
+                    SqlCommand cmd = new SqlCommand(sSQL_Select, connection);
+
+                    SqlDataAdapter adp = new SqlDataAdapter(cmd);
+                    adp.Fill(dt);
+
+                    periodiOUT.Periodo = new List<Periodo>();
+
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        i++;
+                        Periodo periodo = new Periodo
+                        {
+                            ID = Convert.ToInt32(row["ID"]),
+
+                            Descrizione = row["Descrizione"].ToString(),
+
+                            Anno = Convert.ToInt32(row["Anno"]),
+
+                            Mese = Convert.ToInt32(row["Mese"]),
+                        };
+                        periodiOUT.Periodo.Add(periodo);
+                    }
+
+                    if (i <= 0)
+                    {
+                        periodiOUT.StatusError = "Nessuna previsione trovata.";
+                    }
+                }
+                catch (Exception e)
+                {
+                    periodiOUT.Status = "KO";
+                    periodiOUT.StatusError = e.ToString();
+
+                }
+                connection.Close();
+            }
+
+            json = JsonConvert.SerializeObject(periodiOUT, Formatting.None);
+            return Json(json);
+        }
+
         // DELETE: api/Previsioni/Delete/id
         [HttpDelete("[action]/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
