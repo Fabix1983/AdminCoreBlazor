@@ -232,8 +232,23 @@ namespace API.Controllers
                     int i = 0;
                     DataTable dt = new DataTable();
 
-                    string sSQL_Select = "SELECT ID, Descrizione, Anno, Mese FROM tblPeriodi WHERE Anno >= YEAR(GETDATE()) AND Mese >= MONTH(GETDATE()) AND Anno <= YEAR(GETDATE())+5  ORDER BY Anno, Mese";
-
+                    string sSQL_Select = "SELECT " +
+	                                     "   ID, " + 
+	                                     "   Descrizione, " + 
+	                                     "   Anno, " +  
+	                                     "   Mese " +
+                                         "FROM " +
+	                                     "    tblPeriodi " + 
+                                         "WHERE " +
+	                                     "    Anno >= YEAR(GETDATE()) AND " +
+	                                     "    Anno <= YEAR(GETDATE())+5 AND " +
+	                                     "    CASE " +
+		                                 "        WHEN Anno = YEAR(GETDATE()) AND Mese >= MONTH(GETDATE()) THEN 1 " +
+		                                 "        WHEN Anno > YEAR(GETDATE()) THEN 1 " +
+		                                 "        ELSE 0 " +
+	                                     "    END = 1 " +
+                                         "ORDER BY " +
+	                                     "    Anno, Mese";
 
                     periodiOUT.Status = "OK";
 
