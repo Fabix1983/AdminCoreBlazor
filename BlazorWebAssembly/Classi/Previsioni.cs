@@ -62,4 +62,19 @@ namespace Shared.Class
         public string? TipoAttivita { get; set; }
         public string? ColoreHTML { get; set; }
     }
+
+    public class ListaPeriodiOUT
+    {
+        public String? Status { get; set; }
+        public String? StatusError { get; set; }
+        public List<Periodo>? Periodo { get; set; }
+    }
+
+    public class Periodo
+    {
+        public int ID { get; set; }
+        public string? Descrizione { get; set; }
+        public int Anno { get; set; }
+        public int Mese { get; set; }
+    }
 }

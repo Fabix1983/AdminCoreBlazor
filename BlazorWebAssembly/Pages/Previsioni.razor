@@ -22,6 +22,7 @@
         }
         else
         {
+
             <div class="col-md-6">
                 <div class="alert alert-primary" role="alert">
                     <div class="box-body">
@@ -29,6 +30,87 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-6">
+                <div class="box-body">
+                    <div class="alert alert-warning" role="alert">
+                        <b>Nuova Previsione di spesa</b>
+                        <EditForm Model="@modelPre" OnValidSubmit="OnValidSubmitPre">
+                            <DataAnnotationsValidator />
+                            <ValidationMessage For="@(() => modelPre.Giorno)"></ValidationMessage>
+                            <ValidationMessage For="@(() => modelPre.Descrizione)"></ValidationMessage>
+                            <ValidationMessage For="@(() => modelPre.Costo)"></ValidationMessage>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>
+                                        Periodo:
+                                        <InputSelect id="department" @bind-Value="modelPre.RifPeriodo" class="form-select" aria-label="Default select example">
+                                            <option value="0">Periodo...</option>
+                                            @foreach (var dept in listaperiodiOUT.Periodo)
+                                            {
+                                                <option value="@dept.ID">@dept.Descrizione</option>
+                                            }
+                                        </InputSelect>
+                                    </label>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label>
+                                        Giorno:
+                                        <InputNumber @bind-Value="modelPre.Giorno" required class="form-control" style="width: 4em" Min="1" Max="@ultimogiornodelmese" />
+                                    </label>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <label>
+                                        Dettagli:
+                                        <InputText @bind-Value="modelPre.Descrizione" class="form-control" />
+                                    </label>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label>
+                                        Importo &euro;:
+                                        <InputNumber @bind-Value="modelPre.Costo" required class="form-control" style="width: 6em" Min="1" />
+                                    </label>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label>
+                                        Tipo Attivita:
+                                        <InputSelect id="department" @bind-Value="modelPre.RifTipoAttivita" class="form-select" aria-label="Default select example">
+                                            <option value="0">Seleziona una tipologia</option>
+                                            @foreach (var dept in tipoattOUT.TipoAttivita)
+                                            {
+                                                <option value="@dept.ID">@dept.Tipo</option>
+                                            }
+                                        </InputSelect>
+                                    </label>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>
+                                        Auto:
+                                        <InputSelect id="department" @bind-Value="modelPre.AddebitoAutomatico" class="form-select" aria-label="Default select example">
+                                            <option value="0">NO</option>
+                                            <option value="1">SI</option>
+                                        </InputSelect>
+                                    </label>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>
+                                        <br>
+                                        <button type="submit" value="Inserisci" class="btn btn-warning">Procedi</button>
+                                    </label>
+                                </div>
+                            </div>
+                        </EditForm>
+                    </div>
+                </div>
+            </div>
+
             @if (genericOUT.StatusError != null && genericOUT.StatusError != "")
             {
                 if (genericOUT.Status == "OK")
@@ -126,16 +208,43 @@
     public int? numattivita { get; set; } = 0;
     public GenericOUT genericOUT = new GenericOUT();
 
+    public int? annoPre { get; set; } = 0;
+    public int? mesePre { get; set; } = 0;
+    private PrevisioneIN modelPre { get; set; } = new();
+    public ListaPeriodiOUT listaperiodiOUT = new ListaPeriodiOUT();
+    public TipoAttivitaOUT tipoattOUT = new TipoAttivitaOUT();
+
+    public int ultimogiornodelmese { get; set; } = 0;
+    public int? anno { get; set; } = 0;
+    public int? mese { get; set; } = 0;
+
     protected override async Task OnInitializedAsync()
     {
         try
         {
+            anno = Int32.Parse(DateTime.Now.ToString("yyyy"));
+            mese = Int32.Parse(DateTime.Now.ToString("MM"));
+
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
             var response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Previsioni/ListaTotale");
             response = StateMenagement.JsonNormalized(response);
             previsioneTotaleListaOUT = System.Text.Json.JsonSerializer.Deserialize<PrevisioneTotaleListaOUT>(response);
             totale = previsioneTotaleListaOUT.Previsione.Sum(item => Convert.ToInt32(item.Costo));
             numattivita = previsioneTotaleListaOUT.Previsione.Count();
+
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Previsioni/ListaPeriodi");
+            response = StateMenagement.JsonNormalized(response);
+            listaperiodiOUT = System.Text.Json.JsonSerializer.Deserialize<ListaPeriodiOUT>(response);
+
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Attivita/TipoAttivitaList");
+            response = StateMenagement.JsonNormalized(response);
+            tipoattOUT = System.Text.Json.JsonSerializer.Deserialize<TipoAttivitaOUT>(response);
+
+            modelPre.Giorno = Convert.ToInt32(DateTime.Now.ToString("dd"));
+
+            ultimogiornodelmese = DateTime.DaysInMonth(Convert.ToInt32(anno), Convert.ToInt32(mese));
 
         }
         catch (Exception e)
@@ -188,6 +297,91 @@
         genericOUT.Status = null;
         genericOUT.StatusError = null;
         await OnInitializedAsync();
+    }
+
+    private async Task OnValidSubmitPre()
+    {
+
+        // DEBUG
+        /*
+        Console.WriteLine("Giorno:" + modelPre.Giorno);
+        Console.WriteLine("RifPeriodo:" + modelPre.RifPeriodo);
+        Console.WriteLine("Descrizione:" + modelPre.Descrizione);
+        Console.WriteLine("Costo:" + modelPre.Costo);
+        */
+
+        if (modelPre.RifPeriodo == 0)
+        {
+            genericOUT.Status = "KO";
+            genericOUT.StatusError = "ERRORE: Riferimento Periodo Assente!";
+            return;
+        }
+
+        if (modelPre.RifTipoAttivita == 0)
+        {
+            genericOUT.Status = "KO";
+            genericOUT.StatusError = "ERRORE: Riferimento Tipo Attivita Assente!";
+            return;
+        }
+
+        if (modelPre.Descrizione == "")
+        {
+            genericOUT.Status = "KO";
+            genericOUT.StatusError = "ERRORE: Descrizione Previsione Assente!";
+            return;
+        }
+
+        if (modelPre.Costo == 0 || modelPre.Giorno == 0)
+        {
+            genericOUT.Status = "KO";
+            genericOUT.StatusError = "ERRORE: Dati Mancanti!";
+            return;
+        }
+
+        try
+        {
+
+            var json = System.Text.Json.JsonSerializer.Serialize(modelPre);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            httpClient.DefaultRequestHeaders.Accept.Clear();
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
+
+            var response = await httpClient.PostAsync(StateMenagement.api_url + "/api/Previsioni/New", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                HttpResponseMessage resp = response;
+                string res = await resp.Content.ReadAsStringAsync();
+                var responseJS = StateMenagement.JsonNormalized(res);
+
+                genericOUT = System.Text.Json.JsonSerializer.Deserialize<GenericOUT>(responseJS);
+
+                if (genericOUT.Status == "OK")
+                {
+                    genericOUT.StatusError = "Nuova spesa prevista inserita correttamente";
+
+                    modelPre.Giorno = Convert.ToInt32(DateTime.Now.ToString("dd"));
+                    modelPre.RifPeriodo = 0;
+                    modelPre.Descrizione = "";
+                    modelPre.Costo = 0;
+                    modelPre.AddebitoAutomatico = 0;
+                    modelPre.RifTipoAttivita = 0;
+                }
+
+                await OnInitializedAsync();
+            }
+            else
+            {
+                Navigation.NavigateTo("/errore?errdesc=Si è verificato un errore nell'inserimento della nuova previsione");
+            }
+        }
+        catch (Exception e)
+        {
+            Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
+        }
+
     }
 
 }
