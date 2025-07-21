@@ -401,7 +401,8 @@ namespace API.Controllers
                             TipoAttivita = row["TipoAttivita"].ToString(),
                             ColoreHTML = row["ColoreHTML"].ToString(),
                             Descrizione = row["Descrizione"].ToString(),
-                            TotAtt = Convert.ToDecimal(row["TotAtt"])
+                            TotAtt = Convert.ToDecimal(row["TotAtt"]),
+                            Media = Convert.ToDecimal(row["Media"])
                         };
                         aggregatoAttivitaOUT.AggregatoAttivita.Add(aggregatoAttivita);
                     }

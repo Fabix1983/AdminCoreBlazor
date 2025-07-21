@@ -46,6 +46,7 @@ namespace Shared.Class
         public string? ColoreHTML { get; set; }
         public string? Descrizione { get; set; }
         public decimal TotAtt { get; set; }
+        public decimal Media { get; set; }
     }
 
     public class DatiSuntoOUT
