@@ -12,6 +12,18 @@
 
 <PageTitle>Home</PageTitle>
 
+<style>
+    /* Sovrascrive l'opacità predefinita per rendere il modale solido */
+    .modal.show {
+        opacity: 1 !important;
+    }
+
+    /* Rimuovi la trasparenza iniziale per l'effetto di entrata */
+    .modal.fade {
+        transition: none !important;
+    }
+</style>
+
 @{
     DateTime now = DateTime.Now;
     var startDate = new DateTime(now.Year, now.Month, 1);
@@ -26,6 +38,28 @@
     &nbsp;&nbsp;<button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => next())"><i class="bi bi-arrow-right"></i></button>
 </h1>
 <hr />
+
+@if (confirmation && !confirmationExplicit)
+{
+    <div class="modal fade show bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" style="display:block" id="modalpp">
+        <div class="modal-dialog text-center modal-dialog-centered" role="document">
+            <div class="modal-content rounded-4 shadow">
+                <div class="modal-header text-center alert-danger border-bottom-0">
+                    <h5 class="modal-title text-center">@popuptitle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="ConfirmClose"></button>
+                </div>
+                <div class="modal-body text-center alert-danger">
+                    <h5><b>@popupbody</b></h5>
+                </div>
+                <div class="modal-footer alert-danger flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick="ConfirmClose">Chiudi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop fade show"></div>
+}
 
 <div class="container-fluid">
     <div class="row">
@@ -436,6 +470,24 @@
                                     <br />
                                 }
 
+                                <div class="modal" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Modal title</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Modal body text goes here.</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 @if (mesefuturo != 1)
                                 {
                                     <div class="alert alert-secondary" role="alert">
@@ -512,6 +564,17 @@
 
     public int ultimogiornodelmese { get; set; } = 0;
     public int mesefuturo { get; set; } = 0;
+
+    private bool confirmation = false;
+    string popuptitle = "";
+    string popupbody = "";
+    private bool confirmationExplicit = false;
+
+    private void ConfirmClose()
+    {
+        confirmation = false;
+        confirmationExplicit = true;
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -697,6 +760,16 @@
             totentrate = aggregatoAttivitaOUT.AggregatoAttivita.Where(item => Convert.ToInt32(item.TotAtt) > 0).Sum(item => Convert.ToInt32(item.TotAtt));
             bilancio = aggregatoAttivitaOUT.AggregatoAttivita.Sum(item => Convert.ToInt32(item.TotAtt));
             bilancio_previsionale = bilancio + totprevisionespesaprevista;
+
+            @foreach (var prev in previsioneOUT.Previsione)
+            {
+                @if (Convert.ToInt32(prev.Giorno) < Convert.ToInt32(DateTime.Now.ToString("dd")) && mesefuturo != 1)
+                {
+                    popuptitle = "Previsioni di spesa SCADUTA";
+                    popupbody = popupbody + " - " + prev.Descrizione.ToString() + " " + Math.Round((decimal)prev.Costo, 0).ToString() + " €";
+                    confirmation = true;
+                }
+            }
         }
         catch (Exception e)
         {
