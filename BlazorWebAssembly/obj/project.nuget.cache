@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "mOIg+xdMVc8=",
+  "dgSpecHash": "MRvmqLKZ7ME=",
   "success": true,
   "projectFilePath": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\BlazorWebAssembly.csproj",
   "expectedPackageFiles": [
@@ -31,7 +31,7 @@
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.jsinterop\\8.0.0\\microsoft.jsinterop.8.0.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.jsinterop.webassembly\\8.0.0\\microsoft.jsinterop.webassembly.8.0.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.net.illink.tasks\\8.0.22\\microsoft.net.illink.tasks.8.0.22.nupkg.sha512",
-    "C:\\Users\\PC\\.nuget\\packages\\microsoft.net.sdk.webassembly.pack\\9.0.11\\microsoft.net.sdk.webassembly.pack.9.0.11.nupkg.sha512",
+    "C:\\Users\\PC\\.nuget\\packages\\microsoft.net.sdk.webassembly.pack\\10.0.1\\microsoft.net.sdk.webassembly.pack.10.0.1.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\system.io.pipelines\\8.0.0\\system.io.pipelines.8.0.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512",

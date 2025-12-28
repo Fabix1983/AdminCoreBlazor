@@ -208,6 +208,82 @@ namespace API.Controllers
             return Json(json);
         }
 
+        // GET: api/Previsioni/ListaTotaleAggregata
+        [HttpGet("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public JsonResult ListaTotaleAggregata()
+        {
+            string json = "";
+            PrevisioneTotaleAggregatiListaOUT previsioneOUT = new PrevisioneTotaleAggregatiListaOUT();
+
+            var connString = _configuration.GetConnectionString("Default");
+
+            string connStringEscape = connString.ToString().Replace("\\\\", "\\");
+
+            // dichiaro il chiamante con Certificato Valido
+            connStringEscape = connStringEscape + ";TrustServerCertificate=true";
+
+            using (SqlConnection connection = new SqlConnection(connStringEscape))
+            {
+                try
+                {
+                    connection.Open();
+                    int i = 0;
+                    DataTable dt = new DataTable();
+
+                    string sSQL_Select = "SELECT " +
+                                         "  SUM(Pre.Costo) AS Costo, " +
+                                         "  TA.TipoAttivita, " +
+                                         "  TA.ColoreHTML " +
+                                         "FROM " +
+                                         "  tblPrevisioni Pre " +
+                                         "  INNER JOIN tblPeriodi Per ON Per.ID = Pre.RifPeriodo " +
+                                         "  INNER JOIN tblTipoAttivita TA ON TA.ID = Pre.RifTipoAttivita " +
+                                         "GROUP BY " +
+                                         "   TA.TipoAttivita, TA.ColoreHTML " +
+                                         "ORDER BY " +
+                                         "  SUM(Pre.Costo) ";
+
+                    previsioneOUT.Status = "OK";
+
+                    SqlCommand cmd = new SqlCommand(sSQL_Select, connection);
+
+                    SqlDataAdapter adp = new SqlDataAdapter(cmd);
+                    adp.Fill(dt);
+
+                    previsioneOUT.Previsione = new List<PrevisioneTotaleAggregati>();
+
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        i++;
+                        PrevisioneTotaleAggregati previsione = new PrevisioneTotaleAggregati
+                        {
+                            Costo = Convert.ToDecimal(row["Costo"]),
+                            TipoAttivita = row["TipoAttivita"].ToString(),
+                            ColoreHTML = row["ColoreHTML"].ToString()
+                        };
+                        previsioneOUT.Previsione.Add(previsione);
+                    }
+
+                    if (i <= 0)
+                    {
+                        previsioneOUT.StatusError = "Nessuna previsione trovata.";
+                    }
+                }
+                catch (Exception e)
+                {
+                    previsioneOUT.Status = "KO";
+                    previsioneOUT.StatusError = e.ToString();
+
+                }
+                connection.Close();
+            }
+
+            json = JsonConvert.SerializeObject(previsioneOUT, Formatting.None);
+            return Json(json);
+        }
+
         // GET: api/Previsioni/ListaPeriodi
         [HttpGet("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
