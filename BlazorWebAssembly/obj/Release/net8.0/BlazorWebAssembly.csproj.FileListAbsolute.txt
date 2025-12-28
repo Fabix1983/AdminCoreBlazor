@@ -1041,11 +1041,11 @@ C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\compressed\gxz2mgc0ta-{0}-tptq2av103-tptq2av103.gz
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\compressed\ukp8cb27mf-{0}-lfu7j35m59-lfu7j35m59.gz
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\compressed\jijsh4mzkr-{0}-oyz0vx2fzb-oyz0vx2fzb.gz
-C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\compressed\7rjygah7pu-{0}-vitvqdlo0s-vitvqdlo0s.gz
-C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\compressed\20k1jvogj1-{0}-cz8lc8o7t2-cz8lc8o7t2.gz
-C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\compressed\vke2gz502p-{0}-ktfn7g74cf-ktfn7g74cf.gz
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\staticwebassets.build.json.cache
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\staticwebassets.build.endpoints.json
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\swae.build.ex.cache
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\BlazorWe.B026F7F9.Up2Date
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\compressed\7rjygah7pu-{0}-jv3qvh0bro-jv3qvh0bro.gz
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\compressed\20k1jvogj1-{0}-scvcldzs8f-scvcldzs8f.gz
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\compressed\vke2gz502p-{0}-9ck17ow1qa-9ck17ow1qa.gz
