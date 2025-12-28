@@ -1,5 +1,6 @@
 ﻿@page "/previsioni"
 @using System.ComponentModel.DataAnnotations;
+@using ChartJs.Blazor.BarChart
 @using Shared.Class
 @inject NavigationManager Navigation
 @using System.Net.Http
@@ -22,19 +23,103 @@
         }
         else
         {
+            <!--Gestione SEGNALAZIONI-->
+            @if (genericOUT.StatusError != null && genericOUT.StatusError != "")
+            {
+                if (genericOUT.Status == "OK")
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-success" role="alert">
+                                <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-success btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger" role="alert">
+                                <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-danger btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
 
-            <div class="col-md-6">
+            @if (previsioneTotaleListaOUT.StatusError != null && previsioneTotaleListaOUT.StatusError != "")
+            {
+                <div class="col-md-12">
+                    <div class="alert alert-warning" role="alert">
+                        <p><b>@previsioneTotaleListaOUT.StatusError</b></p>
+                    </div>
+                </div>
+            }
+
+            <!--Primo blocco-->
+            <div class="col-md-3">
                 <div class="alert alert-primary" role="alert">
                     <div class="box-body">
-                        <p>Num. Spese previste trovate:<b>@numattivita</b>&nbsp;&nbsp;&nbsp;Totale Spese previste: <b>@totale &euro;</b></p>
+                        <p><b>Riepilogo Previsione di spesa</b></p>
+                        <p>Previsioni di Spesa Nr.:<b>@numattivita</b></p>
+                        <p>Totale Previsioni di Spesa: <b>@totale &euro;</b></p>
                     </div>
                 </div>
             </div>
 
+            <!--Secondo blocco-->
+            <div class="col-md-3">
+                <div class="alert alert-secondary" role="alert">
+                    <div class="box-body">
+                        <p><b>Aggregati Previsione di spesa</b></p>
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Tipologia</th>
+                                    <th>Valore</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    _configBar.Data.Labels.Clear();
+                                    _configBar.Data.Datasets.Clear();
+                                    y = 0;
+                                }
+                                @foreach (var previsione in previsioneTotaleAggregatiListaOUT.Previsione)
+                                {
+                                    <tr>
+                                        <td><b><font color="@previsione.ColoreHTML.ToString()">@previsione.TipoAttivita.ToString()</font></b></td>
+                                        @if (Math.Round((decimal)previsione.Costo, 0) < 0)
+                                        {
+                                            <td><font color="red">@Math.Round((decimal)previsione.Costo, 0)</font></td>
+                                            _configBar.Data.Labels.Add(previsione.TipoAttivita.ToString());
+                                            bardataset.Add(Convert.ToInt32(previsione.Costo) * -1);
+                                            chart_color_assey[y] = previsione.ColoreHTML.ToString();
+                                        }
+                                        else
+                                        {
+                                            <td><font color="green">@Math.Round((decimal)previsione.Costo, 0)</font></td>
+                                        }
+                                    </tr>
+                                    y = y + 1;
+                                }
+                                @if (y > 1)
+                                {
+                                    bardataset.BackgroundColor = chart_color_assey;
+                                    _configBar.Data.Datasets.Add(bardataset);
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!--Terzo blocco-->
             <div class="col-md-6">
                 <div class="box-body">
                     <div class="alert alert-warning" role="alert">
-                        <b>Nuova Previsione di spesa</b>
+                        <p><b>Nuova Previsione di spesa</b></p>
                         <EditForm Model="@modelPre" OnValidSubmit="OnValidSubmitPre">
                             <DataAnnotationsValidator />
                             <ValidationMessage For="@(() => modelPre.Giorno)"></ValidationMessage>
@@ -111,38 +196,7 @@
                 </div>
             </div>
 
-            @if (genericOUT.StatusError != null && genericOUT.StatusError != "")
-            {
-                if (genericOUT.Status == "OK")
-                {
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-success" role="alert">
-                                <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-success btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
-                            </div>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-danger" role="alert">
-                                <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-danger btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
-                            </div>
-                        </div>
-                    </div>
-                }
-            }
             <hr />
-            @if (previsioneTotaleListaOUT.StatusError != null && previsioneTotaleListaOUT.StatusError != "")
-            {
-                <div class="col-md-12">
-                    <div class="alert alert-warning" role="alert">
-                        <p><b>@previsioneTotaleListaOUT.StatusError</b></p>
-                    </div>
-                </div>
-            }
 
             @if (previsioneTotaleListaOUT.Previsione != null)
             {
@@ -172,16 +226,23 @@
                                         @if (Convert.ToInt32(previsione.AddebitoAutomatico) == 1)
                                         {
                                             <td>SI</td>
-                                        }else
+                                        }
+                                        else
                                         {
                                             <td>NO</td>
-                                        }                                        
+                                        }
                                         <td><button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => deletePrev(previsione.ID))"><i class="bi bi-x-lg"></i></button></td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
                         <br />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="alert alert-secondary" role="alert">
+                        <p><b>Distribuzione Previsioni di Spesa</b></p>
+                        <Chart Config="_configBar"></Chart>
                     </div>
                 </div>
                 <br />
@@ -213,10 +274,16 @@
     private PrevisioneIN modelPre { get; set; } = new();
     public ListaPeriodiOUT listaperiodiOUT = new ListaPeriodiOUT();
     public TipoAttivitaOUT tipoattOUT = new TipoAttivitaOUT();
+    public PrevisioneTotaleAggregatiListaOUT previsioneTotaleAggregatiListaOUT = new PrevisioneTotaleAggregatiListaOUT();
 
     public int ultimogiornodelmese { get; set; } = 0;
     public int? anno { get; set; } = 0;
     public int? mese { get; set; } = 0;
+    public int y { get; set; } = 0;
+
+    public BarDataset<int> bardataset = new BarDataset<int>();
+    public BarConfig _configBar;
+    public string[]? chart_color_assey = new string[10000];
 
     protected override async Task OnInitializedAsync()
     {
@@ -233,6 +300,11 @@
             numattivita = previsioneTotaleListaOUT.Previsione.Count();
 
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Previsioni/ListaTotaleAggregata");
+            response = StateMenagement.JsonNormalized(response);
+            previsioneTotaleAggregatiListaOUT = System.Text.Json.JsonSerializer.Deserialize<PrevisioneTotaleAggregatiListaOUT>(response);
+
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
             response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Previsioni/ListaPeriodi");
             response = StateMenagement.JsonNormalized(response);
             listaperiodiOUT = System.Text.Json.JsonSerializer.Deserialize<ListaPeriodiOUT>(response);
@@ -245,6 +317,25 @@
             modelPre.Giorno = Convert.ToInt32(DateTime.Now.ToString("dd"));
 
             ultimogiornodelmese = DateTime.DaysInMonth(Convert.ToInt32(anno), Convert.ToInt32(mese));
+
+            _configBar = new BarConfig
+            {
+                Options = new BarOptions
+                {
+                    Responsive = true,
+                    Legend = new Legend
+                    {
+                        Position = Position.Top,
+                        Display = false
+                    },
+                    Title = new OptionsTitle
+                    {
+                        Display = false,
+                        Text = "Bar Chart",
+                        FontColor = "DARKSLATEBLUE",
+                    }
+                }
+            };
 
         }
         catch (Exception e)
