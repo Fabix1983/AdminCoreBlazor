@@ -23,32 +23,18 @@
         }
         else
         {
-            <!--Gestione SEGNALAZIONI-->
-            @if (genericOUT.StatusError != null && genericOUT.StatusError != "")
+            @if (!string.IsNullOrEmpty(genericOUT.StatusError))
             {
-                if (genericOUT.Status == "OK")
-                {
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-success" role="alert">
-                                <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-success btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
-                            </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert @(genericOUT.Status == "OK" ? "alert-success" : "alert-danger")" role="alert">
+                            <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-@(genericOUT.Status == "OK" ? "success" : "danger") btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
                         </div>
                     </div>
-                }
-                else
-                {
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-danger" role="alert">
-                                <p><b>@genericOUT.StatusError</b>&nbsp;&nbsp;<button type="button" class="btn btn-outline-danger btn-sm" @onclick="(e => refreshdel())"><i class="bi bi-x-lg"></i></button></p>
-                            </div>
-                        </div>
-                    </div>
-                }
+                </div>
             }
 
-            @if (previsioneTotaleListaOUT.StatusError != null && previsioneTotaleListaOUT.StatusError != "")
+            @if (!string.IsNullOrEmpty(previsioneTotaleListaOUT.StatusError))
             {
                 <div class="col-md-12">
                     <div class="alert alert-warning" role="alert">
@@ -57,7 +43,6 @@
                 </div>
             }
 
-            <!--Primo blocco-->
             <div class="col-md-3">
                 <div class="alert alert-primary" role="alert">
                     <div class="box-body">
@@ -68,7 +53,6 @@
                 </div>
             </div>
 
-            <!--Secondo blocco-->
             <div class="col-md-3">
                 <div class="alert alert-secondary" role="alert">
                     <div class="box-body">
@@ -81,11 +65,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @{
-                                    _configBar.Data.Labels.Clear();
-                                    _configBar.Data.Datasets.Clear();
-                                    y = 0;
-                                }
                                 @foreach (var previsione in previsioneTotaleAggregatiListaOUT.Previsione)
                                 {
                                     <tr>
@@ -93,21 +72,12 @@
                                         @if (Math.Round((decimal)previsione.Costo, 0) < 0)
                                         {
                                             <td><font color="red">@Math.Round((decimal)previsione.Costo, 0)</font></td>
-                                            _configBar.Data.Labels.Add(previsione.TipoAttivita.ToString());
-                                            bardataset.Add(Convert.ToInt32(previsione.Costo) * -1);
-                                            chart_color_assey[y] = previsione.ColoreHTML.ToString();
                                         }
                                         else
                                         {
                                             <td><font color="green">@Math.Round((decimal)previsione.Costo, 0)</font></td>
                                         }
                                     </tr>
-                                    y = y + 1;
-                                }
-                                @if (y > 1)
-                                {
-                                    bardataset.BackgroundColor = chart_color_assey;
-                                    _configBar.Data.Datasets.Add(bardataset);
                                 }
                             </tbody>
                         </table>
@@ -115,22 +85,17 @@
                 </div>
             </div>
 
-            <!--Terzo blocco-->
             <div class="col-md-6">
                 <div class="box-body">
                     <div class="alert alert-warning" role="alert">
                         <p><b>Nuova Previsione di spesa</b></p>
                         <EditForm Model="@modelPre" OnValidSubmit="OnValidSubmitPre">
                             <DataAnnotationsValidator />
-                            <ValidationMessage For="@(() => modelPre.Giorno)"></ValidationMessage>
-                            <ValidationMessage For="@(() => modelPre.Descrizione)"></ValidationMessage>
-                            <ValidationMessage For="@(() => modelPre.Costo)"></ValidationMessage>
-
                             <div class="row">
                                 <div class="col-md-3">
                                     <label>
                                         Periodo:
-                                        <InputSelect id="department" @bind-Value="modelPre.RifPeriodo" class="form-select" aria-label="Default select example">
+                                        <InputSelect @bind-Value="modelPre.RifPeriodo" class="form-select">
                                             <option value="0">Periodo...</option>
                                             @foreach (var dept in listaperiodiOUT.Periodo)
                                             {
@@ -139,32 +104,28 @@
                                         </InputSelect>
                                     </label>
                                 </div>
-
                                 <div class="col-md-2">
                                     <label>
                                         Giorno:
-                                        <InputNumber @bind-Value="modelPre.Giorno" required class="form-control" style="width: 4em" Min="1" Max="@ultimogiornodelmese" />
+                                        <InputNumber @bind-Value="modelPre.Giorno" class="form-control" style="width: 4em" Min="1" Max="@ultimogiornodelmese" />
                                     </label>
                                 </div>
-
                                 <div class="col-md-5">
                                     <label>
                                         Dettagli:
                                         <InputText @bind-Value="modelPre.Descrizione" class="form-control" />
                                     </label>
                                 </div>
-
                                 <div class="col-md-2">
                                     <label>
                                         Importo &euro;:
-                                        <InputNumber @bind-Value="modelPre.Costo" required class="form-control" style="width: 6em" Min="1" />
+                                        <InputNumber @bind-Value="modelPre.Costo" class="form-control" style="width: 6em" Min="1" />
                                     </label>
                                 </div>
-
                                 <div class="col-md-6">
                                     <label>
                                         Tipo Attivita:
-                                        <InputSelect id="department" @bind-Value="modelPre.RifTipoAttivita" class="form-select" aria-label="Default select example">
+                                        <InputSelect @bind-Value="modelPre.RifTipoAttivita" class="form-select">
                                             <option value="0">Seleziona una tipologia</option>
                                             @foreach (var dept in tipoattOUT.TipoAttivita)
                                             {
@@ -173,22 +134,17 @@
                                         </InputSelect>
                                     </label>
                                 </div>
-
                                 <div class="col-md-3">
                                     <label>
                                         Auto:
-                                        <InputSelect id="department" @bind-Value="modelPre.AddebitoAutomatico" class="form-select" aria-label="Default select example">
+                                        <InputSelect @bind-Value="modelPre.AddebitoAutomatico" class="form-select">
                                             <option value="0">NO</option>
                                             <option value="1">SI</option>
                                         </InputSelect>
                                     </label>
                                 </div>
-
                                 <div class="col-md-3">
-                                    <label>
-                                        <br>
-                                        <button type="submit" value="Inserisci" class="btn btn-warning">Procedi</button>
-                                    </label>
+                                    <br><button type="submit" class="btn btn-warning">Procedi</button>
                                 </div>
                             </div>
                         </EditForm>
@@ -210,7 +166,7 @@
                                     <th>Descrizione</th>
                                     <th>Tipo Costo</th>
                                     <th>Costo</th>
-                                    <th>Addebito Automatico</th>
+                                    <th>Auto</th>
                                     <th>Azione</th>
                                 </tr>
                             </thead>
@@ -223,29 +179,23 @@
                                         <td>@previsione.Descrizione.ToString()</td>
                                         <td><b><font color="@previsione.ColoreHTML.ToString()">@previsione.TipoAttivita.ToString()</font></b></td>
                                         <td>@Math.Round((decimal)@previsione.Costo, 0)&nbsp;&euro;</td>
-                                        @if (Convert.ToInt32(previsione.AddebitoAutomatico) == 1)
-                                        {
-                                            <td>SI</td>
-                                        }
-                                        else
-                                        {
-                                            <td>NO</td>
-                                        }
+                                        <td>@(Convert.ToInt32(previsione.AddebitoAutomatico) == 1 ? "SI" : "NO")</td>
                                         <td><button type="button" class="btn btn-outline-primary btn-sm" @onclick="(e => deletePrev(previsione.ID))"><i class="bi bi-x-lg"></i></button></td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
-                        <br />
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="alert alert-secondary" role="alert">
                         <p><b>Distribuzione Previsioni di Spesa</b></p>
-                        <Chart Config="_configBar"></Chart>
+                        @if (_configBar != null)
+                        {
+                            <Chart Config="_configBar"></Chart>
+                        }
                     </div>
                 </div>
-                <br />
             }
             else
             {
@@ -262,81 +212,35 @@
 <Bottom></Bottom>
 
 @code {
-
-    private PrevisioneTotaleListaOUT previsioneTotaleListaOUT { get; set; } = new PrevisioneTotaleListaOUT();
-    public HttpClient httpClient = new HttpClient();
+    private PrevisioneTotaleListaOUT previsioneTotaleListaOUT { get; set; } = new();
+    public HttpClient httpClient = new();
     public decimal? totale { get; set; } = 0;
     public int? numattivita { get; set; } = 0;
-    public GenericOUT genericOUT = new GenericOUT();
-
-    public int? annoPre { get; set; } = 0;
-    public int? mesePre { get; set; } = 0;
+    public GenericOUT genericOUT = new();
     private PrevisioneIN modelPre { get; set; } = new();
-    public ListaPeriodiOUT listaperiodiOUT = new ListaPeriodiOUT();
-    public TipoAttivitaOUT tipoattOUT = new TipoAttivitaOUT();
-    public PrevisioneTotaleAggregatiListaOUT previsioneTotaleAggregatiListaOUT = new PrevisioneTotaleAggregatiListaOUT();
-
-    public int ultimogiornodelmese { get; set; } = 0;
-    public int? anno { get; set; } = 0;
-    public int? mese { get; set; } = 0;
-    public int y { get; set; } = 0;
-
-    public BarDataset<int> bardataset = new BarDataset<int>();
+    public ListaPeriodiOUT listaperiodiOUT = new();
+    public TipoAttivitaOUT tipoattOUT = new();
+    public PrevisioneTotaleAggregatiListaOUT previsioneTotaleAggregatiListaOUT = new();
+    public int ultimogiornodelmese { get; set; }
     public BarConfig _configBar;
-    public string[]? chart_color_assey = new string[10000];
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            anno = Int32.Parse(DateTime.Now.ToString("yyyy"));
-            mese = Int32.Parse(DateTime.Now.ToString("MM"));
+            var anno = DateTime.Now.Year;
+            var mese = DateTime.Now.Month;
+            ultimogiornodelmese = DateTime.DaysInMonth(anno, mese);
+            modelPre.Giorno = DateTime.Now.Day;
 
-            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            var response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Previsioni/ListaTotale");
-            response = StateMenagement.JsonNormalized(response);
-            previsioneTotaleListaOUT = System.Text.Json.JsonSerializer.Deserialize<PrevisioneTotaleListaOUT>(response);
-            totale = previsioneTotaleListaOUT.Previsione.Sum(item => Convert.ToInt32(item.Costo));
-            numattivita = previsioneTotaleListaOUT.Previsione.Count();
+            // Caricamento Dati
+            await CaricaDatiAPI();
 
-            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Previsioni/ListaTotaleAggregata");
-            response = StateMenagement.JsonNormalized(response);
-            previsioneTotaleAggregatiListaOUT = System.Text.Json.JsonSerializer.Deserialize<PrevisioneTotaleAggregatiListaOUT>(response);
+            // Configurazione Grafico
+            InizializzaGrafico();
 
-            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Previsioni/ListaPeriodi");
-            response = StateMenagement.JsonNormalized(response);
-            listaperiodiOUT = System.Text.Json.JsonSerializer.Deserialize<ListaPeriodiOUT>(response);
-
-            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Attivita/TipoAttivitaList");
-            response = StateMenagement.JsonNormalized(response);
-            tipoattOUT = System.Text.Json.JsonSerializer.Deserialize<TipoAttivitaOUT>(response);
-
-            modelPre.Giorno = Convert.ToInt32(DateTime.Now.ToString("dd"));
-
-            ultimogiornodelmese = DateTime.DaysInMonth(Convert.ToInt32(anno), Convert.ToInt32(mese));
-
-            _configBar = new BarConfig
-            {
-                Options = new BarOptions
-                {
-                    Responsive = true,
-                    Legend = new Legend
-                    {
-                        Position = Position.Top,
-                        Display = false
-                    },
-                    Title = new OptionsTitle
-                    {
-                        Display = false,
-                        Text = "Bar Chart",
-                        FontColor = "DARKSLATEBLUE",
-                    }
-                }
-            };
-
+            // Popolamento Dati Grafico
+            AggiornaDatiGrafico();
         }
         catch (Exception e)
         {
@@ -344,42 +248,78 @@
         }
     }
 
+    private async Task CaricaDatiAPI()
+    {
+        httpClient.DefaultRequestHeaders.Clear();
+        httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+
+        var response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Previsioni/ListaTotale");
+        previsioneTotaleListaOUT = System.Text.Json.JsonSerializer.Deserialize<PrevisioneTotaleListaOUT>(StateMenagement.JsonNormalized(response));
+        totale = previsioneTotaleListaOUT.Previsione.Sum(item => Convert.ToDecimal(item.Costo));
+        numattivita = previsioneTotaleListaOUT.Previsione.Count();
+
+        response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Previsioni/ListaTotaleAggregata");
+        previsioneTotaleAggregatiListaOUT = System.Text.Json.JsonSerializer.Deserialize<PrevisioneTotaleAggregatiListaOUT>(StateMenagement.JsonNormalized(response));
+
+        response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Previsioni/ListaPeriodi");
+        listaperiodiOUT = System.Text.Json.JsonSerializer.Deserialize<ListaPeriodiOUT>(StateMenagement.JsonNormalized(response));
+
+        response = await httpClient.GetStringAsync(StateMenagement.api_url + "/api/Attivita/TipoAttivitaList");
+        tipoattOUT = System.Text.Json.JsonSerializer.Deserialize<TipoAttivitaOUT>(StateMenagement.JsonNormalized(response));
+    }
+
+    private void InizializzaGrafico()
+    {
+        if (_configBar == null)
+        {
+            _configBar = new BarConfig
+            {
+                Options = new BarOptions
+                {
+                    Responsive = true,
+                    Legend = new Legend { Display = false },
+                    Title = new OptionsTitle { Display = false }
+                }
+            };
+        }
+    }
+
+    private void AggiornaDatiGrafico()
+    {
+        if (previsioneTotaleAggregatiListaOUT?.Previsione == null) return;
+
+        _configBar.Data.Labels.Clear();
+        _configBar.Data.Datasets.Clear();
+
+        var dataset = new BarDataset<int>();
+        var colors = new List<string>();
+
+        foreach (var item in previsioneTotaleAggregatiListaOUT.Previsione)
+        {
+            decimal costo = (decimal)item.Costo;
+            if (Math.Round(costo, 0) < 0)
+            {
+                _configBar.Data.Labels.Add(item.TipoAttivita.ToString());
+                dataset.Add(Convert.ToInt32(costo) * -1);
+                colors.Add(item.ColoreHTML.ToString());
+            }
+        }
+
+        if (dataset.Count > 0)
+        {
+            dataset.BackgroundColor = colors.ToArray();
+            _configBar.Data.Datasets.Add(dataset);
+        }
+    }
+
     private async Task deletePrev(int id)
     {
-        //DEBUG
-        //Console.WriteLine("id:" + id.ToString());
         bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Vuoi eliminare la voce?");
         if (confirmed)
         {
-            try
-            {
-                httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-                var response = await httpClient.DeleteAsync(StateMenagement.api_url + "/api/Previsioni/Delete/" + id);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    HttpResponseMessage resp = response;
-                    string res = await resp.Content.ReadAsStringAsync();
-                    var responseJS = StateMenagement.JsonNormalized(res);
-
-                    genericOUT = System.Text.Json.JsonSerializer.Deserialize<GenericOUT>(responseJS);
-
-                    if (genericOUT.Status == "OK")
-                    {
-                        genericOUT.StatusError = "Cancellazione Previsione di spesa eseguita correttamente";
-                    }
-
-                    await OnInitializedAsync();
-                }
-                else
-                {
-                    Navigation.NavigateTo("/errore?errdesc=Si è verificato un errore nella cancellazione della Previsione di spesa");
-                }
-            }
-            catch (Exception e)
-            {
-                Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
-            }
+            await httpClient.DeleteAsync(StateMenagement.api_url + "/api/Previsioni/Delete/" + id);
+            await OnInitializedAsync();
+            StateHasChanged();
         }
     }
 
@@ -392,87 +332,23 @@
 
     private async Task OnValidSubmitPre()
     {
-
-        // DEBUG
-        /*
-        Console.WriteLine("Giorno:" + modelPre.Giorno);
-        Console.WriteLine("RifPeriodo:" + modelPre.RifPeriodo);
-        Console.WriteLine("Descrizione:" + modelPre.Descrizione);
-        Console.WriteLine("Costo:" + modelPre.Costo);
-        */
-
-        if (modelPre.RifPeriodo == 0)
+        if (modelPre.RifPeriodo == 0 || modelPre.RifTipoAttivita == 0 || string.IsNullOrEmpty(modelPre.Descrizione))
         {
             genericOUT.Status = "KO";
-            genericOUT.StatusError = "ERRORE: Riferimento Periodo Assente!";
+            genericOUT.StatusError = "Dati obbligatori mancanti!";
             return;
         }
 
-        if (modelPre.RifTipoAttivita == 0)
+        var json = System.Text.Json.JsonSerializer.Serialize(modelPre);
+        var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+        var response = await httpClient.PostAsync(StateMenagement.api_url + "/api/Previsioni/New", content);
+
+        if (response.IsSuccessStatusCode)
         {
-            genericOUT.Status = "KO";
-            genericOUT.StatusError = "ERRORE: Riferimento Tipo Attivita Assente!";
-            return;
+            genericOUT.Status = "OK";
+            genericOUT.StatusError = "Inserimento eseguito correttamente";
+            modelPre = new PrevisioneIN { Giorno = DateTime.Now.Day };
+            await OnInitializedAsync();
         }
-
-        if (modelPre.Descrizione == "")
-        {
-            genericOUT.Status = "KO";
-            genericOUT.StatusError = "ERRORE: Descrizione Previsione Assente!";
-            return;
-        }
-
-        if (modelPre.Costo == 0 || modelPre.Giorno == 0)
-        {
-            genericOUT.Status = "KO";
-            genericOUT.StatusError = "ERRORE: Dati Mancanti!";
-            return;
-        }
-
-        try
-        {
-
-            var json = System.Text.Json.JsonSerializer.Serialize(modelPre);
-            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-
-            httpClient.DefaultRequestHeaders.Accept.Clear();
-            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
-
-            var response = await httpClient.PostAsync(StateMenagement.api_url + "/api/Previsioni/New", content);
-
-            if (response.IsSuccessStatusCode)
-            {
-                HttpResponseMessage resp = response;
-                string res = await resp.Content.ReadAsStringAsync();
-                var responseJS = StateMenagement.JsonNormalized(res);
-
-                genericOUT = System.Text.Json.JsonSerializer.Deserialize<GenericOUT>(responseJS);
-
-                if (genericOUT.Status == "OK")
-                {
-                    genericOUT.StatusError = "Nuova spesa prevista inserita correttamente";
-
-                    modelPre.Giorno = Convert.ToInt32(DateTime.Now.ToString("dd"));
-                    modelPre.RifPeriodo = 0;
-                    modelPre.Descrizione = "";
-                    modelPre.Costo = 0;
-                    modelPre.AddebitoAutomatico = 0;
-                    modelPre.RifTipoAttivita = 0;
-                }
-
-                await OnInitializedAsync();
-            }
-            else
-            {
-                Navigation.NavigateTo("/errore?errdesc=Si è verificato un errore nell'inserimento della nuova previsione");
-            }
-        }
-        catch (Exception e)
-        {
-            Navigation.NavigateTo("/errore?errdesc=" + e.ToString());
-        }
-
     }
-
 }

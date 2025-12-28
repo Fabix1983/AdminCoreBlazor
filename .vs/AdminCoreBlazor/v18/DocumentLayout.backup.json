@@ -3,16 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0E3B4EE6-2A11-4702-8C3E-7DFC013ED466}|BlazorWebAssembly\\BlazorWebAssembly.csproj|c:\\users\\pc\\desktop\\github\\admincoreblazor\\blazorwebassembly\\pages\\bottom.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{0E3B4EE6-2A11-4702-8C3E-7DFC013ED466}|BlazorWebAssembly\\BlazorWebAssembly.csproj|solutionrelative:blazorwebassembly\\pages\\bottom.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{0E3B4EE6-2A11-4702-8C3E-7DFC013ED466}|BlazorWebAssembly\\BlazorWebAssembly.csproj|c:\\users\\pc\\desktop\\github\\admincoreblazor\\blazorwebassembly\\pages\\previsioni.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0E3B4EE6-2A11-4702-8C3E-7DFC013ED466}|BlazorWebAssembly\\BlazorWebAssembly.csproj|solutionrelative:blazorwebassembly\\pages\\previsioni.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0E3B4EE6-2A11-4702-8C3E-7DFC013ED466}|BlazorWebAssembly\\BlazorWebAssembly.csproj|c:\\users\\pc\\desktop\\github\\admincoreblazor\\blazorwebassembly\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{0E3B4EE6-2A11-4702-8C3E-7DFC013ED466}|BlazorWebAssembly\\BlazorWebAssembly.csproj|solutionrelative:blazorwebassembly\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0E3B4EE6-2A11-4702-8C3E-7DFC013ED466}|BlazorWebAssembly\\BlazorWebAssembly.csproj|c:\\users\\pc\\desktop\\github\\admincoreblazor\\blazorwebassembly\\pages\\previsioni.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{0E3B4EE6-2A11-4702-8C3E-7DFC013ED466}|BlazorWebAssembly\\BlazorWebAssembly.csproj|solutionrelative:blazorwebassembly\\pages\\previsioni.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,21 +18,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Bottom.razor",
-              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\Pages\\Bottom.razor",
-              "RelativeDocumentMoniker": "BlazorWebAssembly\\Pages\\Bottom.razor",
-              "ToolTip": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\Pages\\Bottom.razor",
-              "RelativeToolTip": "BlazorWebAssembly\\Pages\\Bottom.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-28T16:57:22.102Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -45,20 +28,20 @@
               "RelativeDocumentMoniker": "BlazorWebAssembly\\Pages\\Home.razor",
               "ToolTip": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\Pages\\Home.razor",
               "RelativeToolTip": "BlazorWebAssembly\\Pages\\Home.razor",
-              "ViewState": "AgIAANUBAAAAAAAAAAAAAPIBAABSAAAAAAAAAA==",
+              "ViewState": "AgIAAMUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-28T16:54:02.05Z",
+              "WhenOpened": "2025-12-28T17:35:49.512Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Previsioni.razor",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\Pages\\Previsioni.razor",
               "RelativeDocumentMoniker": "BlazorWebAssembly\\Pages\\Previsioni.razor",
               "ToolTip": "C:\\Users\\PC\\Desktop\\GitHub\\AdminCoreBlazor\\BlazorWebAssembly\\Pages\\Previsioni.razor",
               "RelativeToolTip": "BlazorWebAssembly\\Pages\\Previsioni.razor",
-              "ViewState": "AgIAAN4AAAAAAAAAAAAAAPMAAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAAAABAAAAAAAAAAAuwBsBAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-12-28T16:25:09.05Z",
               "EditorCaption": ""

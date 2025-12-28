@@ -1046,6 +1046,6 @@ C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\swae.build.ex.cache
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\BlazorWe.B026F7F9.Up2Date
-C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\compressed\7rjygah7pu-{0}-jv3qvh0bro-jv3qvh0bro.gz
-C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\compressed\20k1jvogj1-{0}-scvcldzs8f-scvcldzs8f.gz
-C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\compressed\vke2gz502p-{0}-9ck17ow1qa-9ck17ow1qa.gz
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\compressed\7rjygah7pu-{0}-rw26efe83w-rw26efe83w.gz
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\compressed\20k1jvogj1-{0}-u3dwgf1y9f-u3dwgf1y9f.gz
+C:\Users\PC\Desktop\GitHub\AdminCoreBlazor\BlazorWebAssembly\obj\Release\net8.0\compressed\vke2gz502p-{0}-1gszoczd5r-1gszoczd5r.gz
